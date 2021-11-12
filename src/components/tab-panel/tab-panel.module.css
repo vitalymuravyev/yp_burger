@@ -1,0 +1,9 @@
+.wrapper {
+    display: flex;
+
+    margin-bottom: 40px;
+}
+
+.wrapper > div {
+    flex: 1;
+}

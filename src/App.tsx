@@ -1,7 +1,9 @@
 import React from 'react';
-import './App.css';
+import styles from './App.module.css';
+
 import { AppHeader } from './components/app-header/AppHeader';
 import { BurgerConstructor } from "./components/burger-constructor/burger-constructor";
+import {BurgerIngredients} from "./components/burger-ingredients/burger-ingredients";
 
 import { data } from './utils/data';
 
@@ -9,7 +11,10 @@ function App() {
   return (
     <div className="App">
       <AppHeader />
-      <BurgerConstructor data={data} />
+      <main className={styles.main}>
+        <BurgerIngredients data={data} />
+        <BurgerConstructor data={data} />
+      </main>
     </div>
   );
 }
