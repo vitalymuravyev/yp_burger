@@ -21,6 +21,7 @@ export class ButtonWithIcon extends React.Component {
         const { type, active } = this.props;
         const textColor = active ? '' : 'text_color_inactive'
         return(
+            // eslint-disable-next-line jsx-a11y/anchor-is-valid
             <a href="#" className={styles.wrapper}>
                 {ICONS[type]}
                 <p className={`text text_type_main-default ${textColor} ml-2`}>

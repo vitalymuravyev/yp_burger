@@ -1,4 +1,3 @@
-import {BurgerIngredients} from "../components/burger-ingredients/burger-ingredients";
 
 export const data = [
     {
