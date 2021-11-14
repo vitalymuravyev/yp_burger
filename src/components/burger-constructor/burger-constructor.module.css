@@ -12,6 +12,10 @@
 
     list-style: none;
     padding: 0;
+
+
+    overflow: scroll;
+    height: calc(100vh - 424px);
 }
 
 .item {

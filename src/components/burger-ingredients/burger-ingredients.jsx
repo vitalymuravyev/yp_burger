@@ -13,8 +13,11 @@ export class BurgerIngredients extends React.Component {
       <section className={styles.wrapper}>
         <h2 className="text text_type_main-large">Соберите бургер</h2>
         <TabPanel />
-        <IngredientsList data={data} type="bun"/>
-        <IngredientsList data={data} type="sauce"/>
+        <div className={styles.list}>
+          <IngredientsList data={data} type="bun"/>
+          <IngredientsList data={data} type="sauce"/>
+          <IngredientsList data={data} type="main" />
+        </div>
       </section>
     )
   }

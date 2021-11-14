@@ -13,17 +13,24 @@ export const BurgerConstructor = ({ data }) => {
   return (
     <section className={styles.wrapper}>
       <ul className={styles.list}>
-        {data.map((item, index, arr) =>
-          <li key={item._id} className={styles.item}>
-              {(index !== 0 && index !== arr.length - 1) && <DragIcon type="primary"/>}
-              <ConstructorElement
-                  text={item.name}
-                  price={item.price}
-                  thumbnail={item.image}
-                  type={index === 0 ? "top" : index === arr.length - 1 ? 'bottom' : ''}
-                  isLocked={(index === 0 || index === arr.length - 1) && true}
-              />
-          </li>
+        {data.map((item, index, arr) => {
+            const type = index === 0 ? "top" : index === arr.length - 1 ? 'bottom' : '';
+            const isLocked = index === 0 || index === arr.length - 1;
+            const additionalText = index === 0 ? "(верх)" : index === arr.length - 1 ? '(низ)' : '';
+            const text = `${item.name} ${additionalText}`
+            return (
+                <li key={item._id} className={styles.item}>
+                    {!isLocked && <DragIcon type="primary"/>}
+                    <ConstructorElement
+                        text={text}
+                        price={item.price}
+                        thumbnail={item.image}
+                        type={type}
+                        isLocked={isLocked}
+                    />
+                </li>
+            )
+        }
         )}
       </ul>
       <div className={styles.order}>

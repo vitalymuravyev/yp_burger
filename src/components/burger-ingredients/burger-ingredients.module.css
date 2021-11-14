@@ -3,3 +3,8 @@
 
     padding-top: 40px;
 }
+
+.list {
+    height: calc(100vh - 360px);
+    overflow: scroll;
+}
