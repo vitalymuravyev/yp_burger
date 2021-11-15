@@ -2,7 +2,19 @@
     max-width: 600px;
 
     padding: 100px 39px 50px 39px;
+}
 
+.container {
+    height: calc(100vh - 424px);
+
+    display: flex;
+    gap: 10px;
+    flex-direction: column;
+    align-items: flex-end;
+}
+
+.container > div {
+    margin-right: 15px;
 }
 
 .list {
@@ -12,10 +24,9 @@
 
     list-style: none;
     padding: 0;
+    margin: 0;
 
-
-    overflow: scroll;
-    height: calc(100vh - 424px);
+    overflow-y: scroll;
 }
 
 .item {
