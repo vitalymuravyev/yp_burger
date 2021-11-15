@@ -1,0 +1,13 @@
+.price {
+    display: inline-flex;
+    align-items: center;
+}
+
+.price svg {
+    margin-left: 10px;
+}
+
+.medium svg {
+    height: 33px;
+    width: 33px;
+}

@@ -1,0 +1,62 @@
+.wrapper {
+    max-width: 600px;
+
+    padding: 100px 39px 50px 39px;
+}
+
+.container {
+    height: calc(100vh - 424px);
+
+    display: flex;
+    gap: 10px;
+    flex-direction: column;
+    align-items: flex-end;
+}
+
+.container > div {
+    margin-right: 15px;
+}
+
+.list {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+
+    list-style: none;
+    padding: 0;
+    margin: 0;
+
+    overflow-y: scroll;
+}
+
+.item {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    width: 100%;
+}
+
+.item svg {
+    margin-right: 10px;
+
+    cursor: pointer;
+}
+
+.order {
+    margin-top: 40px;
+
+    display: flex;
+    justify-content: flex-end;
+    gap: 40px;
+}
+
+.price {
+    display: inline-flex;
+    align-items: center;
+}
+
+.price svg {
+    margin-left: 10px;
+    height: 33px;
+    width: 33px;
+}

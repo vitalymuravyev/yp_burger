@@ -1,0 +1,10 @@
+.wrapper {
+    display: flex;
+
+    margin-bottom: 40px;
+    margin-top: 20px;
+}
+
+.wrapper > div {
+    flex: 1;
+}
