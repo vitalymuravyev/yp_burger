@@ -1,4 +1,6 @@
 import React from "react";
+import PropTypes from 'prop-types';
+import { ingredientType } from '../../utils/types';
 
 import styles from './ingredients-list.module.css';
 
@@ -23,4 +25,9 @@ export const IngredientsList = ({ data, type }) => {
       </div>
     </div>
   )
+}
+
+IngredientsList.propTypes = {
+  data: PropTypes.arrayOf(ingredientType),
+  type: PropTypes.oneOf(['bun', 'sauce', 'main'])
 }

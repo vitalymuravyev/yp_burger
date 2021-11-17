@@ -1,13 +1,15 @@
 import React from "react";
 
+import { ingredientType } from '../../utils/types';
+
 import {
     Button,
     ConstructorElement, DragIcon
-} from '@ya.praktikum/react-developer-burger-ui-components'
-
+} from '@ya.praktikum/react-developer-burger-ui-components';
 
 import styles from './burger-constructor.module.css';
 import {PriceBlock} from "../price-block/price-block";
+import PropTypes from "prop-types";
 
 export const BurgerConstructor = ({ data }) => {
   const bun = data[0];
@@ -55,4 +57,8 @@ export const BurgerConstructor = ({ data }) => {
     </section>
 
   )
+}
+
+BurgerConstructor.propTypes = {
+  data: PropTypes.arrayOf(ingredientType)
 }

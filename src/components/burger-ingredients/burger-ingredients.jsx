@@ -1,8 +1,11 @@
 import React from "react";
 
+import { ingredientType } from '../../utils/types';
+
 import styles from './burger-ingredients.module.css';
 import {TabPanel} from "../tab-panel/tab-panel";
 import {IngredientsList} from "../ingredients-list/ingredients-list";
+import PropTypes from "prop-types";
 
 
 export const BurgerIngredients = ({ data }) => {
@@ -17,4 +20,8 @@ export const BurgerIngredients = ({ data }) => {
         </div>
       </section>
     )
+}
+
+BurgerIngredients.propTypes = {
+  data: PropTypes.arrayOf(ingredientType)
 }

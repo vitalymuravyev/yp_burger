@@ -1,4 +1,5 @@
 import React from "react";
+import PropTypes from 'prop-types';
 
 import styles from './ingredient-card.module.css';
 import {PriceBlock} from "../price-block/price-block";
@@ -15,4 +16,10 @@ export const IngredientCard = ({ image, price, name }) => {
         </div>
     </div>
   )
+}
+
+IngredientCard.propTypes = {
+  image: PropTypes.string.isRequired,
+  price: PropTypes.number.isRequired,
+  name: PropTypes.string.isRequired
 }
