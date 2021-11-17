@@ -12,7 +12,7 @@ import {PriceBlock} from "../price-block/price-block";
 import PropTypes from "prop-types";
 
 export const BurgerConstructor = ({ data }) => {
-  const bun = data[0];
+  const bun = data[0] || {};
   return (
     <section className={styles.wrapper}>
       <div className={styles.container}>
