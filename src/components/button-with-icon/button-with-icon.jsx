@@ -16,20 +16,18 @@ const LABELS = {
     profile: 'Личный кабинет',
 }
 
-export class ButtonWithIcon extends React.Component {
-    render() {
-        const { type, active } = this.props;
-        const textColor = active ? '' : 'text_color_inactive'
-        return(
-            // eslint-disable-next-line jsx-a11y/anchor-is-valid
-            <a href="#" className={styles.wrapper}>
-                {ICONS[type]}
-                <p className={`text text_type_main-default ${textColor} ml-2`}>
-                    {LABELS[type]}
-                </p>
-            </a>
-        )
-    }
+export const ButtonWithIcon = ({ type, active }) => {
+    const textColor = active ? '' : 'text_color_inactive';
+
+    return(
+        // eslint-disable-next-line jsx-a11y/anchor-is-valid
+        <a href="#" className={styles.wrapper}>
+            {ICONS[type]}
+            <p className={`text text_type_main-default ${textColor} ml-2`}>
+                {LABELS[type]}
+            </p>
+        </a>
+    );
 }
 
 ButtonWithIcon.propTypes = {

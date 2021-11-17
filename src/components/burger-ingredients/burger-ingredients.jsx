@@ -5,10 +5,7 @@ import {TabPanel} from "../tab-panel/tab-panel";
 import {IngredientsList} from "../ingredients-list/ingredients-list";
 
 
-export class BurgerIngredients extends React.Component {
-  render() {
-    const { data } = this.props;
-
+export const BurgerIngredients = ({ data }) => {
     return (
       <section className={styles.wrapper}>
         <h2 className="text text_type_main-large">Соберите бургер</h2>
@@ -20,5 +17,4 @@ export class BurgerIngredients extends React.Component {
         </div>
       </section>
     )
-  }
 }

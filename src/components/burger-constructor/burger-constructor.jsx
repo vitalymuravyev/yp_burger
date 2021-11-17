@@ -25,10 +25,6 @@ export const BurgerConstructor = ({ data }) => {
         </div>
         <ul className={styles.list}>
           {data.filter((item) => item.type !== 'bun').map((item, index, arr) => {
-              // const type = index === 0 ? "top" : index === arr.length - 1 ? 'bottom' : '';
-              // const isLocked = index === 0 || index === arr.length - 1;
-              // const additionalText = index === 0 ? "(верх)" : index === arr.length - 1 ? '(низ)' : '';
-              // const text = `${item.name} ${additionalText}`
               return (
                 <li key={item._id} className={styles.item}>
                   {<DragIcon type="primary"/>}
