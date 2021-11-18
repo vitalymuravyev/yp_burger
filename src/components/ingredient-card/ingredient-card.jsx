@@ -5,9 +5,9 @@ import styles from './ingredient-card.module.css';
 import {PriceBlock} from "../price-block/price-block";
 import {Counter} from "@ya.praktikum/react-developer-burger-ui-components";
 
-export const IngredientCard = ({ image, price, name }) => {
+export const IngredientCard = ({ image, price, name, onClick }) => {
   return (
-    <div className={styles.card}>
+    <div className={styles.card} onClick={onClick}>
       <img src={image} alt={name} />
       <PriceBlock count={price} size="default" className={styles.price} />
       <p className="text text_type_main-default name">{name}</p>
@@ -21,5 +21,6 @@ export const IngredientCard = ({ image, price, name }) => {
 IngredientCard.propTypes = {
   image: PropTypes.string.isRequired,
   price: PropTypes.number.isRequired,
-  name: PropTypes.string.isRequired
+  name: PropTypes.string.isRequired,
+  onClick: PropTypes.func
 }

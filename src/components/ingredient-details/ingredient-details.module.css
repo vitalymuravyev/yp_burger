@@ -1,0 +1,19 @@
+.heading {
+    text-align: start;
+}
+
+.nutrition {
+    list-style: none;
+    padding: 0;
+
+    display: flex;
+    gap: 20px;
+    justify-content: center;
+}
+
+.nutrition_item {
+    display: flex;
+    flex-direction: column;
+
+    min-width: 115px;
+}

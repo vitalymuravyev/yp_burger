@@ -8,7 +8,7 @@ import {BurgerIngredients} from "../burger-ingredients/burger-ingredients";
 const url = 'https://norma.nomoreparties.space/api/ingredients';
 
 function App() {
-  const [state, setState] = useState({ data: []})
+  const [state, setState] = useState({ data: []});
 
   useEffect(() => {
     fetch(url)
