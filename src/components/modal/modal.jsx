@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useCallback, useEffect} from "react";
 import ReactDOM from "react-dom";
 
 import styles from './modal.module.css';
@@ -8,6 +8,19 @@ import {CloseIcon} from "@ya.praktikum/react-developer-burger-ui-components";
 const container = document.getElementById('modal-root');
 
 export const Modal = ({closeModal, children }) => {
+
+  const handleEscPress = useCallback((evt) => {
+    if (evt.key === 'Escape') {
+      closeModal();
+    }
+  }, [closeModal]);
+
+  useEffect(() => {
+    document.addEventListener('keydown', (evt) => handleEscPress(evt));
+    return (
+      document.removeEventListener('keydown', handleEscPress)
+    )
+  }, [handleEscPress])
 
   return ReactDOM.createPortal(
     <>

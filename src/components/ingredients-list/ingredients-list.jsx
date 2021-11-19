@@ -45,6 +45,6 @@ export const IngredientsList = ({ data, type }) => {
 }
 
 IngredientsList.propTypes = {
-  data: PropTypes.arrayOf(ingredientType),
-  type: PropTypes.oneOf(['bun', 'sauce', 'main'])
+  data: PropTypes.arrayOf(ingredientType).isRequired,
+  type: PropTypes.oneOf(['bun', 'sauce', 'main']).isRequired
 }

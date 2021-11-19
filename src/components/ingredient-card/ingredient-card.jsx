@@ -22,5 +22,5 @@ IngredientCard.propTypes = {
   image: PropTypes.string.isRequired,
   price: PropTypes.number.isRequired,
   name: PropTypes.string.isRequired,
-  onClick: PropTypes.func
+  onClick: PropTypes.func.isRequired
 }

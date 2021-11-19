@@ -39,6 +39,6 @@ export const IngredientDetails = ({ closeModal, data}) => {
 }
 
 IngredientDetails.propTypes = {
-  closeModal: PropTypes.func,
+  closeModal: PropTypes.func.isRequired,
   data: ingredientType.isRequired
 }

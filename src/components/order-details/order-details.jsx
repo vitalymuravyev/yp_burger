@@ -18,7 +18,7 @@ export const OrderDetails = ({ closeModal }) => {
       <p className="text text_type_main-medium mt-8">
         идентификатор заказа
       </p>
-      <img src="done.gif" alt="" height="120px" width="120px"  className="mt-15" />
+      <img src="done.gif" alt="Картинка принятия заказа" height="120px" width="120px"  className="mt-15" />
       <p className="text text_type_main-default mt-15">
         {ORDER_DATA.status}
       </p>

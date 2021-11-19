@@ -13,7 +13,7 @@ export const BurgerIngredients = ({ data }) => {
       <section className={styles.wrapper}>
         <h2 className="text text_type_main-large">Соберите бургер</h2>
         <TabPanel />
-        <div className={styles.list}>
+        <div className={`${styles.list} custom-scroll`}>
           <IngredientsList data={data} type="bun"/>
           <IngredientsList data={data} type="sauce"/>
           <IngredientsList data={data} type="main" />
@@ -23,5 +23,5 @@ export const BurgerIngredients = ({ data }) => {
 }
 
 BurgerIngredients.propTypes = {
-  data: PropTypes.arrayOf(ingredientType)
+  data: PropTypes.arrayOf(ingredientType).isRequired
 }

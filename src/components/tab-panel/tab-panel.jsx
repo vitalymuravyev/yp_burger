@@ -1,4 +1,4 @@
-import React, {useCallback, useState} from "react";
+import React, { useState } from "react";
 
 import styles from './tab-panel.module.css';
 
@@ -10,9 +10,9 @@ const TABS = ['bun', 'sauce', 'main'];
 export const TabPanel = () => {
   const [currentTab, setCurrentTab] = useState('bun');
 
-  const handleClick = useCallback((value) => {
+  const handleClick = (value) => {
     setCurrentTab(value)
-  }, []);
+  };
 
   return (
     <div className={styles.wrapper}>

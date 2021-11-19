@@ -16,6 +16,10 @@ export const BurgerConstructor = ({ data }) => {
   const bun = data[0] || {};
   const [modalVisible, setModalVisible] = useState(false);
 
+  const filteredData = data.filter((item) => item.type !== 'bun');
+
+  const totalCost = filteredData.reduce((sum, item) => sum + item.price, 0) + (bun.price * 2);
+
   const handleButtonClick = () => {
     setModalVisible(true);
   }
@@ -37,8 +41,8 @@ export const BurgerConstructor = ({ data }) => {
               isLocked
             />
           </div>
-          <ul className={styles.list}>
-            {data.filter((item) => item.type !== 'bun').map((item, index, arr) => {
+          <ul className={`${styles.list} custom-scroll`}>
+            {filteredData.map((item, index, arr) => {
                 return (
                   <li key={item._id} className={styles.item}>
                     {<DragIcon type="primary"/>}
@@ -63,7 +67,7 @@ export const BurgerConstructor = ({ data }) => {
           </div>
         </div>
         <div className={styles.order}>
-          <PriceBlock count={610} size="medium" />
+          <PriceBlock count={totalCost} size="medium" />
           <Button size="large" onClick={handleButtonClick}>Оформить заказ</Button>
         </div>
       </section>
@@ -73,5 +77,5 @@ export const BurgerConstructor = ({ data }) => {
 }
 
 BurgerConstructor.propTypes = {
-  data: PropTypes.arrayOf(ingredientType)
+  data: PropTypes.arrayOf(ingredientType).isRequired
 }
