@@ -16,7 +16,7 @@ export const Modal = ({closeModal, children }) => {
   }, [closeModal]);
 
   useEffect(() => {
-    document.addEventListener('keydown', (evt) => handleEscPress(evt));
+    document.addEventListener('keydown', handleEscPress);
     return (
       document.removeEventListener('keydown', handleEscPress)
     )
