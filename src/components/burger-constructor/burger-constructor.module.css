@@ -1,5 +1,5 @@
 .wrapper {
-    max-width: 600px;
+    width: 600px;
 
     padding: 100px 39px 50px 39px;
 }
@@ -14,7 +14,7 @@
 }
 
 .container > div {
-    margin-right: 15px;
+    margin-right: 16px;
 }
 
 .list {
@@ -25,6 +25,7 @@
     list-style: none;
     padding: 0;
     margin: 0;
+    padding-right: 8px;
 
     overflow-y: scroll;
 }
