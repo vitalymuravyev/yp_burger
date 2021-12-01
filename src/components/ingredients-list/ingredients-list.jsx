@@ -1,14 +1,16 @@
-import React, {useState} from "react";
+import React, {useContext, useState} from "react";
 import PropTypes from 'prop-types';
-import { ingredientType } from '../../utils/types';
 
 import styles from './ingredients-list.module.css';
 
 import { ingredientTypes } from '../../utils/data'
 import {IngredientCard} from "../ingredient-card/ingredient-card";
 import {IngredientDetails} from "../ingredient-details/ingredient-details";
+import {BurgerContext, DataContext} from "../../utils/appContext";
 
-export const IngredientsList = ({ data, type }) => {
+export const IngredientsList = ({ type }) => {
+  const { data } = useContext(DataContext);
+  const { burgerDispatcher } = useContext(BurgerContext);
   const ingredients = data.filter((item) => item.type === type);
 
   const [detailsVisible, setDetailsVisible] = useState(false);
@@ -20,7 +22,8 @@ export const IngredientsList = ({ data, type }) => {
 
   const handleItemClick = (item) => {
     setDetailsVisible(true);
-    setDetails(item)
+    setDetails(item);
+    burgerDispatcher({type: 'add', payload: item});
   }
 
   return (
@@ -45,6 +48,5 @@ export const IngredientsList = ({ data, type }) => {
 }
 
 IngredientsList.propTypes = {
-  data: PropTypes.arrayOf(ingredientType).isRequired,
   type: PropTypes.oneOf(['bun', 'sauce', 'main']).isRequired
 }

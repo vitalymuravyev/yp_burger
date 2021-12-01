@@ -1,24 +1,20 @@
-import React, {useState} from "react";
+import React, {useContext, useState} from "react";
 import PropTypes from "prop-types";
 
-import { ingredientType } from '../../utils/types';
-
-import {
-    Button,
-    ConstructorElement, DragIcon
-} from '@ya.praktikum/react-developer-burger-ui-components';
+import { Button, ConstructorElement, DragIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 
 import styles from './burger-constructor.module.css';
 import {PriceBlock} from "../price-block/price-block";
 import {OrderDetails} from "../order-details/order-details";
+import {BurgerContext} from "../../utils/appContext";
 
-export const BurgerConstructor = ({ data }) => {
-  const bun = data[0] || {};
+export const BurgerConstructor = () => {
+  const {burger} = useContext(BurgerContext);
+  console.log(burger)
+  const bun = burger.bun;
   const [modalVisible, setModalVisible] = useState(false);
 
-  const filteredData = data.filter((item) => item.type !== 'bun');
-
-  const totalCost = filteredData.reduce((sum, item) => sum + item.price, 0) + (bun.price * 2);
+  const ingredients = burger.ingredients;
 
   const handleButtonClick = () => {
     setModalVisible(true);
@@ -28,11 +24,21 @@ export const BurgerConstructor = ({ data }) => {
     setModalVisible(false);
   }
 
+  if (!bun && ingredients.length === 0) {
+    return (
+      <section className={styles.wrapper}>
+        <p className="text text_type_main-medium">
+          Пока в вашем бургере ничего нет. Обязательно добавьте побольше всего вкусного
+        </p>
+      </section>
+    )
+  }
+
   return (
     <React.Fragment>
       <section className={styles.wrapper}>
         <div className={styles.container}>
-          <div className={styles.item}>
+          {bun && <div className={styles.item}>
             <ConstructorElement
               text={`${bun.name} (верх)`}
               price={bun.price}
@@ -40,11 +46,11 @@ export const BurgerConstructor = ({ data }) => {
               type="top"
               isLocked
             />
-          </div>
+          </div>}
           <ul className={`${styles.list} custom-scroll`}>
-            {filteredData.map((item, index, arr) => {
+            {ingredients && ingredients.map((item, index, arr) => {
                 return (
-                  <li key={item._id} className={styles.item}>
+                  <li key={item._id + index} className={styles.item}>
                     {<DragIcon type="primary"/>}
                     <ConstructorElement
                       text={item.name}
@@ -56,7 +62,7 @@ export const BurgerConstructor = ({ data }) => {
               }
             )}
           </ul>
-          <div className={styles.item}>
+          {bun && <div className={styles.item}>
             <ConstructorElement
               text={`${bun.name} (низ)`}
               price={bun.price}
@@ -64,10 +70,10 @@ export const BurgerConstructor = ({ data }) => {
               type="bottom"
               isLocked
             />
-          </div>
+          </div>}
         </div>
         <div className={styles.order}>
-          <PriceBlock count={totalCost} size="medium" />
+          <PriceBlock count={burger.price} size="medium" />
           <Button size="large" onClick={handleButtonClick}>Оформить заказ</Button>
         </div>
       </section>
@@ -77,5 +83,4 @@ export const BurgerConstructor = ({ data }) => {
 }
 
 BurgerConstructor.propTypes = {
-  data: PropTypes.arrayOf(ingredientType).isRequired
 }
