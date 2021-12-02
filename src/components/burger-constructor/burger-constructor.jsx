@@ -73,7 +73,7 @@ export const BurgerConstructor = () => {
     <React.Fragment>
       <section className={styles.wrapper}>
         <div className={styles.container}>
-          {bun && <div className={styles.item}>
+          {bun && <div className={styles.item2}>
             <ConstructorElement
               text={`${bun.name} (верх)`}
               price={bun.price}
@@ -97,7 +97,7 @@ export const BurgerConstructor = () => {
               }
             )}
           </ul>
-          {bun && <div className={styles.item}>
+          {bun && <div className={styles.item2}>
             <ConstructorElement
               text={`${bun.name} (низ)`}
               price={bun.price}
