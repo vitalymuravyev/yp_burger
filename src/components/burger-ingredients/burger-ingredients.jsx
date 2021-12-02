@@ -7,8 +7,7 @@ import {IngredientsList} from "../ingredients-list/ingredients-list";
 import {Modal} from "../modal/modal";
 import {DataContext} from "../../utils/appContext";
 
-const URL = 'https://norma.nomoreparties.space/api/ingredients';
-const ERROR_MESSAGE = 'Что-то пошло не так! Перезагрузите страницу';
+import {URL, ERROR_MESSAGE} from "../../utils/constants";
 
 export const BurgerIngredients = () => {
   const [data, setData] = useState( []);

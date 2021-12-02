@@ -23,6 +23,8 @@ function burgerReducer(state, action) {
         ingredients: [...state.ingredients, action.payload],
         price: state.price + action.payload.price
       })
+    default:
+      console.log('wrong action type')
   }
 }
 

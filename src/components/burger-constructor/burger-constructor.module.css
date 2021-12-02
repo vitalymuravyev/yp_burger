@@ -1,5 +1,6 @@
 .wrapper {
     width: 600px;
+    position: relative;
 
     padding: 100px 39px 50px 39px;
 }
@@ -60,4 +61,12 @@
     margin-left: 10px;
     height: 33px;
     width: 33px;
+}
+
+.text {
+    text-align: center;
+
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
 }
