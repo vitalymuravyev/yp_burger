@@ -7,7 +7,6 @@ import { ORDER_DATA } from "../../utils/constants";
 import {orderType} from "../../utils/types";
 
 export const OrderDetails = ({ closeModal, data }) => {
-  console.log(data)
   return (
     <Modal closeModal={closeModal}>
       <p className="text text_type_digits-large mt-20">{data.id}</p>
@@ -27,5 +26,5 @@ export const OrderDetails = ({ closeModal, data }) => {
 
 OrderDetails.propTypes = {
   closeModal: PropTypes.func.isRequired,
-  data: PropTypes.objectOf(orderType).isRequired
+  data: orderType.isRequired
 }

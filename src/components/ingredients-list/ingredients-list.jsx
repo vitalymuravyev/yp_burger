@@ -6,11 +6,11 @@ import styles from './ingredients-list.module.css';
 import { ingredientTypes } from '../../utils/data'
 import {IngredientCard} from "../ingredient-card/ingredient-card";
 import {IngredientDetails} from "../ingredient-details/ingredient-details";
-import {BurgerContext, DataContext} from "../../utils/appContext";
+import {BurgerContext, DataContext} from "../../services/appContext";
 
 export const IngredientsList = ({ type }) => {
   const { data } = useContext(DataContext);
-  const { burgerDispatcher } = useContext(BurgerContext);
+  const { dispatchBurger } = useContext(BurgerContext);
   const ingredients = data.filter((item) => item.type === type);
 
   const [detailsVisible, setDetailsVisible] = useState(false);
@@ -23,7 +23,7 @@ export const IngredientsList = ({ type }) => {
   const handleItemClick = (item) => {
     setDetailsVisible(true);
     setDetails(item);
-    burgerDispatcher({type: 'add', payload: item});
+    dispatchBurger({type: 'add', payload: item});
   }
 
   return (

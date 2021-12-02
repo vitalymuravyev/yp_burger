@@ -16,5 +16,4 @@ export const ingredientType = PropTypes.shape({
 
 export const orderType = PropTypes.shape({
   id: PropTypes.number,
-  name: PropTypes.string,
 })

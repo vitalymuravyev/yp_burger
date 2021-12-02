@@ -1,14 +1,19 @@
-import React, {useCallback, useContext, useState} from "react";
+import React, {useCallback, useContext, useMemo, useState} from "react";
 
 import { Button, ConstructorElement, DragIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 
 import styles from './burger-constructor.module.css';
 import {PriceBlock} from "../price-block/price-block";
 import {OrderDetails} from "../order-details/order-details";
-import {BurgerContext} from "../../utils/appContext";
+import {BurgerContext} from "../../services/appContext";
 import {Modal} from "../modal/modal";
 
-import {ERROR_MESSAGE_ORDER, EMPTY_ORDER, URL_ORDER} from "../../utils/constants";
+import {ERROR_MESSAGE_ORDER, EMPTY_ORDER, API_URL} from "../../utils/constants";
+
+const getPrice = (newBurger) => {
+  const price = newBurger.bun ? newBurger.bun.price : 0;
+  return newBurger.ingredients.reduce((sum, item) => sum + item.price, price);
+}
 
 export const BurgerConstructor = () => {
   const [modalVisible, setModalVisible] = useState(false);
@@ -19,12 +24,14 @@ export const BurgerConstructor = () => {
   const bun = burger.bun;
   const ingredients = burger.ingredients;
 
+  const totalPrice = useMemo(() => getPrice(burger), [burger]);
+
   const postOrder = useCallback(() => {
     const data = {
       ingredients: [...ingredients.map((item) => item._id), bun._id]
     }
 
-    fetch(URL_ORDER, {
+    fetch(`${API_URL}/orders`, {
       method: 'POST',
       mode: 'cors',
       headers: {
@@ -40,16 +47,11 @@ export const BurgerConstructor = () => {
       })
       .then(res => res.json())
       .then(result => setOrderInfo({
-        name: result.name,
         id: result.order.number
       }))
       .then(() => setModalVisible(true))
       .catch((err) => setErrorMessage(true))
   }, [bun, ingredients])
-
-  const handleButtonClick = () => {
-    postOrder();
-  }
 
   const closeModal = () => {
     setModalVisible(false);
@@ -73,7 +75,7 @@ export const BurgerConstructor = () => {
     <React.Fragment>
       <section className={styles.wrapper}>
         <div className={styles.container}>
-          {bun && <div className={styles.item2}>
+          {bun && <div className={styles.item}>
             <ConstructorElement
               text={`${bun.name} (верх)`}
               price={bun.price}
@@ -97,7 +99,7 @@ export const BurgerConstructor = () => {
               }
             )}
           </ul>
-          {bun && <div className={styles.item2}>
+          {bun && <div className={styles.item}>
             <ConstructorElement
               text={`${bun.name} (низ)`}
               price={bun.price}
@@ -108,8 +110,8 @@ export const BurgerConstructor = () => {
           </div>}
         </div>
         <div className={styles.order}>
-          <PriceBlock count={burger.price} size="medium" />
-          <Button size="large" onClick={handleButtonClick}>Оформить заказ</Button>
+          <PriceBlock count={totalPrice} size="medium" />
+          <Button size="large" onClick={postOrder}>Оформить заказ</Button>
         </div>
       </section>
       {modalVisible && <OrderDetails closeModal={closeModal} data={orderInfo} />}
