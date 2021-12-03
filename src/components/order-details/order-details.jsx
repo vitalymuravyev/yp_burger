@@ -3,18 +3,13 @@ import PropTypes from "prop-types";
 
 import {Modal} from "../modal/modal";
 
-const ORDER_DATA = {
-  id: '034536',
-  status: 'Ваш заказ начали готовить',
-  text: 'Дождитесь готовности на орбитальной станции'
-}
+import { ORDER_DATA } from "../../utils/constants";
+import {orderType} from "../../utils/types";
 
-
-export const OrderDetails = ({ closeModal }) => {
-
+export const OrderDetails = ({ closeModal, data }) => {
   return (
     <Modal closeModal={closeModal}>
-      <p className="text text_type_digits-large mt-20">{ORDER_DATA.id}</p>
+      <p className="text text_type_digits-large mt-20">{data.id}</p>
       <p className="text text_type_main-medium mt-8">
         идентификатор заказа
       </p>
@@ -30,5 +25,6 @@ export const OrderDetails = ({ closeModal }) => {
 }
 
 OrderDetails.propTypes = {
-  closeModal: PropTypes.func.isRequired
+  closeModal: PropTypes.func.isRequired,
+  data: orderType.isRequired
 }
