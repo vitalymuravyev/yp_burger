@@ -35,10 +35,10 @@ export const IngredientDetails = ({ closeModal, data}) => {
         </ul>
       </div>
     </Modal>
-  )
-}
+  );
+};
 
 IngredientDetails.propTypes = {
   closeModal: PropTypes.func.isRequired,
   data: ingredientType.isRequired
-}
+};

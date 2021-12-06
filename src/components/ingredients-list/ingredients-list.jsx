@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 
 import styles from './ingredients-list.module.css';
 
-import { ingredientTypes } from '../../utils/data'
+import { ingredientTypes } from '../../utils/data';
 import {IngredientCard} from "../ingredient-card/ingredient-card";
 import {IngredientDetails} from "../ingredient-details/ingredient-details";
 import {BurgerContext, DataContext} from "../../services/appContext";
@@ -18,13 +18,13 @@ export const IngredientsList = ({ type }) => {
 
   const closeModal = () => {
     setDetailsVisible(false);
-  }
+  };
 
   const handleItemClick = (item) => {
     setDetailsVisible(true);
     setDetails(item);
     dispatchBurger({type: 'add', payload: item});
-  }
+  };
 
   return (
     <React.Fragment>
@@ -44,9 +44,9 @@ export const IngredientsList = ({ type }) => {
       </div>
       {detailsVisible && <IngredientDetails closeModal={closeModal} data={details} />}
     </React.Fragment>
-  )
-}
+  );
+};
 
 IngredientsList.propTypes = {
   type: PropTypes.oneOf(['bun', 'sauce', 'main']).isRequired
-}
+};

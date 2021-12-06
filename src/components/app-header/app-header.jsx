@@ -9,7 +9,7 @@ const LABELS = {
   constructor: 'Конструктор',
   list: 'Лента заказов',
   profile: 'Личный кабинет',
-}
+};
 
 export const AppHeader = () => {
     return (
@@ -29,5 +29,5 @@ export const AppHeader = () => {
                 <Logo />
             </span>
         </header>
-    )
-}
+    );
+};

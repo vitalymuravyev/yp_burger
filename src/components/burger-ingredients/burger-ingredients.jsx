@@ -17,5 +17,5 @@ export const BurgerIngredients = () => {
         <IngredientsList type="main" />
       </div>
     </section>
-  )
-}
+  );
+};

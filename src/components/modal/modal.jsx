@@ -1,9 +1,9 @@
 import React, {useCallback, useEffect} from "react";
 import ReactDOM from "react-dom";
 
+import {CloseIcon} from "@ya.praktikum/react-developer-burger-ui-components";
 import styles from './modal.module.css';
 import {ModalOverlay} from "../modal-overlay/modal-overlay";
-import {CloseIcon} from "@ya.praktikum/react-developer-burger-ui-components";
 
 const container = document.getElementById('modal-root');
 
@@ -19,8 +19,8 @@ export const Modal = ({closeModal, children }) => {
     document.addEventListener('keydown', handleEscPress);
     return (
       document.removeEventListener('keydown', handleEscPress)
-    )
-  }, [handleEscPress])
+    );
+  }, [handleEscPress]);
 
   return ReactDOM.createPortal(
     <>
@@ -33,5 +33,5 @@ export const Modal = ({closeModal, children }) => {
       <ModalOverlay onCloseClick={closeModal}/>
     </>,
     container
-  )
-}
+  );
+};

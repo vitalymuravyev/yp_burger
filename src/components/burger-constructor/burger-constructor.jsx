@@ -13,7 +13,7 @@ import {ERROR_MESSAGE_ORDER, EMPTY_ORDER, API_URL} from "../../utils/constants";
 const getPrice = (newBurger) => {
   const price = newBurger.bun ? newBurger.bun.price : 0;
   return newBurger.ingredients.reduce((sum, item) => sum + item.price, price);
-}
+};
 
 export const BurgerConstructor = () => {
   const [modalVisible, setModalVisible] = useState(false);
@@ -29,7 +29,7 @@ export const BurgerConstructor = () => {
   const postOrder = useCallback(() => {
     const data = {
       ingredients: [...ingredients.map((item) => item._id), bun._id]
-    }
+    };
 
     fetch(`${API_URL}/orders`, {
       method: 'POST',
@@ -50,16 +50,16 @@ export const BurgerConstructor = () => {
         id: result.order.number
       }))
       .then(() => setModalVisible(true))
-      .catch((err) => setErrorMessage(true))
-  }, [bun, ingredients])
+      .catch((err) => setErrorMessage(true));
+  }, [bun, ingredients]);
 
   const closeModal = () => {
     setModalVisible(false);
-  }
+  };
 
   const closeError = () => {
     setErrorMessage(false);
-  }
+  };
 
   if (!bun && ingredients.length === 0) {
     return (
@@ -68,7 +68,7 @@ export const BurgerConstructor = () => {
           {EMPTY_ORDER}
         </p>
       </section>
-    )
+    );
   }
 
   return (
@@ -88,14 +88,14 @@ export const BurgerConstructor = () => {
             {ingredients && ingredients.map((item, index, arr) => {
                 return (
                   <li key={item._id + index} className={styles.item}>
-                    {<DragIcon type="primary"/>}
+                    <DragIcon type="primary"/>
                     <ConstructorElement
                       text={item.name}
                       price={item.price}
                       thumbnail={item.image}
                     />
                   </li>
-                )
+                );
               }
             )}
           </ul>
@@ -123,5 +123,5 @@ export const BurgerConstructor = () => {
         </Modal>
       }
     </React.Fragment>
-  )
-}
+  );
+};

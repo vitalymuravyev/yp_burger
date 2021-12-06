@@ -17,14 +17,14 @@ function burgerReducer(state, action) {
         return ({
           ...state,
           bun: action.payload,
-        })
+        });
       }
       return ({
         ...state,
         ingredients: [...state.ingredients, action.payload],
-      })
+      });
     default:
-      console.log('wrong action type')
+      console.log('wrong action type');
   }
 }
 
@@ -38,7 +38,7 @@ function App() {
     fetch(`${API_URL}/ingredients`)
       .then(res => {
         if (res.status !== 200) {
-          return Promise.reject(new Error(res.statusText))
+          return Promise.reject(new Error(res.statusText));
         }
         return Promise.resolve(res);
       })
@@ -49,14 +49,14 @@ function App() {
 
   const closeModal = () => {
     setErrorMessage(false);
-  }
+  };
 
   return (
     <div className="App">
       <DataContext.Provider value={{data, setData}}>
         <AppHeader />
         <main className={styles.main}>
-          <BurgerContext.Provider value={{burger, dispatchBurger: dispatchBurger}}>
+          <BurgerContext.Provider value={{burger, dispatchBurger}}>
             <BurgerIngredients />
             <BurgerConstructor />
           </BurgerContext.Provider>

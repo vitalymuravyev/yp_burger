@@ -21,10 +21,10 @@ export const OrderDetails = ({ closeModal, data }) => {
         {ORDER_DATA.text}
       </p>
     </Modal>
-  )
-}
+  );
+};
 
 OrderDetails.propTypes = {
   closeModal: PropTypes.func.isRequired,
   data: orderType.isRequired
-}
+};

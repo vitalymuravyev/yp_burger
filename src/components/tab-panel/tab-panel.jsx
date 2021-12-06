@@ -1,9 +1,9 @@
 import React, { useState } from "react";
 
+import {Tab} from "@ya.praktikum/react-developer-burger-ui-components";
 import styles from './tab-panel.module.css';
 
 import { ingredientTypes } from '../../utils/data';
-import {Tab} from "@ya.praktikum/react-developer-burger-ui-components";
 
 const TABS = ['bun', 'sauce', 'main'];
 
@@ -18,5 +18,5 @@ export const TabPanel = () => {
         </Tab>
       )}
     </div>
-  )
-}
+  );
+};

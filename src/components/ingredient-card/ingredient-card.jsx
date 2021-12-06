@@ -1,9 +1,9 @@
 import React from "react";
 import PropTypes from 'prop-types';
 
+import {Counter} from "@ya.praktikum/react-developer-burger-ui-components";
 import styles from './ingredient-card.module.css';
 import {PriceBlock} from "../price-block/price-block";
-import {Counter} from "@ya.praktikum/react-developer-burger-ui-components";
 
 export const IngredientCard = ({ image, price, name, onClick }) => {
   return (
@@ -15,12 +15,12 @@ export const IngredientCard = ({ image, price, name, onClick }) => {
             <Counter count={1} />
         </div>
     </div>
-  )
-}
+  );
+};
 
 IngredientCard.propTypes = {
   image: PropTypes.string.isRequired,
   price: PropTypes.number.isRequired,
   name: PropTypes.string.isRequired,
   onClick: PropTypes.func.isRequired
-}
+};
