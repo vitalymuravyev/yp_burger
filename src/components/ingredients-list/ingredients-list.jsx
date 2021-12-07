@@ -1,30 +1,31 @@
-import React, {useContext, useState} from "react";
+import React from "react";
 import PropTypes from 'prop-types';
 
-import {useSelector} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 import styles from './ingredients-list.module.css';
 
 import { ingredientTypes } from '../../utils/data';
 import {IngredientCard} from "../ingredient-card/ingredient-card";
 import {IngredientDetails} from "../ingredient-details/ingredient-details";
-import {BurgerContext} from "../../services/appContext";
+import {ADD_ITEM_INFO, REMOVE_ITEM_INFO} from "../../services/actions/ingredient-card";
 
 export const IngredientsList = ({ type }) => {
   const data = useSelector(state => state.ingredients.items);
-  const { dispatchBurger } = useContext(BurgerContext);
+  const dispatch = useDispatch();
+  const { isDetailsVisible } = useSelector(state => state.ingredientInfo);
   const ingredients = data.filter((item) => item.type === type);
 
-  const [detailsVisible, setDetailsVisible] = useState(false);
-  const [details, setDetails] = useState({});
-
   const closeModal = () => {
-    setDetailsVisible(false);
+    dispatch({
+      type: REMOVE_ITEM_INFO
+    });
   };
 
   const handleItemClick = (item) => {
-    setDetailsVisible(true);
-    setDetails(item);
-    dispatchBurger({type: 'add', payload: item});
+    dispatch({
+      type: ADD_ITEM_INFO,
+      payload: item
+    });
   };
 
   return (
@@ -43,7 +44,7 @@ export const IngredientsList = ({ type }) => {
           )}
         </div>
       </div>
-      {detailsVisible && <IngredientDetails closeModal={closeModal} data={details} />}
+      {isDetailsVisible && <IngredientDetails closeModal={closeModal} />}
     </React.Fragment>
   );
 };

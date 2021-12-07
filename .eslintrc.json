@@ -45,6 +45,7 @@
         "react/jsx-filename-extension": [2, { "extensions": [".js", ".jsx", ".ts", ".tsx"] }],
         "import/extensions": "off",
         "import/no-unresolved": "off",
-        "default-param-last": "off"
+        "default-param-last": "off",
+        "camelcase": "off"
     }
 }
