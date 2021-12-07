@@ -44,6 +44,7 @@
         "jsx-a11y/click-events-have-key-events": "off",
         "react/jsx-filename-extension": [2, { "extensions": [".js", ".jsx", ".ts", ".tsx"] }],
         "import/extensions": "off",
-        "import/no-unresolved": "off"
+        "import/no-unresolved": "off",
+        "default-param-last": "off"
     }
 }

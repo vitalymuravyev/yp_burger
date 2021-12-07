@@ -1,15 +1,16 @@
 import React, {useContext, useState} from "react";
 import PropTypes from 'prop-types';
 
+import {useSelector} from "react-redux";
 import styles from './ingredients-list.module.css';
 
 import { ingredientTypes } from '../../utils/data';
 import {IngredientCard} from "../ingredient-card/ingredient-card";
 import {IngredientDetails} from "../ingredient-details/ingredient-details";
-import {BurgerContext, DataContext} from "../../services/appContext";
+import {BurgerContext} from "../../services/appContext";
 
 export const IngredientsList = ({ type }) => {
-  const { data } = useContext(DataContext);
+  const data = useSelector(state => state.ingredients.items);
   const { dispatchBurger } = useContext(BurgerContext);
   const ingredients = data.filter((item) => item.type === type);
 

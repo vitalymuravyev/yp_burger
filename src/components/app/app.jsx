@@ -1,12 +1,14 @@
 import React, {useEffect, useReducer, useState} from 'react';
+import {useDispatch, useSelector} from "react-redux";
 import styles from './app.module.css';
 
 import { AppHeader } from '../app-header/app-header';
 import { BurgerConstructor } from "../burger-constructor/burger-constructor";
 import {BurgerIngredients} from "../burger-ingredients/burger-ingredients";
-import {BurgerContext, DataContext} from "../../services/appContext";
-import {API_URL, ERROR_MESSAGE} from "../../utils/constants";
+import {BurgerContext} from "../../services/appContext";
+import { ERROR_MESSAGE} from "../../utils/constants";
 import {Modal} from "../modal/modal";
+import {CLOSE_ERROR, getItems} from "../../services/actions/burger-ingredients";
 
 const burgerInitialState = {bun: null, ingredients: []};
 
@@ -29,46 +31,37 @@ function burgerReducer(state, action) {
 }
 
 function App() {
-  const [data, setData] = useState( []);
-  const [errorMessage, setErrorMessage] = useState(false);
+  const dispatch = useDispatch();
+  const errorMessage = useSelector(state => state.ingredients.itemsFailed);
 
   const [ burger, dispatchBurger ] = useReducer(burgerReducer, burgerInitialState, undefined);
 
   useEffect(() => {
-    fetch(`${API_URL}/ingredients`)
-      .then(res => {
-        if (res.status !== 200) {
-          return Promise.reject(new Error(res.statusText));
-        }
-        return Promise.resolve(res);
-      })
-      .then(res => res.json())
-      .then(result => setData(result.data))
-      .catch((err) => setErrorMessage(true));
-  }, []);
+    dispatch(getItems());
+  }, [dispatch]);
 
   const closeModal = () => {
-    setErrorMessage(false);
+    dispatch({
+      type: CLOSE_ERROR
+    });
   };
 
   return (
     <div className="App">
-      <DataContext.Provider value={{data, setData}}>
-        <AppHeader />
-        <main className={styles.main}>
-          <BurgerContext.Provider value={{burger, dispatchBurger}}>
-            <BurgerIngredients />
-            <BurgerConstructor />
-          </BurgerContext.Provider>
-        </main>
-        {errorMessage &&
-          <Modal closeModal={closeModal}>
-            <p className="text text_type_main-large">
-              {ERROR_MESSAGE}
-            </p>
-          </Modal>
-        }
-      </DataContext.Provider>
+      <AppHeader />
+      <main className={styles.main}>
+        <BurgerContext.Provider value={{burger, dispatchBurger}}>
+          <BurgerIngredients />
+          <BurgerConstructor />
+        </BurgerContext.Provider>
+      </main>
+      {errorMessage &&
+        <Modal closeModal={closeModal}>
+          <p className="text text_type_main-large">
+            {ERROR_MESSAGE}
+          </p>
+        </Modal>
+      }
     </div>
   );
 }
