@@ -1,0 +1,2 @@
+export const ADD_BURGER_ITEM = 'ADD_BURGER_ITEM';
+export const REMOVE_BURGER_ITEM = 'REMOVE_BURGER_ITEM';

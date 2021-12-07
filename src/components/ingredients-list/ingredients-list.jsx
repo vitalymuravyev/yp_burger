@@ -8,6 +8,7 @@ import { ingredientTypes } from '../../utils/data';
 import {IngredientCard} from "../ingredient-card/ingredient-card";
 import {IngredientDetails} from "../ingredient-details/ingredient-details";
 import {ADD_ITEM_INFO, REMOVE_ITEM_INFO} from "../../services/actions/ingredient-card";
+import {ADD_BURGER_ITEM} from "../../services/actions/burger-constructor";
 
 export const IngredientsList = ({ type }) => {
   const data = useSelector(state => state.ingredients.items);
@@ -24,6 +25,10 @@ export const IngredientsList = ({ type }) => {
   const handleItemClick = (item) => {
     dispatch({
       type: ADD_ITEM_INFO,
+      payload: item
+    });
+    dispatch({
+      type: ADD_BURGER_ITEM,
       payload: item
     });
   };

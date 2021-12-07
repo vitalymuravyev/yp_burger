@@ -2,6 +2,7 @@ import React, {useCallback, useContext, useMemo, useState} from "react";
 
 import { Button, ConstructorElement, DragIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 
+import {useDispatch, useSelector} from "react-redux";
 import styles from './burger-constructor.module.css';
 import {PriceBlock} from "../price-block/price-block";
 import {OrderDetails} from "../order-details/order-details";
@@ -9,9 +10,10 @@ import {BurgerContext} from "../../services/appContext";
 import {Modal} from "../modal/modal";
 
 import {ERROR_MESSAGE_ORDER, EMPTY_ORDER, API_URL} from "../../utils/constants";
+import {REMOVE_BURGER_ITEM} from "../../services/actions/burger-constructor";
 
 const getPrice = (newBurger) => {
-  const price = newBurger.bun ? newBurger.bun.price : 0;
+  const price = newBurger.bun ? newBurger.bun.price * 2 : 0;
   return newBurger.ingredients.reduce((sum, item) => sum + item.price, price);
 };
 
@@ -20,7 +22,8 @@ export const BurgerConstructor = () => {
   const [orderInfo, setOrderInfo] = useState({});
   const [errorMessage, setErrorMessage] = useState(false);
 
-  const {burger} = useContext(BurgerContext);
+  const dispatch = useDispatch();
+  const {burger} = useSelector(state => state);
   const bun = burger.bun;
   const ingredients = burger.ingredients;
 
@@ -61,6 +64,13 @@ export const BurgerConstructor = () => {
     setErrorMessage(false);
   };
 
+  const onRemoveClick = (item) => {
+    dispatch({
+      type: REMOVE_BURGER_ITEM,
+      item
+    });
+  };
+
   if (!bun && ingredients.length === 0) {
     return (
       <section className={styles.wrapper}>
@@ -93,6 +103,7 @@ export const BurgerConstructor = () => {
                       text={item.name}
                       price={item.price}
                       thumbnail={item.image}
+                      handleClose={() => onRemoveClick(item)}
                     />
                   </li>
                 );
