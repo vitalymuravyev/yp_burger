@@ -3,6 +3,7 @@ import { ADD_BURGER_ITEM, REMOVE_BURGER_ITEM} from '../actions/burger-constructo
 const initialState = {
   bun: '',
   ingredients: [],
+  counter: 0
 };
 
 export const burgerReducer = (state = initialState, action) => {
@@ -14,16 +15,20 @@ export const burgerReducer = (state = initialState, action) => {
           bun: action.payload
         };
       }
+
       return {
         ...state,
-        ingredients: [...state.ingredients, action.payload]
+        ingredients: [
+          ...state.ingredients, {...action.payload, orderIndex: state.counter}
+        ],
+        counter: state.counter + 1,
       };
     }
     case REMOVE_BURGER_ITEM: {
       return {
         ...state,
         ingredients:
-          [...state.ingredients.filter(item => item._id !== action.item._id)]
+          [...state.ingredients.filter(item => item.orderIndex !== action.item.orderIndex)]
       };
     }
     default: {
