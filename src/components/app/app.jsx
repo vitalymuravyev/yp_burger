@@ -1,5 +1,7 @@
 import React, {useEffect} from 'react';
 import {useDispatch, useSelector} from "react-redux";
+import {DndProvider} from "react-dnd";
+import {HTML5Backend} from "react-dnd-html5-backend";
 import styles from './app.module.css';
 
 import { AppHeader } from '../app-header/app-header';
@@ -8,7 +10,6 @@ import {BurgerIngredients} from "../burger-ingredients/burger-ingredients";
 import { ERROR_MESSAGE} from "../../utils/constants";
 import {Modal} from "../modal/modal";
 import {CLOSE_ERROR, getItems} from "../../services/actions/burger-ingredients";
-
 
 function App() {
   const dispatch = useDispatch();
@@ -28,8 +29,10 @@ function App() {
     <div className="App">
       <AppHeader />
       <main className={styles.main}>
+        <DndProvider backend={HTML5Backend}>
           <BurgerIngredients />
           <BurgerConstructor />
+        </DndProvider>
       </main>
       {errorMessage &&
         <Modal closeModal={closeModal}>

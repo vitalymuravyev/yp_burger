@@ -27,10 +27,6 @@ export const IngredientsList = ({ type }) => {
       type: ADD_ITEM_INFO,
       payload: item
     });
-    dispatch({
-      type: ADD_BURGER_ITEM,
-      payload: item
-    });
   };
 
   return (
@@ -41,9 +37,7 @@ export const IngredientsList = ({ type }) => {
           {ingredients.map((item) =>
             <IngredientCard
               key={item._id}
-              image={item.image}
-              price={item.price}
-              name={item.name}
+              item={item}
               onClick={() => handleItemClick(item)}
             />
           )}

@@ -15,7 +15,7 @@ export const postOrder = (ingredients, bun, openModal) => {
     dispatch({
       type: PUT_ORDER_INFO_REQUEST
     });
-    fetch(`${API_URL}/order`, {
+    fetch(`${API_URL}/orders`, {
       method: 'POST',
       mode: 'cors',
       headers: {

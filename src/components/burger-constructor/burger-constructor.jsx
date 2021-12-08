@@ -1,5 +1,6 @@
 import React, {useCallback, useMemo, useState} from "react";
 import {useDispatch, useSelector} from "react-redux";
+import {useDrop} from "react-dnd";
 
 import { Button, ConstructorElement, DragIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 
@@ -9,7 +10,7 @@ import {OrderDetails} from "../order-details/order-details";
 import {Modal} from "../modal/modal";
 
 import {ERROR_MESSAGE_ORDER, EMPTY_ORDER} from "../../utils/constants";
-import {REMOVE_BURGER_ITEM} from "../../services/actions/burger-constructor";
+import {ADD_BURGER_ITEM, REMOVE_BURGER_ITEM} from "../../services/actions/burger-constructor";
 import {CLOSE_ERROR, postOrder, REMOVE_ORDER_INFO} from "../../services/actions/order-details";
 
 const getPrice = (newBurger) => {
@@ -26,6 +27,16 @@ export const BurgerConstructor = () => {
   const {burger} = useSelector(state => state);
   const bun = burger.bun;
   const ingredients = burger.ingredients;
+
+  const [, dropTarget] = useDrop({
+    accept: 'ingredient',
+    drop(item) {
+      dispatch({
+        type: ADD_BURGER_ITEM,
+        payload: item
+      });
+    },
+  });
 
   const totalPrice = useMemo(() => getPrice(burger), [burger]);
 
@@ -55,7 +66,7 @@ export const BurgerConstructor = () => {
 
   if (!bun && ingredients.length === 0) {
     return (
-      <section className={styles.wrapper}>
+      <section className={styles.wrapper} ref={dropTarget}>
         <p className={`text text_type_main-medium ${styles.text}`}>
           {EMPTY_ORDER}
         </p>
@@ -65,7 +76,7 @@ export const BurgerConstructor = () => {
 
   return (
     <React.Fragment>
-      <section className={styles.wrapper}>
+      <section className={styles.wrapper} ref={dropTarget} >
         <div className={styles.container}>
           {bun && <div className={styles.item}>
             <ConstructorElement
