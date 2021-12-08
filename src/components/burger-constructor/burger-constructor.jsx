@@ -1,16 +1,16 @@
-import React, {useCallback, useContext, useMemo, useState} from "react";
+import React, {useCallback, useMemo, useState} from "react";
+import {useDispatch, useSelector} from "react-redux";
 
 import { Button, ConstructorElement, DragIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 
-import {useDispatch, useSelector} from "react-redux";
 import styles from './burger-constructor.module.css';
 import {PriceBlock} from "../price-block/price-block";
 import {OrderDetails} from "../order-details/order-details";
-import {BurgerContext} from "../../services/appContext";
 import {Modal} from "../modal/modal";
 
-import {ERROR_MESSAGE_ORDER, EMPTY_ORDER, API_URL} from "../../utils/constants";
+import {ERROR_MESSAGE_ORDER, EMPTY_ORDER} from "../../utils/constants";
 import {REMOVE_BURGER_ITEM} from "../../services/actions/burger-constructor";
+import {CLOSE_ERROR, postOrder, REMOVE_ORDER_INFO} from "../../services/actions/order-details";
 
 const getPrice = (newBurger) => {
   const price = newBurger.bun ? newBurger.bun.price * 2 : 0;
@@ -19,8 +19,8 @@ const getPrice = (newBurger) => {
 
 export const BurgerConstructor = () => {
   const [modalVisible, setModalVisible] = useState(false);
-  const [orderInfo, setOrderInfo] = useState({});
-  const [errorMessage, setErrorMessage] = useState(false);
+
+  const errorMessage = useSelector(state => state.orderDetails.orderFailed);
 
   const dispatch = useDispatch();
   const {burger} = useSelector(state => state);
@@ -29,39 +29,21 @@ export const BurgerConstructor = () => {
 
   const totalPrice = useMemo(() => getPrice(burger), [burger]);
 
-  const postOrder = useCallback(() => {
-    const data = {
-      ingredients: [...ingredients.map((item) => item._id), bun._id]
-    };
-
-    fetch(`${API_URL}/orders`, {
-      method: 'POST',
-      mode: 'cors',
-      headers: {
-        'Content-Type': 'application/json;charset=utf-8'
-      },
-      body: JSON.stringify(data)
-    })
-      .then(res => {
-        if (res.status !== 200) {
-          return Promise.reject(new Error(res.statusText));
-        }
-        return Promise.resolve(res);
-      })
-      .then(res => res.json())
-      .then(result => setOrderInfo({
-        id: result.order.number
-      }))
-      .then(() => setModalVisible(true))
-      .catch((err) => setErrorMessage(true));
-  }, [bun, ingredients]);
+  const onOrderClick = useCallback(() => {
+    dispatch(postOrder(ingredients, bun, setModalVisible));
+  }, [bun, dispatch, ingredients]);
 
   const closeModal = () => {
     setModalVisible(false);
+    dispatch({
+      type: REMOVE_ORDER_INFO
+    });
   };
 
   const closeError = () => {
-    setErrorMessage(false);
+    dispatch({
+      type: CLOSE_ERROR
+    });
   };
 
   const onRemoveClick = (item) => {
@@ -122,10 +104,10 @@ export const BurgerConstructor = () => {
         </div>
         <div className={styles.order}>
           <PriceBlock count={totalPrice} size="medium" />
-          <Button size="large" onClick={postOrder}>Оформить заказ</Button>
+          <Button size="large" onClick={onOrderClick}>Оформить заказ</Button>
         </div>
       </section>
-      {modalVisible && <OrderDetails closeModal={closeModal} data={orderInfo} />}
+      {modalVisible && <OrderDetails closeModal={closeModal} />}
       {errorMessage &&
         <Modal closeModal={closeError}>
           <p className="text text_type_main-large">
