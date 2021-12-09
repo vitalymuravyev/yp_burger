@@ -2,7 +2,7 @@ import React, {useCallback, useMemo, useState} from "react";
 import {useDispatch, useSelector} from "react-redux";
 import {useDrop} from "react-dnd";
 
-import { Button, ConstructorElement, DragIcon } from '@ya.praktikum/react-developer-burger-ui-components';
+import { Button, ConstructorElement } from '@ya.praktikum/react-developer-burger-ui-components';
 
 import styles from './burger-constructor.module.css';
 import {PriceBlock} from "../price-block/price-block";
@@ -12,6 +12,8 @@ import {Modal} from "../modal/modal";
 import {ERROR_MESSAGE_ORDER, EMPTY_ORDER} from "../../utils/constants";
 import {ADD_BURGER_ITEM, REMOVE_BURGER_ITEM} from "../../services/actions/burger-constructor";
 import {CLOSE_ERROR, postOrder, REMOVE_ORDER_INFO} from "../../services/actions/order-details";
+import {BurgerConstructorItem} from "../burger-constructor-item/burger-constructor-item";
+import {DECREASE_COUNTER, INCREASE_COUNTER} from "../../services/actions/burger-ingredients";
 
 const getPrice = (newBurger) => {
   const price = newBurger.bun ? newBurger.bun.price * 2 : 0;
@@ -34,6 +36,11 @@ export const BurgerConstructor = () => {
       dispatch({
         type: ADD_BURGER_ITEM,
         payload: item
+      });
+      dispatch({
+        type: INCREASE_COUNTER,
+        id: item._id,
+        isBun: item.type === 'bun',
       });
     },
   });
@@ -61,6 +68,10 @@ export const BurgerConstructor = () => {
     dispatch({
       type: REMOVE_BURGER_ITEM,
       item
+    });
+    dispatch({
+      type: DECREASE_COUNTER,
+      id: item._id,
     });
   };
 
@@ -90,15 +101,12 @@ export const BurgerConstructor = () => {
           <ul className={`${styles.list} custom-scroll`}>
             {ingredients && ingredients.map((item, index, arr) => {
                 return (
-                  <li key={item._id + index} className={styles.item}>
-                    <DragIcon type="primary"/>
-                    <ConstructorElement
-                      text={item.name}
-                      price={item.price}
-                      thumbnail={item.image}
-                      handleClose={() => onRemoveClick(item)}
-                    />
-                  </li>
+                  <BurgerConstructorItem
+                    key={item._id + index}
+                    className={styles.item}
+                    item={item}
+                    onRemoveClick={onRemoveClick}
+                  />
                 );
               }
             )}

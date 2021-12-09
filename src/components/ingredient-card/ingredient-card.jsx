@@ -8,7 +8,7 @@ import {PriceBlock} from "../price-block/price-block";
 import {ingredientType} from "../../utils/types";
 
 export const IngredientCard = ({ onClick, item }) => {
-  const { image, name, price } = item;
+  const { image, name, price, counter } = item;
   const [, dragRef] = useDrag({
     type: 'ingredient',
     item,
@@ -20,9 +20,9 @@ export const IngredientCard = ({ onClick, item }) => {
       <img src={image} alt={name} />
       <PriceBlock count={price} size="default" className={styles.price} />
       <p className="text text_type_main-default name">{name}</p>
-        {/* <div className={styles.counter}> */}
-        {/*    <Counter count={1} /> */}
-        {/* </div> */}
+        {counter > 0 && (<div className={styles.counter}>
+          <Counter count={counter}/>
+        </div>)}
     </div>
   );
 };
