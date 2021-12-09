@@ -1,13 +1,57 @@
 import React, {useRef} from "react";
 import PropTypes from 'prop-types';
+import {useDrag, useDrop} from "react-dnd";
 
 import { ConstructorElement, DragIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import {ingredientType} from "../../utils/types";
 
-export const BurgerConstructorItem = ({item, onRemoveClick, className}) => {
-  // const ref = useRef(null);
+export const BurgerConstructorItem = ({item, onRemoveClick, className, index, moveItem, id}) => {
+  const ref = useRef(null);
+
+  const [{ handlerId }, drop] = useDrop({
+    accept: 'ingredient',
+    collect: monitor => ({
+      handlerId: monitor.getHandlerId(),
+    }),
+    hover: (unit, monitor) => {
+      if (!ref.current) return;
+
+      const dragIndex = unit.index;
+      const hoverIndex = index;
+
+      if (dragIndex === hoverIndex) return;
+
+      const hoverBoundingRect = ref.current?.getBoundingClientRect();
+      const hoverMiddleY = (hoverBoundingRect.bottom - hoverBoundingRect.top) / 2;
+      const clientOffset = monitor.getClientOffset();
+      const hoverClientY = clientOffset.y - hoverBoundingRect.top;
+
+      if (dragIndex < hoverIndex && hoverClientY < hoverMiddleY) return;
+
+      if (dragIndex > hoverIndex && hoverClientY > hoverMiddleY) return;
+
+      moveItem(dragIndex, hoverIndex);
+
+
+      // eslint-disable-next-line no-param-reassign
+      unit.index = hoverIndex;
+    }
+  });
+
+  const [{ isDragging }, drag] = useDrag({
+    type: 'ingredient',
+    item: () => {
+      return { id, index};
+    },
+    collect: monitor => ({
+      isDragging: monitor.isDragging()
+    })
+  });
+
+  drag(drop(ref));
+
   return (
-    <li className={className}>
+    <li className={className} ref={ref} data-handler-id={handlerId}>
       <DragIcon type="primary"/>
       <ConstructorElement
         text={item.name}
@@ -22,5 +66,8 @@ export const BurgerConstructorItem = ({item, onRemoveClick, className}) => {
 BurgerConstructorItem.propTypes = {
   item: ingredientType.isRequired,
   onRemoveClick: PropTypes.func.isRequired,
-  className: PropTypes.string
+  className: PropTypes.string,
+  index: PropTypes.number,
+  moveItem: PropTypes.func,
+  id: PropTypes.string
 };

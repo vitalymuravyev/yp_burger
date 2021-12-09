@@ -1,6 +1,6 @@
 import React, {useCallback, useMemo, useState} from "react";
 import {useDispatch, useSelector} from "react-redux";
-import {useDrop} from "react-dnd";
+import { useDrop} from "react-dnd";
 
 import { Button, ConstructorElement } from '@ya.praktikum/react-developer-burger-ui-components';
 
@@ -10,7 +10,7 @@ import {OrderDetails} from "../order-details/order-details";
 import {Modal} from "../modal/modal";
 
 import {ERROR_MESSAGE_ORDER, EMPTY_ORDER} from "../../utils/constants";
-import {ADD_BURGER_ITEM, REMOVE_BURGER_ITEM} from "../../services/actions/burger-constructor";
+import {ADD_BURGER_ITEM, DRAG_ITEM, REMOVE_BURGER_ITEM} from "../../services/actions/burger-constructor";
 import {CLOSE_ERROR, postOrder, REMOVE_ORDER_INFO} from "../../services/actions/order-details";
 import {BurgerConstructorItem} from "../burger-constructor-item/burger-constructor-item";
 import {DECREASE_COUNTER, INCREASE_COUNTER} from "../../services/actions/burger-ingredients";
@@ -30,6 +30,7 @@ export const BurgerConstructor = () => {
   const bun = burger.bun;
   const ingredients = burger.ingredients;
 
+
   const [, dropTarget] = useDrop({
     accept: 'ingredient',
     drop(item) {
@@ -44,8 +45,18 @@ export const BurgerConstructor = () => {
       });
     },
   });
+  
+  const moveItem = useCallback((dragIndex, hoverIndex) => {
+    const dragItem = ingredients[dragIndex];
+    dispatch({
+      type: DRAG_ITEM,
+      dragIndex,
+      hoverIndex,
+      dragItem
+    });
+  }, [dispatch, ingredients]);
 
-  const totalPrice = useMemo(() => getPrice(burger), [burger]);
+  // const totalPrice = useMemo(() => getPrice(burger), [burger]);
 
   const onOrderClick = useCallback(() => {
     dispatch(postOrder(ingredients, bun, setModalVisible));
@@ -98,19 +109,22 @@ export const BurgerConstructor = () => {
               isLocked
             />
           </div>}
-          <ul className={`${styles.list} custom-scroll`}>
-            {ingredients && ingredients.map((item, index, arr) => {
-                return (
-                  <BurgerConstructorItem
-                    key={item._id + index}
-                    className={styles.item}
-                    item={item}
-                    onRemoveClick={onRemoveClick}
-                  />
-                );
-              }
-            )}
-          </ul>
+            <ul className={`${styles.list} custom-scroll`}>
+              {ingredients.map((item, index, arr) => {
+                  return (
+                    <BurgerConstructorItem
+                      key={item._id + index}
+                      className={styles.item}
+                      item={item}
+                      onRemoveClick={onRemoveClick}
+                      index={index}
+                      moveItem={moveItem}
+                      id={item._id}
+                    />
+                  );
+                }
+              )}
+            </ul>
           {bun && <div className={styles.item}>
             <ConstructorElement
               text={`${bun.name} (низ)`}
@@ -122,7 +136,7 @@ export const BurgerConstructor = () => {
           </div>}
         </div>
         <div className={styles.order}>
-          <PriceBlock count={totalPrice} size="medium" />
+          <PriceBlock count={56} size="medium" />
           <Button size="large" onClick={onOrderClick}>Оформить заказ</Button>
         </div>
       </section>

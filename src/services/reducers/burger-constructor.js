@@ -1,4 +1,6 @@
-import { ADD_BURGER_ITEM, REMOVE_BURGER_ITEM} from '../actions/burger-constructor';
+import update from 'immutability-helper';
+
+import {ADD_BURGER_ITEM, DRAG_ITEM, REMOVE_BURGER_ITEM} from '../actions/burger-constructor';
 
 const initialState = {
   bun: '',
@@ -29,6 +31,19 @@ export const burgerReducer = (state = initialState, action) => {
         ...state,
         ingredients:
           [...state.ingredients.filter(item => item.orderIndex !== action.item.orderIndex)]
+      };
+    }
+
+    case DRAG_ITEM: {
+      return {
+        ...state,
+        ingredients:
+          update(state.ingredients, {
+            $splice: [
+              [action.dragIndex, 1],
+              [action.hoverIndex, 0, action.dragItem]
+            ]
+          })
       };
     }
     default: {
