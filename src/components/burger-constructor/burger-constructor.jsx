@@ -32,17 +32,20 @@ export const BurgerConstructor = () => {
 
 
   const [, dropTarget] = useDrop({
-    accept: 'ingredient',
-    drop(item) {
-      dispatch({
-        type: ADD_BURGER_ITEM,
-        payload: item
-      });
-      dispatch({
-        type: INCREASE_COUNTER,
-        id: item._id,
-        isBun: item.type === 'bun',
-      });
+    accept: ['ingredient', 'burger'],
+    drop(item, monitor) {
+      const itemType = monitor.getItemType();
+      if (itemType === 'ingredient') {
+        dispatch({
+          type: ADD_BURGER_ITEM,
+          payload: item
+        });
+        dispatch({
+          type: INCREASE_COUNTER,
+          id: item._id,
+          isBun: item.type === 'bun',
+        });
+      }
     },
   });
   
@@ -56,7 +59,7 @@ export const BurgerConstructor = () => {
     });
   }, [dispatch, ingredients]);
 
-  // const totalPrice = useMemo(() => getPrice(burger), [burger]);
+  const totalPrice = useMemo(() => getPrice(burger), [burger]);
 
   const onOrderClick = useCallback(() => {
     dispatch(postOrder(ingredients, bun, setModalVisible));
@@ -136,7 +139,7 @@ export const BurgerConstructor = () => {
           </div>}
         </div>
         <div className={styles.order}>
-          <PriceBlock count={56} size="medium" />
+          <PriceBlock count={totalPrice} size="medium" />
           <Button size="large" onClick={onOrderClick}>Оформить заказ</Button>
         </div>
       </section>

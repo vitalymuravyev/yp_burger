@@ -8,11 +8,8 @@ import {ingredientType} from "../../utils/types";
 export const BurgerConstructorItem = ({item, onRemoveClick, className, index, moveItem, id}) => {
   const ref = useRef(null);
 
-  const [{ handlerId }, drop] = useDrop({
-    accept: 'ingredient',
-    collect: monitor => ({
-      handlerId: monitor.getHandlerId(),
-    }),
+  const [, drop] = useDrop({
+    accept: 'burger',
     hover: (unit, monitor) => {
       if (!ref.current) return;
 
@@ -39,7 +36,7 @@ export const BurgerConstructorItem = ({item, onRemoveClick, className, index, mo
   });
 
   const [{ isDragging }, drag] = useDrag({
-    type: 'ingredient',
+    type: 'burger',
     item: () => {
       return { id, index};
     },
@@ -49,9 +46,10 @@ export const BurgerConstructorItem = ({item, onRemoveClick, className, index, mo
   });
 
   drag(drop(ref));
+  const opacity = isDragging ? 0 : 1;
 
   return (
-    <li className={className} ref={ref} data-handler-id={handlerId}>
+    <li className={className} ref={ref} style={{opacity}}>
       <DragIcon type="primary"/>
       <ConstructorElement
         text={item.name}
@@ -66,8 +64,8 @@ export const BurgerConstructorItem = ({item, onRemoveClick, className, index, mo
 BurgerConstructorItem.propTypes = {
   item: ingredientType.isRequired,
   onRemoveClick: PropTypes.func.isRequired,
-  className: PropTypes.string,
-  index: PropTypes.number,
-  moveItem: PropTypes.func,
-  id: PropTypes.string
+  className: PropTypes.string.isRequired,
+  index: PropTypes.number.isRequired,
+  moveItem: PropTypes.func.isRequired,
+  id: PropTypes.string.isRequired
 };
