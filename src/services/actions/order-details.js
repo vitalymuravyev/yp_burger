@@ -24,7 +24,7 @@ export const postOrder = (ingredients, bun, openModal) => {
       body: JSON.stringify(data)
     })
       .then(res => {
-        if (res.status !== 200) {
+        if (!res.ok) {
           return Promise.reject(new Error(res.statusText));
         }
         return Promise.resolve(res);

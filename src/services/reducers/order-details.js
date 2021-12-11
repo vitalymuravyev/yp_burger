@@ -32,7 +32,7 @@ export const orderDetailsReducer = (state = initialState, action) => {
     case PUT_ORDER_INFO_FAILED: {
       return {
         ...state,
-        orderRequest: false,
+        ...initialState,
         orderFailed: true
       };
     }

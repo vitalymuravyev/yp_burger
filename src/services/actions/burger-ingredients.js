@@ -6,9 +6,6 @@ export const GET_ITEMS_FAILED = 'GET_ITEMS_FAILED';
 
 export const CLOSE_ERROR = 'CLOSE_ERROR';
 
-export const INCREASE_COUNTER = 'INCREASE_COUNTER';
-export const DECREASE_COUNTER = 'DECREASE_COUNTER';
-
 export const getItems = () => {
   return function (dispatch) {
     dispatch({
@@ -16,7 +13,7 @@ export const getItems = () => {
     });
     fetch(`${API_URL}/ingredients`)
       .then(res => {
-        if (res.status !== 200) {
+        if (!res.ok) {
           return Promise.reject(new Error(res.statusText));
         }
         return Promise.resolve(res);

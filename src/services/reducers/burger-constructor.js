@@ -29,8 +29,7 @@ export const burgerReducer = (state = initialState, action) => {
     case REMOVE_BURGER_ITEM: {
       return {
         ...state,
-        ingredients:
-          [...state.ingredients.filter(item => item.orderIndex !== action.item.orderIndex)]
+        ingredients: state.ingredients.filter(item => item.orderIndex !== action.item.orderIndex)
       };
     }
 

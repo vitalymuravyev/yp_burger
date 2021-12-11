@@ -2,7 +2,7 @@ import {
   GET_ITEMS_REQUEST,
   GET_ITEMS_SUCCESS,
   GET_ITEMS_FAILED,
-  CLOSE_ERROR, INCREASE_COUNTER, DECREASE_COUNTER
+  CLOSE_ERROR,
 } from '../actions/burger-ingredients';
 
 const initialValue = {
@@ -34,7 +34,7 @@ export const ingredientsReducer = (state = initialValue, action) => {
     case GET_ITEMS_FAILED: {
       return {
         ...state,
-        itemsRequest: false,
+        ...initialValue,
         itemsFailed: true
       };
     }
@@ -42,29 +42,6 @@ export const ingredientsReducer = (state = initialValue, action) => {
       return {
         ...state,
         itemsFailed: false
-      };
-    }
-    case INCREASE_COUNTER: {
-      if (action.isBun) {
-        return {
-          ...state,
-          items: state.items.map(item => {
-            if (item.type !== 'bun') return item;
-            return item._id === action.id ? {...item, counter: 2} : {...item, counter: 0};
-          })
-        };
-      }
-      return {
-        ...state,
-        items: state.items.map(item =>
-          item._id === action.id ? {...item, counter: item.counter + 1}: item),
-      };
-    }
-    case DECREASE_COUNTER: {
-      return {
-        ...state,
-        items: state.items.map(item =>
-          item._id === action.id ? {...item, counter: item.counter - 1} : item),
       };
     }
     default: {
