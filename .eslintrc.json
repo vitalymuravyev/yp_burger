@@ -1,0 +1,51 @@
+{
+    "env": {
+        "browser": true,
+        "es2021": true
+    },
+    "extends": [
+        "airbnb",
+        "eslint:recommended",
+        "plugin:react/recommended",
+        "plugin:@typescript-eslint/recommended",
+        "plugin:react/jsx-runtime",
+        "plugin:react-hooks/recommended",
+        "plugin:jsx-a11y/recommended",
+        "plugin:import/recommended",
+        "prettier"
+    ],
+    "parser": "@typescript-eslint/parser",
+    "parserOptions": {
+        "ecmaFeatures": {
+            "jsx": true
+        },
+        "ecmaVersion": 12,
+        "sourceType": "module"
+    },
+    "plugins": [
+        "react",
+        "@typescript-eslint"
+    ],
+    "rules": {
+        "semi": "error",
+        "import/prefer-default-export": "off",
+        "react/function-component-definition": "off",
+        "arrow-body-style": "off",
+        "no-unused-vars": "warn",
+        "consistent-return": "warn",
+        "prefer-destructuring": "off",
+        "no-underscore-dangle": "off",
+        "react/jsx-fragments": "off",
+        "import/no-extraneous-dependencies": "off",
+        "react/require-default-props": "warn",
+        "react/jsx-no-constructed-context-values": "warn",
+        "react/no-array-index-key": "warn",
+        "jsx-a11y/no-static-element-interactions": "off",
+        "jsx-a11y/click-events-have-key-events": "off",
+        "react/jsx-filename-extension": [2, { "extensions": [".js", ".jsx", ".ts", ".tsx"] }],
+        "import/extensions": "off",
+        "import/no-unresolved": "off",
+        "default-param-last": "off",
+        "camelcase": "off"
+    }
+}

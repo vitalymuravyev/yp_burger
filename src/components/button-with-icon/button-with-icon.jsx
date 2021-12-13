@@ -14,10 +14,10 @@ export const ButtonWithIcon = ({ active, children, icon }) => {
             </p>
         </a>
     );
-}
+};
 
 ButtonWithIcon.propTypes = {
     active: PropTypes.bool,
     children: PropTypes.string.isRequired,
     icon: PropTypes.element.isRequired
-}
+};

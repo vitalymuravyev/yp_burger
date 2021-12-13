@@ -1,15 +1,16 @@
 import React from "react";
 import PropTypes from "prop-types";
 
+import {useSelector} from "react-redux";
 import {Modal} from "../modal/modal";
 
 import { ORDER_DATA } from "../../utils/constants";
-import {orderType} from "../../utils/types";
 
-export const OrderDetails = ({ closeModal, data }) => {
+export const OrderDetails = ({ closeModal }) => {
+  const { id } = useSelector(state => state.orderDetails);
   return (
     <Modal closeModal={closeModal}>
-      <p className="text text_type_digits-large mt-20">{data.id}</p>
+      <p className="text text_type_digits-large mt-20">{id}</p>
       <p className="text text_type_main-medium mt-8">
         идентификатор заказа
       </p>
@@ -21,10 +22,9 @@ export const OrderDetails = ({ closeModal, data }) => {
         {ORDER_DATA.text}
       </p>
     </Modal>
-  )
-}
+  );
+};
 
 OrderDetails.propTypes = {
   closeModal: PropTypes.func.isRequired,
-  data: orderType.isRequired
-}
+};

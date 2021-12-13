@@ -1,79 +1,97 @@
-import React, {useCallback, useContext, useMemo, useState} from "react";
+import React, {useCallback, useMemo, useState} from "react";
+import {useDispatch, useSelector} from "react-redux";
+import { useDrop} from "react-dnd";
 
-import { Button, ConstructorElement, DragIcon } from '@ya.praktikum/react-developer-burger-ui-components';
+import { Button, ConstructorElement } from '@ya.praktikum/react-developer-burger-ui-components';
 
 import styles from './burger-constructor.module.css';
 import {PriceBlock} from "../price-block/price-block";
 import {OrderDetails} from "../order-details/order-details";
-import {BurgerContext} from "../../services/appContext";
 import {Modal} from "../modal/modal";
 
-import {ERROR_MESSAGE_ORDER, EMPTY_ORDER, API_URL} from "../../utils/constants";
+import {ERROR_MESSAGE_ORDER, EMPTY_ORDER} from "../../utils/constants";
+import {ADD_BURGER_ITEM, DRAG_ITEM, REMOVE_BURGER_ITEM} from "../../services/actions/burger-constructor";
+import {CLOSE_ERROR, postOrder, REMOVE_ORDER_INFO} from "../../services/actions/order-details";
+import {BurgerConstructorItem} from "../burger-constructor-item/burger-constructor-item";
 
 const getPrice = (newBurger) => {
-  const price = newBurger.bun ? newBurger.bun.price : 0;
+  const price = newBurger.bun ? newBurger.bun.price * 2 : 0;
   return newBurger.ingredients.reduce((sum, item) => sum + item.price, price);
-}
+};
 
 export const BurgerConstructor = () => {
   const [modalVisible, setModalVisible] = useState(false);
-  const [orderInfo, setOrderInfo] = useState({});
-  const [errorMessage, setErrorMessage] = useState(false);
 
-  const {burger} = useContext(BurgerContext);
+  const errorMessage = useSelector(state => state.orderDetails.orderFailed);
+
+  const dispatch = useDispatch();
+  const {burger} = useSelector(state => state);
   const bun = burger.bun;
   const ingredients = burger.ingredients;
 
+
+  const [, dropTarget] = useDrop({
+    accept: ['ingredient', 'burger'],
+    drop(item, monitor) {
+      const itemType = monitor.getItemType();
+      if (itemType === 'ingredient') {
+        dispatch({
+          type: ADD_BURGER_ITEM,
+          payload: item
+        });
+      }
+    },
+  });
+
+  const moveItem = useCallback((dragIndex, hoverIndex) => {
+    const dragItem = ingredients[dragIndex];
+    dispatch({
+      type: DRAG_ITEM,
+      dragIndex,
+      hoverIndex,
+      dragItem
+    });
+  }, [dispatch, ingredients]);
+
   const totalPrice = useMemo(() => getPrice(burger), [burger]);
 
-  const postOrder = useCallback(() => {
-    const data = {
-      ingredients: [...ingredients.map((item) => item._id), bun._id]
-    }
-
-    fetch(`${API_URL}/orders`, {
-      method: 'POST',
-      mode: 'cors',
-      headers: {
-        'Content-Type': 'application/json;charset=utf-8'
-      },
-      body: JSON.stringify(data)
-    })
-      .then(res => {
-        if (res.status !== 200) {
-          return Promise.reject(new Error(res.statusText));
-        }
-        return Promise.resolve(res);
-      })
-      .then(res => res.json())
-      .then(result => setOrderInfo({
-        id: result.order.number
-      }))
-      .then(() => setModalVisible(true))
-      .catch((err) => setErrorMessage(true))
-  }, [bun, ingredients])
+  const onOrderClick = useCallback(() => {
+    dispatch(postOrder(ingredients, bun, setModalVisible));
+  }, [bun, dispatch, ingredients]);
 
   const closeModal = () => {
     setModalVisible(false);
-  }
+    dispatch({
+      type: REMOVE_ORDER_INFO
+    });
+  };
 
   const closeError = () => {
-    setErrorMessage(false);
-  }
+    dispatch({
+      type: CLOSE_ERROR
+    });
+  };
+
+  const onRemoveClick = (item) => {
+    dispatch({
+      type: REMOVE_BURGER_ITEM,
+      item
+    });
+  };
 
   if (!bun && ingredients.length === 0) {
     return (
-      <section className={styles.wrapper}>
+      <section className={styles.wrapper} ref={dropTarget}>
         <p className={`text text_type_main-medium ${styles.text}`}>
           {EMPTY_ORDER}
         </p>
       </section>
-    )
+    );
   }
 
   return (
     <React.Fragment>
-      <section className={styles.wrapper}>
+      <section className={styles.wrapper} ref={dropTarget} >
         <div className={styles.container}>
           {bun && <div className={styles.item}>
             <ConstructorElement
@@ -84,21 +102,22 @@ export const BurgerConstructor = () => {
               isLocked
             />
           </div>}
-          <ul className={`${styles.list} custom-scroll`}>
-            {ingredients && ingredients.map((item, index, arr) => {
-                return (
-                  <li key={item._id + index} className={styles.item}>
-                    {<DragIcon type="primary"/>}
-                    <ConstructorElement
-                      text={item.name}
-                      price={item.price}
-                      thumbnail={item.image}
+            <ul className={`${styles.list} custom-scroll`}>
+              {ingredients.map((item, index, arr) => {
+                  return (
+                    <BurgerConstructorItem
+                      key={item._id + index}
+                      className={styles.item}
+                      item={item}
+                      onRemoveClick={onRemoveClick}
+                      index={index}
+                      moveItem={moveItem}
+                      id={item._id}
                     />
-                  </li>
-                )
-              }
-            )}
-          </ul>
+                  );
+                }
+              )}
+            </ul>
           {bun && <div className={styles.item}>
             <ConstructorElement
               text={`${bun.name} (низ)`}
@@ -111,10 +130,10 @@ export const BurgerConstructor = () => {
         </div>
         <div className={styles.order}>
           <PriceBlock count={totalPrice} size="medium" />
-          <Button size="large" onClick={postOrder}>Оформить заказ</Button>
+          <Button size="large" onClick={onOrderClick}>Оформить заказ</Button>
         </div>
       </section>
-      {modalVisible && <OrderDetails closeModal={closeModal} data={orderInfo} />}
+      {modalVisible && <OrderDetails closeModal={closeModal} />}
       {errorMessage &&
         <Modal closeModal={closeError}>
           <p className="text text_type_main-large">
@@ -123,5 +142,5 @@ export const BurgerConstructor = () => {
         </Modal>
       }
     </React.Fragment>
-  )
-}
+  );
+};

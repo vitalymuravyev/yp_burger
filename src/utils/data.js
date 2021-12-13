@@ -216,4 +216,4 @@ export const ingredientTypes = {
    bun: 'Булки',
    sauce: 'Соусы',
    main: 'Начинки'
-}
+};
