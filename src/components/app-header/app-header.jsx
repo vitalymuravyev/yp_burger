@@ -14,20 +14,22 @@ const LABELS = {
 export const AppHeader = () => {
     return (
         <header className={styles.container}>
+          <div className={styles.wrapper}>
             <nav className={styles.menu}>
-              <ButtonWithIcon active icon={<BurgerIcon type="primary" />}>
+              <ButtonWithIcon active icon={<BurgerIcon type="primary" />} path="/">
                 {LABELS.constructor}
               </ButtonWithIcon>
-              <ButtonWithIcon icon={<ListIcon type="secondary" />}>
+              <ButtonWithIcon icon={<ListIcon type="secondary" />} path="/order-feed">
                 {LABELS.list}
               </ButtonWithIcon>
             </nav>
-          <ButtonWithIcon icon={<ProfileIcon type="secondary"/>}>
-            {LABELS.profile}
-          </ButtonWithIcon>
+            <ButtonWithIcon icon={<ProfileIcon type="secondary" /> } path="/login">
+              {LABELS.profile}
+            </ButtonWithIcon>
             <span className={styles.logo}>
-                <Logo />
-            </span>
+              <Logo />
+          </span>
+          </div>
         </header>
     );
 };

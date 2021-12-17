@@ -1,46 +1,23 @@
-import React, {useEffect} from 'react';
-import {useDispatch, useSelector} from "react-redux";
-import {DndProvider} from "react-dnd";
-import {HTML5Backend} from "react-dnd-html5-backend";
+import React from 'react';
+import { Route, Routes } from 'react-router-dom';
+
 import styles from './app.module.css';
 
+
 import { AppHeader } from '../app-header/app-header';
-import { BurgerConstructor } from "../burger-constructor/burger-constructor";
-import {BurgerIngredients} from "../burger-ingredients/burger-ingredients";
-import { ERROR_MESSAGE} from "../../utils/constants";
-import {Modal} from "../modal/modal";
-import {CLOSE_ERROR, getItems} from "../../services/actions/burger-ingredients";
+import { Home } from "../../pages/home/home";
+import {Login} from "../../pages/login/login";
 
 function App() {
-  const dispatch = useDispatch();
-  const errorMessage = useSelector(state => state.ingredients.itemsFailed);
-
-  useEffect(() => {
-    dispatch(getItems());
-  }, [dispatch]);
-
-  const closeModal = () => {
-    dispatch({
-      type: CLOSE_ERROR
-    });
-  };
-
   return (
-    <div className="App">
+    <div className={`App ${styles.wrapper}`}>
       <AppHeader />
-      <main className={styles.main}>
-        <DndProvider backend={HTML5Backend}>
-          <BurgerIngredients />
-          <BurgerConstructor />
-        </DndProvider>
-      </main>
-      {errorMessage &&
-        <Modal closeModal={closeModal}>
-          <p className="text text_type_main-large">
-            {ERROR_MESSAGE}
-          </p>
-        </Modal>
-      }
+      <div className={styles.container}>
+        <Routes>
+          <Route path="/" exact element={<Home />} />
+          <Route path="/login" element={<Login />} />
+        </Routes>
+      </div>
     </div>
   );
 }
