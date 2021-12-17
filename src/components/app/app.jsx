@@ -6,7 +6,8 @@ import styles from './app.module.css';
 
 import { AppHeader } from '../app-header/app-header';
 import { Home } from "../../pages/home/home";
-import {Login} from "../../pages/login/login";
+import { Login } from "../../pages/login/login";
+import { Register } from "../../pages/register/register";
 
 function App() {
   return (
@@ -16,6 +17,7 @@ function App() {
         <Routes>
           <Route path="/" exact element={<Home />} />
           <Route path="/login" element={<Login />} />
+          <Route path="/register" element={<Register />} />
         </Routes>
       </div>
     </div>
