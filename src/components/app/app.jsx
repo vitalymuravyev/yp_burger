@@ -8,6 +8,7 @@ import { AppHeader } from '../app-header/app-header';
 import { Home } from "../../pages/home/home";
 import { Login } from "../../pages/login/login";
 import { Register } from "../../pages/register/register";
+import {ForgotPassword} from "../../pages/forgot-password/forgot-password";
 
 function App() {
   return (
@@ -18,6 +19,7 @@ function App() {
           <Route path="/" exact element={<Home />} />
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
+          <Route path="/forgot-password" element={<ForgotPassword />} />
         </Routes>
       </div>
     </div>

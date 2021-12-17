@@ -21,7 +21,7 @@ export const Login = () => {
         Вы — новый пользователь? <Link to='/register' className={styles.accent}>Зарегистрироваться</Link>
       </p>
       <p className="text text_type_main-default text_color_inactive">
-        Забыли пароль? <Link to='/' className={styles.accent}>Восстановить пароль</Link>
+        Забыли пароль? <Link to='/forgot-password' className={styles.accent}>Восстановить пароль</Link>
       </p>
     </div>
   );
