@@ -9,5 +9,5 @@
 
 .container {
     grid-area: main;
-    height: 100vh;
+    height: calc(100vh - 88px);
 }
