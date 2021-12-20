@@ -9,7 +9,7 @@ export const loginUser = (data) => {
     dispatch({
       type: USER_LOGIN_REQUEST
     });
-    fetch(`${API_URL}/login`, {
+    fetch(`${API_URL}/auth/login`, {
       method: 'POST',
       mode: 'cors',
       headers: {
