@@ -5,6 +5,7 @@ import { Logo, BurgerIcon, ListIcon, ProfileIcon } from '@ya.praktikum/react-dev
 
 import styles from './app-header.module.css';
 import { ButtonWithIcon } from '../button-with-icon/button-with-icon';
+import { isActivePath } from "../../utils/helpers";
 
 const LABELS = {
   constructor: 'Конструктор',
@@ -15,32 +16,28 @@ const LABELS = {
 export const AppHeader = () => {
   const { pathname } = useLocation();
 
-  const isActive = (path) => {
-    return path === pathname;
-  };
-
   return (
     <header className={styles.container}>
       <div className={styles.wrapper}>
         <nav className={styles.menu}>
           <ButtonWithIcon
-            active={isActive("/")}
-            icon={<BurgerIcon type={isActive("/") ? "primary" : "secondary"} />}
+            active={isActivePath("/", pathname)}
+            icon={<BurgerIcon type={isActivePath("/", pathname) ? "primary" : "secondary"} />}
             path="/"
           >
             {LABELS.constructor}
           </ButtonWithIcon>
           <ButtonWithIcon
-            active={isActive("/order-feed")}
-            icon={<ListIcon type={isActive("/order-feed") ? "primary" : "secondary"} />}
+            active={isActivePath("/order-feed", pathname)}
+            icon={<ListIcon type={isActivePath("/order-feed", pathname) ? "primary" : "secondary"} />}
             path="/order-feed"
           >
             {LABELS.list}
           </ButtonWithIcon>
         </nav>
         <ButtonWithIcon
-          active={isActive("/login")}
-          icon={<ProfileIcon type={isActive("/login") ? "primary" : "secondary"} /> }
+          active={isActivePath("/login", pathname)}
+          icon={<ProfileIcon type={isActivePath("/login", pathname) ? "primary" : "secondary"} /> }
           path="/login"
         >
           {LABELS.profile}

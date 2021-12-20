@@ -10,7 +10,8 @@ import { Login } from "../../pages/login/login";
 import { Register } from "../../pages/register/register";
 import { ForgotPassword } from "../../pages/forgot-password/forgot-password";
 import { ResetPassword } from "../../pages/reset-password/reset-password";
-import {NotFound} from "../../pages/not-found/not-found";
+import { NotFound } from "../../pages/not-found/not-found";
+import { Profile } from "../../pages/profile/profile";
 
 function App() {
   return (
@@ -23,6 +24,7 @@ function App() {
           <Route path="/register" element={<Register />} />
           <Route path="/forgot-password" element={<ForgotPassword />} />
           <Route path="/reset-password" element={<ResetPassword />} />
+          <Route path="/profile" element={<Profile />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </div>
