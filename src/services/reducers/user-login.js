@@ -8,11 +8,7 @@ const initialState = {
   loginRequest: false,
   loginFailed: false,
   accessToken: '',
-  refreshToken: '',
-  user: {
-    name: '',
-    email: '',
-  }
+  refreshToken: ''
 };
 
 export const userLoginReducer = (state = initialState, action) => {
@@ -29,12 +25,12 @@ export const userLoginReducer = (state = initialState, action) => {
         loginRequest: false,
         accessToken: action.payload.accessToken,
         refreshToken: action.payload.refreshToken,
-        user: action.payload.user
       };
     }
     case USER_LOGIN_FAILED: {
       return {
         ...state,
+        ...initialState,
         loginFailed: true
       };
     }

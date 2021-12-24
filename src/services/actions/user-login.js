@@ -1,4 +1,7 @@
+import Cookies from 'js-cookie';
+
 import { API_URL } from "../../utils/constants";
+import {checkResponseStatus} from "../../utils/helpers";
 
 export const USER_LOGIN_REQUEST = 'USER_LOGIN_REQUEST';
 export const USER_LOGIN_SUCCESS = 'USER_LOGIN_SUCCESS';
@@ -18,10 +21,7 @@ export const loginUser = (data) => {
       body: JSON.stringify(data)
     })
       .then(res => {
-        if (!res.ok) {
-          return Promise.reject(new Error(res.statusText));
-        }
-        return Promise.resolve(res);
+        return checkResponseStatus(res);
       })
       .then(res => res.json())
       .then(result => {
@@ -29,6 +29,8 @@ export const loginUser = (data) => {
           type: USER_LOGIN_SUCCESS,
           payload: result
         });
+        localStorage.setItem('refreshToken', result.refreshToken);
+        Cookies.set('accessToken', result.accessToken);
       })
       .catch(() => {
         dispatch({

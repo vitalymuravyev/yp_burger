@@ -36,9 +36,9 @@ export const AppHeader = () => {
           </ButtonWithIcon>
         </nav>
         <ButtonWithIcon
-          active={isActivePath("/login", pathname)}
-          icon={<ProfileIcon type={isActivePath("/login", pathname) ? "primary" : "secondary"} /> }
-          path="/login"
+          active={isActivePath("/profile", pathname)}
+          icon={<ProfileIcon type={isActivePath("/profile", pathname) ? "primary" : "secondary"} /> }
+          path="/profile"
         >
           {LABELS.profile}
         </ButtonWithIcon>
