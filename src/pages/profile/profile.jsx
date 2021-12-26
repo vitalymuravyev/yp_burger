@@ -5,18 +5,17 @@ import {useDispatch, useSelector} from "react-redux";
 import { EmailInput, PasswordInput, Input, Button } from '@ya.praktikum/react-developer-burger-ui-components';
 import styles from './profile.module.css';
 import { isActivePath } from "../../utils/helpers";
-import {getUserProfile} from "../../services/actions/user-profile";
-import {logoutUser} from "../../services/actions/user-logout";
+import {getUserProfile, setUserProfile} from "../../services/actions/user-profile";
+import {logoutUser} from "../../services/actions/user-auth";
 
 export const Profile = () => {
   const { pathname } = useLocation();
-  const navigate = useNavigate();
   const dispatch = useDispatch();
   const { name, email} = useSelector(state => state.userProfile.user);
   const initialState = {
     name,
     email,
-    password: '***'
+    password: '******'
   };
 
   const [currentName, setCurrentName] = useState(initialState.name);
@@ -34,12 +33,17 @@ export const Profile = () => {
     onResetClick();
   }, [dispatch, onResetClick]);
 
-  const logout = useSelector(state => state.userLogout.logout);
-
   const onExitClick = useCallback(() => {
     dispatch(logoutUser());
-    if (logout) navigate('/login');
-  }, [dispatch, logout, navigate]);
+  }, [dispatch]);
+
+  const onSaveClick = useCallback(() => {
+    dispatch(setUserProfile({
+      name: currentName,
+      email: currentEmail,
+      password
+    }));
+  });
 
   return (
     <div className={styles.wrapper}>
@@ -85,6 +89,7 @@ export const Profile = () => {
           </Button><Button
           type="primary"
           size="medium"
+          onClick={onSaveClick}
         >
           Сохранить
         </Button>

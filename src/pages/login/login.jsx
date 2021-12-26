@@ -1,22 +1,32 @@
-import React, {useState} from 'react';
-import { Link, useNavigate } from "react-router-dom";
-import { useDispatch } from "react-redux";
+import React, {useCallback, useEffect, useState} from 'react';
+import {Link, useLocation, useNavigate} from "react-router-dom";
+import {useDispatch, useSelector} from "react-redux";
 
 import { EmailInput, PasswordInput, Button } from '@ya.praktikum/react-developer-burger-ui-components';
 import styles from './login.module.css';
-import {loginUser} from "../../services/actions/user-login";
+import {loginUser} from "../../services/actions/user-auth";
 
 export const Login = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const location = useLocation();
+  const { userAuth } = useSelector(state => state);
+
+  const from = location.state?.from?.pathname || '/';
 
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
-  const onLoginClick = () => {
+  const onLoginClick = useCallback(() => {
     dispatch(loginUser({email, password}));
-    navigate('/');
-  };
+  }, [dispatch, email, password]);
+
+  useEffect(() => {
+    if (userAuth.isUserAuth) {
+      navigate(from, { replace: true });
+    }
+  }, [from, navigate, userAuth.isUserAuth]);
+
   return (
     <div className={styles.wrapper}>
       <h2 className="text text_type_main-medium">Вход</h2>
