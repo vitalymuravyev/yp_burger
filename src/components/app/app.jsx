@@ -1,5 +1,6 @@
 import React from 'react';
-import { Route, Routes } from 'react-router-dom';
+import {Route, Routes, useLocation, useNavigate} from 'react-router-dom';
+import {useDispatch} from "react-redux";
 
 import styles from './app.module.css';
 
@@ -13,13 +14,30 @@ import { ResetPassword } from "../../pages/reset-password/reset-password";
 import { NotFound } from "../../pages/not-found/not-found";
 import { Profile } from "../../pages/profile/profile";
 import { RequireAuth } from "../protected-route/protected-route";
+import {Ingredient} from "../../pages/ingredient/ingredient";
+import {Modal} from "../modal/modal";
+import {IngredientDetails} from "../ingredient-details/ingredient-details";
+import {REMOVE_ITEM_INFO} from "../../services/actions/ingredient-card";
 
 function App() {
+  const location = useLocation();
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  const state = location.state;
+
+  const closeModal = () => {
+    dispatch({
+      type: REMOVE_ITEM_INFO
+    });
+    navigate(-1);
+  };
+
   return (
     <div className={`App ${styles.wrapper}`}>
       <AppHeader />
       <div className={styles.container}>
-        <Routes>
+        <Routes location={state?.backgroundLocation || location}>
           <Route path="/" exact element={<Home />} />
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
@@ -28,8 +46,22 @@ function App() {
           <Route element={<RequireAuth />}>
             <Route path="/profile" element={<Profile />} />
           </Route>
+          <Route path="/ingredients/:id" element={<Ingredient/>} />
           <Route path="*" element={<NotFound />} />
         </Routes>
+
+        {state?.backgroundLocation && (
+          <Routes>
+            <Route
+              path="/ingredients/:id"
+              element={
+                <Modal closeModal={closeModal}>
+                  <IngredientDetails />
+                </Modal>
+              }
+            />
+          </Routes>
+        )}
       </div>
     </div>
   );

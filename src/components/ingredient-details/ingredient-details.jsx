@@ -1,16 +1,14 @@
 import React from "react";
-import PropTypes from "prop-types";
-
 import {useSelector} from "react-redux";
+
 import styles from './ingredient-details.module.css';
 
-import {Modal} from "../modal/modal";
-
-export const IngredientDetails = ({ closeModal }) => {
+export const IngredientDetails = () => {
   const { image_large, name, calories, proteins, fat, carbohydrates }
     = useSelector(state => state.ingredientInfo.details);
+
   return (
-    <Modal closeModal={closeModal}>
+    <div>
       <h3 className={`text text_type_main-large pt-3 pb-3 ${styles.heading}`}>
         Детали ингредиента
       </h3>
@@ -36,10 +34,6 @@ export const IngredientDetails = ({ closeModal }) => {
           </li>
         </ul>
       </div>
-    </Modal>
+    </div>
   );
-};
-
-IngredientDetails.propTypes = {
-  closeModal: PropTypes.func.isRequired,
 };

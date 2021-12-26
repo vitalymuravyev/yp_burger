@@ -1,2 +1,3 @@
 export const ADD_ITEM_INFO = 'ADD_ITEM_INFO';
 export const REMOVE_ITEM_INFO = 'REMOVE_ITEM_INFO';
+export const ADD_ITEM_INFO_PAGE = 'ADD_ITEM_INFO_PAGE';
