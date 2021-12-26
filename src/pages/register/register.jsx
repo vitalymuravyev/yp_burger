@@ -1,5 +1,5 @@
-import React, {useCallback, useState} from 'react';
-import { Link } from "react-router-dom";
+import React, {useCallback, useEffect, useState} from 'react';
+import {Link, useNavigate} from "react-router-dom";
 import { useDispatch } from "react-redux";
 
 import { EmailInput, PasswordInput, Input, Button } from '@ya.praktikum/react-developer-burger-ui-components';
@@ -8,6 +8,7 @@ import {registerUser} from "../../services/actions/user-registration";
 
 export const Register = () => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -32,6 +33,12 @@ export const Register = () => {
     };
     dispatch(registerUser(data));
   }, [dispatch, email, name, password]);
+
+  useEffect(() => {
+    if (localStorage.getItem('refreshToken')) {
+      navigate('/', { replace: true });
+    }
+  }, [navigate]);
 
   return (
     <div className={styles.wrapper}>

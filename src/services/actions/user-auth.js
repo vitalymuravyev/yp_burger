@@ -11,6 +11,8 @@ export const USER_LOGOUT_REQUEST = 'USER_LOGOUT_REQUEST';
 export const USER_LOGOUT_SUCCESS = 'USER_LOGOUT_SUCCESS';
 export const USER_LOGOUT_FAILED = 'USER_LOGOUT_FAILED';
 
+export const USER_IS_LOGED = 'USER_IS_LOGED';
+
 export const loginUser = (data) => {
   return function (dispatch) {
     dispatch({

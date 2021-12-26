@@ -45,6 +45,10 @@ export const Profile = () => {
     }));
   });
 
+  const isFormChanged = useCallback(()=> {
+    return !((initialState.name === currentName) && (initialState.email === currentEmail) && (initialState.password === password));
+  }, [currentEmail, currentName, initialState.email, initialState.name, initialState.password, password]);
+
   return (
     <div className={styles.wrapper}>
       <div className={styles.sidebar}>
@@ -79,21 +83,21 @@ export const Profile = () => {
           value={password}
           onChange={evt => setPassword(evt.target.value)}
         />
-        <div>
-          <Button
-            type="secondary"
-            size="medium"
-            onClick={onResetClick}
+        {isFormChanged() ? (< div >
+          < Button
+          type="secondary"
+          size="medium"
+          onClick={onResetClick}
           >
-            Отмена
+          Отмена
           </Button><Button
           type="primary"
           size="medium"
           onClick={onSaveClick}
-        >
+          >
           Сохранить
-        </Button>
-        </div>
+          </Button>
+          </div>) : null}
       </div>
     </div>
   );

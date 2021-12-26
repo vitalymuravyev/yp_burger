@@ -4,7 +4,8 @@ import {
   USER_LOGIN_FAILED,
   USER_LOGOUT_REQUEST,
   USER_LOGOUT_SUCCESS,
-  USER_LOGOUT_FAILED
+  USER_LOGOUT_FAILED,
+  USER_IS_LOGED
 } from '../actions/user-auth';
 
 const initialState = {
@@ -59,6 +60,12 @@ export const userAuthReducer = (state = initialState, action) => {
         ...state,
         ...initialState,
         logoutFailed: true
+      };
+    }
+    case USER_IS_LOGED: {
+      return {
+        ...state,
+        isUserAuth: true
       };
     }
     default: {

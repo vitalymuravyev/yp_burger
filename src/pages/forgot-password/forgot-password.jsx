@@ -16,7 +16,7 @@ export const ForgotPassword = () => {
   const [email, setEmail] = useState('');
 
   useEffect(() => {
-    if (Cookies.get('accessToken')) {
+    if (localStorage.getItem('refreshToken')) {
       navigate('/', { replace: true });
     }
   }, [navigate]);
