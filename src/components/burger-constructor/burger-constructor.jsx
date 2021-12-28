@@ -1,6 +1,7 @@
 import React, {useCallback, useMemo, useState} from "react";
 import {useDispatch, useSelector} from "react-redux";
 import { useDrop} from "react-dnd";
+import {useLocation, useNavigate} from "react-router-dom";
 
 import { Button, ConstructorElement } from '@ya.praktikum/react-developer-burger-ui-components';
 
@@ -20,6 +21,10 @@ const getPrice = (newBurger) => {
 };
 
 export const BurgerConstructor = () => {
+  const navigate = useNavigate();
+  const location = useLocation();
+  const { isUserAuth } = useSelector(state => state.userAuth);
+  
   const [modalVisible, setModalVisible] = useState(false);
 
   const errorMessage = useSelector(state => state.orderDetails.orderFailed);
@@ -56,8 +61,12 @@ export const BurgerConstructor = () => {
   const totalPrice = useMemo(() => getPrice(burger), [burger]);
 
   const onOrderClick = useCallback(() => {
-    dispatch(postOrder(ingredients, bun, setModalVisible));
-  }, [bun, dispatch, ingredients]);
+    if (!isUserAuth) {
+      navigate('/login', {state: { from: location }});
+    } else {
+      dispatch(postOrder(ingredients, bun, setModalVisible));
+    }
+  }, [bun, dispatch, ingredients, isUserAuth, location, navigate]);
 
   const closeModal = () => {
     setModalVisible(false);

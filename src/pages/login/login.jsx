@@ -1,5 +1,5 @@
 import React, {useCallback, useEffect, useState} from 'react';
-import {Link, useNavigate} from "react-router-dom";
+import {Link, useLocation, useNavigate} from "react-router-dom";
 import {useDispatch } from "react-redux";
 
 import { EmailInput, PasswordInput, Button } from '@ya.praktikum/react-developer-burger-ui-components';
@@ -10,6 +10,9 @@ import {getUserProfile} from "../../services/actions/user-profile";
 export const Login = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const location = useLocation();
+
+  const from = location.state?.from?.pathname || "/";
 
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -17,8 +20,8 @@ export const Login = () => {
   const onFormSubmit = useCallback((evt) => {
     evt.preventDefault();
     dispatch(loginUser({email, password}));
-    navigate('/', { replace: true });
-  }, [dispatch, email, password, navigate]);
+    navigate(from, { replace: true });
+  }, [dispatch, email, password, navigate, from]);
 
   useEffect(() => {
     if (localStorage.getItem('refreshToken')) {
