@@ -1,4 +1,4 @@
-import { ADD_ITEM_INFO, REMOVE_ITEM_INFO } from '../actions/ingredient-card';
+import { ADD_ITEM_INFO, REMOVE_ITEM_INFO, ADD_ITEM_INFO_PAGE } from '../actions/ingredient-card';
 
 const initialValue = {
   details: {
@@ -21,6 +21,14 @@ export const ingredientCardReducer = (state = initialValue, action) => {
           ...action.payload,
         },
         isDetailsVisible: true
+      };
+    }
+    case ADD_ITEM_INFO_PAGE: {
+      return {
+        ...state,
+        details: {
+          ...action.payload,
+        }
       };
     }
     case REMOVE_ITEM_INFO: {

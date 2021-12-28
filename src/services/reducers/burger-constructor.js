@@ -1,6 +1,6 @@
 import update from 'immutability-helper';
 
-import {ADD_BURGER_ITEM, DRAG_ITEM, REMOVE_BURGER_ITEM} from '../actions/burger-constructor';
+import {ADD_BURGER_ITEM, DRAG_ITEM, REMOVE_BURGER_ITEM, RESET_BURGER } from '../actions/burger-constructor';
 
 const initialState = {
   bun: '',
@@ -43,6 +43,12 @@ export const burgerReducer = (state = initialState, action) => {
               [action.hoverIndex, 0, action.dragItem]
             ]
           })
+      };
+    }
+    case RESET_BURGER: {
+      return {
+        ...state,
+        ...initialState
       };
     }
     default: {

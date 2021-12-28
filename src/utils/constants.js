@@ -8,3 +8,6 @@ export const ORDER_DATA = {
   status: 'Ваш заказ начали готовить',
   text: 'Дождитесь готовности на орбитальной станции'
 };
+
+// twenty minutes
+export const TOKEN_LIFE_TIME = 1 / 72;

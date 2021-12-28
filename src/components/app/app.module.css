@@ -1,6 +1,13 @@
-.main {
-    display: flex;
-    justify-content: center;
-    gap: 40px;
+.wrapper {
+    display: grid;
+    grid-template-columns: auto minmax(320px, 1280px) auto;
+    grid-template-rows: auto 1fr;
+    grid-template-areas:
+            "header header header"
+            ". main .";
 }
 
+.container {
+    grid-area: main;
+    height: calc(100vh - 88px);
+}

@@ -1,6 +1,7 @@
 import React, {useCallback, useMemo, useState} from "react";
 import {useDispatch, useSelector} from "react-redux";
 import { useDrop} from "react-dnd";
+import {useLocation, useNavigate} from "react-router-dom";
 
 import { Button, ConstructorElement } from '@ya.praktikum/react-developer-burger-ui-components';
 
@@ -10,7 +11,7 @@ import {OrderDetails} from "../order-details/order-details";
 import {Modal} from "../modal/modal";
 
 import {ERROR_MESSAGE_ORDER, EMPTY_ORDER} from "../../utils/constants";
-import {ADD_BURGER_ITEM, DRAG_ITEM, REMOVE_BURGER_ITEM} from "../../services/actions/burger-constructor";
+import {ADD_BURGER_ITEM, DRAG_ITEM, REMOVE_BURGER_ITEM, RESET_BURGER} from "../../services/actions/burger-constructor";
 import {CLOSE_ERROR, postOrder, REMOVE_ORDER_INFO} from "../../services/actions/order-details";
 import {BurgerConstructorItem} from "../burger-constructor-item/burger-constructor-item";
 
@@ -20,6 +21,10 @@ const getPrice = (newBurger) => {
 };
 
 export const BurgerConstructor = () => {
+  const navigate = useNavigate();
+  const location = useLocation();
+  const { isUserAuth } = useSelector(state => state.userAuth);
+  
   const [modalVisible, setModalVisible] = useState(false);
 
   const errorMessage = useSelector(state => state.orderDetails.orderFailed);
@@ -56,13 +61,20 @@ export const BurgerConstructor = () => {
   const totalPrice = useMemo(() => getPrice(burger), [burger]);
 
   const onOrderClick = useCallback(() => {
-    dispatch(postOrder(ingredients, bun, setModalVisible));
-  }, [bun, dispatch, ingredients]);
+    if (!isUserAuth) {
+      navigate('/login', {state: { from: location }});
+    } else {
+      dispatch(postOrder(ingredients, bun, setModalVisible));
+    }
+  }, [bun, dispatch, ingredients, isUserAuth, location, navigate]);
 
   const closeModal = () => {
     setModalVisible(false);
     dispatch({
       type: REMOVE_ORDER_INFO
+    });
+    dispatch({
+      type: RESET_BURGER
     });
   };
 
@@ -128,7 +140,7 @@ export const BurgerConstructor = () => {
             />
           </div>}
         </div>
-        <div className={styles.order}>
+        <div className={`${styles.order} ${bun ? '' : styles.disabled}`}>
           <PriceBlock count={totalPrice} size="medium" />
           <Button size="large" onClick={onOrderClick}>Оформить заказ</Button>
         </div>
