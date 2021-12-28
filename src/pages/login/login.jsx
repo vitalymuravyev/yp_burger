@@ -14,7 +14,8 @@ export const Login = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
-  const onLoginClick = useCallback(() => {
+  const onFormSubmit = useCallback((evt) => {
+    evt.preventDefault();
     dispatch(loginUser({email, password}));
     navigate('/', { replace: true });
   }, [dispatch, email, password, navigate]);
@@ -28,7 +29,7 @@ export const Login = () => {
   return (
     <div className={styles.wrapper}>
       <h2 className="text text_type_main-medium">Вход</h2>
-      <div className={styles.form}>
+      <form className={styles.form} onSubmit={(evt) => onFormSubmit(evt)}>
         <EmailInput
           name="email"
           value={email}
@@ -42,11 +43,10 @@ export const Login = () => {
         <Button
           type="primary"
           size="medium"
-          onClick={onLoginClick}
         >
           Войти
         </Button>
-      </div>
+      </form>
       <p className="text text_type_main-default text_color_inactive">
         Вы — новый пользователь? <Link to='/register' className={styles.accent}>Зарегистрироваться</Link>
       </p>

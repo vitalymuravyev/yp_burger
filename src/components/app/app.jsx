@@ -20,6 +20,7 @@ import {IngredientDetails} from "../ingredient-details/ingredient-details";
 import {REMOVE_ITEM_INFO} from "../../services/actions/ingredient-card";
 import {getUserProfile} from "../../services/actions/user-profile";
 import {USER_IS_LOGED} from "../../services/actions/user-auth";
+import {getItems} from "../../services/actions/burger-ingredients";
 
 function App() {
   const location = useLocation();
@@ -29,6 +30,7 @@ function App() {
   const state = location.state;
 
   useEffect(() => {
+    dispatch(getItems());
     if (localStorage.getItem('refreshToken')) {
       dispatch(getUserProfile());
       dispatch({

@@ -8,15 +8,11 @@ import { BurgerConstructor } from "../../components/burger-constructor/burger-co
 import {BurgerIngredients} from "../../components/burger-ingredients/burger-ingredients";
 import { ERROR_MESSAGE} from "../../utils/constants";
 import {Modal} from "../../components/modal/modal";
-import {CLOSE_ERROR, getItems} from "../../services/actions/burger-ingredients";
+import {CLOSE_ERROR } from "../../services/actions/burger-ingredients";
 
 export const Home = () => {
   const dispatch = useDispatch();
   const errorMessage = useSelector(state => state.ingredients.itemsFailed);
-
-  useEffect(() => {
-    dispatch(getItems());
-  }, [dispatch]);
 
   const closeModal = () => {
     dispatch({

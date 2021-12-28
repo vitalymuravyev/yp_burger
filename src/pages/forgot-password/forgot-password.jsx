@@ -1,6 +1,5 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { Link, useLocation, useNavigate } from "react-router-dom";
-import Cookies from "js-cookie";
 import { useDispatch, useSelector } from "react-redux";
 
 import { Input, Button } from '@ya.praktikum/react-developer-burger-ui-components';
@@ -25,9 +24,10 @@ export const ForgotPassword = () => {
     setEmail(evt.target.value);
   }, []);
 
-  const onRestoreClick = () => {
+  const onFormSubmit = useCallback((evt) => {
+    evt.preventDefault();
     dispatch(sendEmail({email}));
-  };
+  }, [dispatch, email]);
 
   if (isEmailSent) {
     navigate('/reset-password', {state: {from: location}});
@@ -36,7 +36,7 @@ export const ForgotPassword = () => {
   return (
     <div className={styles.wrapper}>
       <h2 className="text text_type_main-medium">Восстановление пароля</h2>
-      <div className={styles.form}>
+      <form className={styles.form} onSubmit={(evt) => onFormSubmit(evt)}>
         <Input
           placeholder="Укажите e-mail"
           name="email"
@@ -44,10 +44,10 @@ export const ForgotPassword = () => {
           value={email}
           onChange={onEmailChange}
         />
-        <Button type="primary" size="medium" onClick={onRestoreClick}>
+        <Button type="primary" size="medium">
           Восстановить
         </Button>
-      </div>
+      </form>
       <p className="text text_type_main-default text_color_inactive">
         Вспомнили пароль? <Link to='/login' className={styles.accent}>Войти</Link>
       </p>

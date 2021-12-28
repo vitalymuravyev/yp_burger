@@ -33,7 +33,8 @@ export const ResetPassword = () => {
     setToken(evt.target.value);
   };
 
-  const onSaveClick = useCallback(() => {
+  const onFormSubmit = useCallback((evt) => {
+    evt.preventDefault();
     dispatch(resetPassword({password, token}));
   }, [dispatch, password, token]);
 
@@ -44,7 +45,7 @@ export const ResetPassword = () => {
   return (
     <div className={styles.wrapper}>
       <h2 className="text text_type_main-medium">Восстановление пароля</h2>
-      <div className={styles.form}>
+      <form className={styles.form} onSubmit={(evt) => onFormSubmit(evt)}>
         <Input
           type="password"
           name="password"
@@ -58,10 +59,10 @@ export const ResetPassword = () => {
           value={token}
           onChange={onTokenChange}
         />
-        <Button type="primary" size="medium" onClick={onSaveClick}>
+        <Button type="primary" size="medium">
           Сохранить
         </Button>
-      </div>
+      </form>
       <p className="text text_type_main-default text_color_inactive">
         Вспомнили пароль? <Link to='/login' className={styles.accent}>Войти</Link>
       </p>

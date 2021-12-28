@@ -25,7 +25,8 @@ export const Register = () => {
     setPassword(evt.target.value);
   };
 
-  const onButtonClick = useCallback(() => {
+  const onFormSubmit = useCallback((evt) => {
+    evt.preventDefault();
     const data = {
       name,
       email,
@@ -43,7 +44,7 @@ export const Register = () => {
   return (
     <div className={styles.wrapper}>
       <h2 className="text text_type_main-medium">Регистрация</h2>
-      <div className={styles.form}>
+      <form className={styles.form} onSubmit={(evt) => onFormSubmit(evt)}>
         <Input
           placeholder="Имя"
           name="name"
@@ -63,11 +64,10 @@ export const Register = () => {
         <Button
           type="primary"
           size="medium"
-          onClick={onButtonClick}
         >
           Зарегистрироваться
         </Button>
-      </div>
+      </form>
       <p className="text text_type_main-default text_color_inactive">
         Уже зарегистрированы? <Link to='/login' className={styles.accent}>Войти</Link>
       </p>

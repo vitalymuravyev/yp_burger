@@ -37,13 +37,14 @@ export const Profile = () => {
     dispatch(logoutUser());
   }, [dispatch]);
 
-  const onSaveClick = useCallback(() => {
+  const onFormSubmit = useCallback((evt) => {
+    evt.preventDefault();
     dispatch(setUserProfile({
       name: currentName,
       email: currentEmail,
       password
     }));
-  });
+  }, [currentEmail, currentName, dispatch, password]);
 
   const isFormChanged = useCallback(()=> {
     return !((initialState.name === currentName) && (initialState.email === currentEmail) && (initialState.password === password));
@@ -66,7 +67,7 @@ export const Profile = () => {
           Выход
         </button>
       </div>
-      <div className={styles.form} >
+      <form className={styles.form} onSubmit={(evt) => onFormSubmit(evt)}>
         <Input
           placeholder="Имя"
           name="name"
@@ -93,12 +94,11 @@ export const Profile = () => {
           </Button><Button
           type="primary"
           size="medium"
-          onClick={onSaveClick}
           >
           Сохранить
           </Button>
           </div>) : null}
-      </div>
+      </form>
     </div>
   );
 };

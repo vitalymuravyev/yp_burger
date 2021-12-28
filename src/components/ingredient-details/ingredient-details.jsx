@@ -1,9 +1,21 @@
-import React from "react";
-import {useSelector} from "react-redux";
+import React, {useEffect} from "react";
+import {useDispatch, useSelector} from "react-redux";
 
 import styles from './ingredient-details.module.css';
+import {ADD_ITEM_INFO_PAGE} from "../../services/actions/ingredient-card";
+import {useIngredientInfo} from "../../utils/helpers";
 
 export const IngredientDetails = () => {
+  const dispatch = useDispatch();
+  const item = useIngredientInfo();
+
+  useEffect(() => {
+    dispatch({
+      type: ADD_ITEM_INFO_PAGE,
+      payload: item
+    });
+  }, [dispatch, item]);
+
   const { image_large, name, calories, proteins, fat, carbohydrates }
     = useSelector(state => state.ingredientInfo.details);
 
