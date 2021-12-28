@@ -1,4 +1,5 @@
 import { API_URL} from "../../utils/constants";
+import {RESET_BURGER} from "./burger-constructor";
 
 export const PUT_ORDER_INFO_REQUEST = 'PUT_ORDER_INFO_REQUEST';
 export const PUT_ORDER_INFO_SUCCESS = 'PUT_ORDER_INFO_SUCCESS';

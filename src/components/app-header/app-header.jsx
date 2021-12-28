@@ -1,5 +1,5 @@
 import React from 'react';
-import { useLocation } from 'react-router-dom';
+import {Link, useLocation} from 'react-router-dom';
 
 import { Logo, BurgerIcon, ListIcon, ProfileIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 
@@ -42,9 +42,9 @@ export const AppHeader = () => {
         >
           {LABELS.profile}
         </ButtonWithIcon>
-        <span className={styles.logo}>
+        <Link to="/" className={styles.logo}>
           <Logo />
-      </span>
+        </Link>
       </div>
     </header>
   );

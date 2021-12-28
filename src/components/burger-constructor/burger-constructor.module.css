@@ -60,6 +60,10 @@
     gap: 40px;
 }
 
+.disabled {
+    pointer-events: none;
+}
+
 .price {
     display: inline-flex;
     align-items: center;
