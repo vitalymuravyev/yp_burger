@@ -1,13 +1,16 @@
-import React from "react";
-import PropTypes from "prop-types";
+import React, { FC } from "react";
 
 import {useSelector} from "react-redux";
 import {Modal} from "../modal/modal";
 
 import { ORDER_DATA } from "../../utils/constants";
 
-export const OrderDetails = ({ closeModal }) => {
-  const { id } = useSelector(state => state.orderDetails);
+type TOrderDetails = {
+  closeModal: () => void
+}
+
+export const OrderDetails: FC<TOrderDetails> = ({ closeModal }) => {
+  const { id }: any = useSelector<any>(state => state.orderDetails);
   return (
     <Modal closeModal={closeModal}>
       <p className="text text_type_digits-large mt-20">{id}</p>
@@ -23,8 +26,4 @@ export const OrderDetails = ({ closeModal }) => {
       </p>
     </Modal>
   );
-};
-
-OrderDetails.propTypes = {
-  closeModal: PropTypes.func.isRequired,
 };

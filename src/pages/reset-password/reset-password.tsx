@@ -12,7 +12,7 @@ export const ResetPassword = () => {
   const location = useLocation();
   const dispatch = useDispatch();
 
-  const { isPasswordChanged } = useSelector(state => state.userRegistration);
+  const { isPasswordChanged }: any = useSelector<any>(state => state.userRegistration);
   const [password, setPassword] = useState('');
   const [token, setToken] = useState('');
 
@@ -29,7 +29,7 @@ export const ResetPassword = () => {
     setPassword(evt.target.value);
   }, []);
 
-  const onTokenChange = (evt) => {
+  const onTokenChange = (evt: React.ChangeEvent<HTMLInputElement>) => {
     setToken(evt.target.value);
   };
 

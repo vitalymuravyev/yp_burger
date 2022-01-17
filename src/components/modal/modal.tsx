@@ -1,13 +1,17 @@
-import React, {useCallback, useEffect} from "react";
+import React, { useCallback, useEffect, FC } from "react";
 import ReactDOM from "react-dom";
 
 import {CloseIcon} from "@ya.praktikum/react-developer-burger-ui-components";
 import styles from './modal.module.css';
 import {ModalOverlay} from "../modal-overlay/modal-overlay";
 
-const container = document.getElementById('modal-root');
+const container = document.getElementById('modal-root') as HTMLElement;
 
-export const Modal = ({closeModal, children }) => {
+type TModal = {
+  closeModal: () => void
+}
+
+export const Modal: FC<TModal> = ({closeModal, children }) => {
 
   const handleEscPress = useCallback((evt) => {
     if (evt.key === 'Escape') {

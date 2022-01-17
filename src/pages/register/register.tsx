@@ -13,15 +13,15 @@ export const Register = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
-  const onNameChange = (evt) => {
+  const onNameChange = (evt: React.ChangeEvent<HTMLInputElement>) => {
     setName(evt.target.value);
   };
 
-  const onEmailChange = (evt) => {
+  const onEmailChange = (evt: React.ChangeEvent<HTMLInputElement>) => {
     setEmail(evt.target.value);
   };
 
-  const onPasswordChange = (evt) => {
+  const onPasswordChange = (evt: React.ChangeEvent<HTMLInputElement>) => {
     setPassword(evt.target.value);
   };
 

@@ -51,7 +51,7 @@ function App() {
       <AppHeader />
       <div className={styles.container}>
         <Routes location={state?.backgroundLocation || location}>
-          <Route path="/" exact element={<Home />} />
+          <Route path="/" element={<Home />} />
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
           <Route path="/forgot-password" element={<ForgotPassword />} />

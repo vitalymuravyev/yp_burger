@@ -1,15 +1,18 @@
-import React, { useMemo } from "react";
+import React, { useMemo, FC } from "react";
 import { useSelector} from "react-redux";
-import PropTypes from 'prop-types';
 import {useDrag} from "react-dnd";
 import { Link, useLocation } from "react-router-dom";
 
 import {Counter} from "@ya.praktikum/react-developer-burger-ui-components";
 import styles from './ingredient-card.module.css';
 import {PriceBlock} from "../price-block/price-block";
-import {ingredientType} from "../../utils/types";
+import { TIngredient } from "../../utils/types";
 
-export const IngredientCard = ({ item }) => {
+type TIngredientCard = {
+  item: TIngredient
+}
+
+export const IngredientCard: FC<TIngredientCard> = ({ item }) => {
   const location = useLocation();
 
   const { image, name, price, type } = item;
@@ -18,12 +21,12 @@ export const IngredientCard = ({ item }) => {
     item,
   });
 
-  const burger = useSelector(state => state.burger);
+  const burger: any = useSelector<any>(state => state.burger);
 
   const counter = useMemo(() => {
     if (type === 'bun' && item._id === burger.bun._id) return 2;
 
-    return burger.ingredients.filter(value => value._id === item._id).length;
+    return burger.ingredients.filter((value: TIngredient) => value._id === item._id).length;
   }, [burger.bun._id, burger.ingredients, item._id, type]);
 
   return (
@@ -41,8 +44,4 @@ export const IngredientCard = ({ item }) => {
         </div>)}
     </Link>
   );
-};
-
-IngredientCard.propTypes = {
-  item: ingredientType.isRequired,
 };
