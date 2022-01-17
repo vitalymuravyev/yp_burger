@@ -1,16 +1,28 @@
-import React, {useRef} from "react";
-import PropTypes from 'prop-types';
-import {useDrag, useDrop} from "react-dnd";
+import React, { useRef, FC } from "react";
+import { useDrag, useDrop } from "react-dnd";
 
 import { ConstructorElement, DragIcon } from '@ya.praktikum/react-developer-burger-ui-components';
-import {ingredientType} from "../../utils/types";
+import {TIngredient} from "../../utils/types";
 
-export const BurgerConstructorItem = ({item, onRemoveClick, className, index, moveItem, id}) => {
-  const ref = useRef(null);
+type TBurgerConstructorItem = {
+  item: TIngredient;
+  className: string;
+  id: string;
+  index: number;
+  onRemoveClick: (item: TIngredient) => void;
+  moveItem: (dragIndex: number, hoverIndex: number) => void
+}
+
+type DragObject = {
+  index: number;
+}
+
+export const BurgerConstructorItem: FC<TBurgerConstructorItem> = ({item, onRemoveClick, className, index, moveItem, id}) => {
+  const ref = useRef<HTMLLIElement>(null);
 
   const [, drop] = useDrop({
     accept: 'burger',
-    hover: (unit, monitor) => {
+    hover: (unit: DragObject, monitor) => {
       if (!ref.current) return;
 
       const dragIndex = unit.index;
@@ -20,7 +32,7 @@ export const BurgerConstructorItem = ({item, onRemoveClick, className, index, mo
 
       const hoverBoundingRect = ref.current?.getBoundingClientRect();
       const hoverMiddleY = (hoverBoundingRect.bottom - hoverBoundingRect.top) / 2;
-      const clientOffset = monitor.getClientOffset();
+      const clientOffset = monitor.getClientOffset() || {x: 0, y: 0};
       const hoverClientY = clientOffset.y - hoverBoundingRect.top;
 
       if (dragIndex < hoverIndex && hoverClientY < hoverMiddleY) return;
@@ -59,13 +71,4 @@ export const BurgerConstructorItem = ({item, onRemoveClick, className, index, mo
       />
     </li>
   );
-};
-
-BurgerConstructorItem.propTypes = {
-  item: ingredientType.isRequired,
-  onRemoveClick: PropTypes.func.isRequired,
-  className: PropTypes.string.isRequired,
-  index: PropTypes.number.isRequired,
-  moveItem: PropTypes.func.isRequired,
-  id: PropTypes.string.isRequired
 };

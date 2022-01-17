@@ -11,3 +11,9 @@ export const ORDER_DATA = {
 
 // twenty minutes
 export const TOKEN_LIFE_TIME = 1 / 72;
+
+export const ingredientTypes = {
+  bun: 'Булки',
+  sauce: 'Соусы',
+  main: 'Начинки'
+};

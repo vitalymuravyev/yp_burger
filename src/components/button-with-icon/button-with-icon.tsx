@@ -1,10 +1,15 @@
-import React from 'react';
+import React, { FC } from 'react';
 import { Link } from "react-router-dom";
-import PropTypes from 'prop-types';
 
 import styles from './button-with-icon.module.css';
 
-export const ButtonWithIcon = ({ active, children, icon, path }) => {
+type TButtonWithIcon = {
+  active: boolean;
+  icon: JSX.Element;
+  path: string;
+}
+
+export const ButtonWithIcon: FC<TButtonWithIcon> = ({ active, children, icon, path }) => {
     const textColor = active ? '' : 'text_color_inactive';
     return(
         <Link to={path} className={styles.wrapper}>
@@ -14,11 +19,4 @@ export const ButtonWithIcon = ({ active, children, icon, path }) => {
             </p>
         </Link>
     );
-};
-
-ButtonWithIcon.propTypes = {
-    active: PropTypes.bool.isRequired,
-    children: PropTypes.string.isRequired,
-    icon: PropTypes.element.isRequired,
-    path: PropTypes.string.isRequired
 };

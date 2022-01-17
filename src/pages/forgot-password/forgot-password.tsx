@@ -11,7 +11,7 @@ export const ForgotPassword = () => {
   const location = useLocation();
   const dispatch = useDispatch();
 
-  const { isEmailSent } = useSelector(state => state.userRegistration);
+  const { isEmailSent }: any = useSelector<any>(state => state.userRegistration);
   const [email, setEmail] = useState('');
 
   useEffect(() => {

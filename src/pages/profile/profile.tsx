@@ -11,7 +11,7 @@ import {logoutUser} from "../../services/actions/user-auth";
 export const Profile = () => {
   const { pathname } = useLocation();
   const dispatch = useDispatch();
-  const { name, email} = useSelector(state => state.userProfile.user);
+  const { name, email}: any = useSelector<any>(state => state.userProfile.user);
   const initialState = {
     name,
     email,

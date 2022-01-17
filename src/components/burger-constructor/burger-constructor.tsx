@@ -15,22 +15,30 @@ import {ADD_BURGER_ITEM, DRAG_ITEM, REMOVE_BURGER_ITEM, RESET_BURGER} from "../.
 import {CLOSE_ERROR, postOrder, REMOVE_ORDER_INFO} from "../../services/actions/order-details";
 import {BurgerConstructorItem} from "../burger-constructor-item/burger-constructor-item";
 
-const getPrice = (newBurger) => {
+import {TIngredient} from "../../utils/types";
+
+type TBurger = {
+  bun: TIngredient;
+  ingredients: Array<TIngredient>;
+  count: number;
+}
+
+const getPrice = (newBurger: TBurger): number => {
   const price = newBurger.bun ? newBurger.bun.price * 2 : 0;
-  return newBurger.ingredients.reduce((sum, item) => sum + item.price, price);
+  return newBurger.ingredients.reduce((sum: number, item: TIngredient) => sum + item.price, price);
 };
 
 export const BurgerConstructor = () => {
   const navigate = useNavigate();
   const location = useLocation();
-  const { isUserAuth } = useSelector(state => state.userAuth);
-  
+  const { isUserAuth }: any = useSelector<any>(state => state.userAuth);
+
   const [modalVisible, setModalVisible] = useState(false);
 
-  const errorMessage = useSelector(state => state.orderDetails.orderFailed);
+  const errorMessage: any = useSelector<any>(state => state.orderDetails.orderFailed);
 
   const dispatch = useDispatch();
-  const {burger} = useSelector(state => state);
+  const {burger}: any = useSelector(state => state);
   const bun = burger.bun;
   const ingredients = burger.ingredients;
 
@@ -84,7 +92,7 @@ export const BurgerConstructor = () => {
     });
   };
 
-  const onRemoveClick = (item) => {
+  const onRemoveClick = (item: TIngredient): void => {
     dispatch({
       type: REMOVE_BURGER_ITEM,
       item
@@ -115,7 +123,7 @@ export const BurgerConstructor = () => {
             />
           </div>}
             <ul className={`${styles.list} custom-scroll`}>
-              {ingredients.map((item, index, arr) => {
+              {ingredients.map((item: TIngredient, index: number) => {
                   return (
                     <BurgerConstructorItem
                       key={item._id + index}

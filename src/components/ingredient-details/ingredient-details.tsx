@@ -16,8 +16,8 @@ export const IngredientDetails = () => {
     });
   }, [dispatch, item]);
 
-  const { image_large, name, calories, proteins, fat, carbohydrates }
-    = useSelector(state => state.ingredientInfo.details);
+  const { image_large, name, calories, proteins, fat, carbohydrates }: any
+    = useSelector<any>(state => state.ingredientInfo.details);
 
   return (
     <div>

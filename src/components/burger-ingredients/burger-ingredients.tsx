@@ -4,20 +4,21 @@ import styles from './burger-ingredients.module.css';
 
 import {TabPanel} from "../tab-panel/tab-panel";
 import {IngredientsList} from "../ingredients-list/ingredients-list";
+import {TIngredientTypeName} from "../../utils/types";
 
 
 export const BurgerIngredients = () => {
-  const [currentTab, setCurrentTab] = useState('bun');
+  const [currentTab, setCurrentTab] = useState<TIngredientTypeName>('bun');
 
-  const newTabRatio = useMemo(() => ({
+  const newTabRatio: { [key in TIngredientTypeName]: number } = useMemo(() => ({
     bun: 1,
     sauce: 0,
     main: 0
   }), []);
 
-  const bunRef = useRef(null);
-  const sauceRef = useRef(null);
-  const mainRef = useRef(null);
+  const bunRef = useRef<HTMLDivElement>(null!);
+  const sauceRef = useRef<HTMLDivElement>(null!);
+  const mainRef = useRef<HTMLDivElement>(null!);
 
   const setTab = useCallback((tab) => {
     setCurrentTab(tab);
@@ -38,13 +39,13 @@ export const BurgerIngredients = () => {
     }
   }, []);
 
-  const setRatio = useCallback((type, ratio) => {
+  const setRatio = useCallback((type: TIngredientTypeName, ratio) => {
     newTabRatio[type] = ratio;
     if (currentTab !== type && newTabRatio[currentTab] < ratio) {
       setCurrentTab(type);
     }
   }, [currentTab, newTabRatio]);
-  
+
   return (
     <section className={styles.wrapper}>
       <h2 className="text text_type_main-large">Соберите бургер</h2>

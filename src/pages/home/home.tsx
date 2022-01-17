@@ -12,7 +12,7 @@ import {CLOSE_ERROR } from "../../services/actions/burger-ingredients";
 
 export const Home = () => {
   const dispatch = useDispatch();
-  const errorMessage = useSelector(state => state.ingredients.itemsFailed);
+  const errorMessage = useSelector<any>(state => state.ingredients.itemsFailed);
 
   const closeModal = () => {
     dispatch({
