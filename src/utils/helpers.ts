@@ -6,27 +6,7 @@ export const isActivePath = (currentPath: string, pathname: string): boolean => 
   return currentPath === pathname;
 };
 
-interface CustomBody<T> extends Body {
-  json(): Promise<T>;
-}
-
-type TResponseBody = {
-  success: boolean;
-
-  message?: string;
-  headers?: Headers;
-};
-
-interface IResponse<T> extends CustomBody<T> {
-  readonly type: ResponseType;
-  readonly ok: boolean;
-  readonly statusText: string;
-  readonly url: string;
-  readonly headers: Headers;
-  readonly redirected: boolean;
-}
-
-export const checkResponseStatus = (response: IResponse<TResponseBody>) => {
+export const checkResponseStatus = (response: Response) => {
   if (!response.ok) {
     return Promise.reject(new Error(response.statusText));
   }
