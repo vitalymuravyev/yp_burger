@@ -7,10 +7,23 @@ import {
   SEND_EMAIL_FAILED,
   RESET_PASSWORD_REQUEST,
   RESET_PASSWORD_SUCCESS,
-  RESET_PASSWORD_FAILED
+  RESET_PASSWORD_FAILED, TUserRegistrationActions
 } from '../actions/user-registration';
 
-const initialState = {
+interface IUserRegistrationState {
+  registrationRequest: boolean;
+  registrationFailed: boolean;
+
+  sendEmailRequest: boolean;
+  sendEmailFailed: boolean;
+  isEmailSent: boolean;
+
+  resetPasswordRequest: boolean;
+  resetPasswordFailed: boolean;
+  isPasswordChanged: boolean;
+}
+
+const initialState: IUserRegistrationState = {
   registrationRequest: false,
   registrationFailed: false,
 
@@ -23,7 +36,7 @@ const initialState = {
   isPasswordChanged: false
 };
 
-export const userRegistrationReducer = (state = initialState, action) => {
+export const userRegistrationReducer = (state = initialState, action: TUserRegistrationActions) => {
   switch (action.type) {
     case USER_REGISTRATION_REQUEST: {
       return {

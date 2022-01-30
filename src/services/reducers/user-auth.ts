@@ -5,10 +5,21 @@ import {
   USER_LOGOUT_REQUEST,
   USER_LOGOUT_SUCCESS,
   USER_LOGOUT_FAILED,
-  USER_IS_LOGED
+  USER_IS_LOGED, TUserAuthActions
 } from '../actions/user-auth';
 
-const initialState = {
+export type TUserAuthState = {
+  isUserAuth: boolean;
+  accessToken: string,
+
+  loginRequest: boolean,
+  loginFailed: boolean,
+
+  logoutRequest: boolean,
+  logoutFailed: boolean,
+}
+
+const initialState: TUserAuthState = {
   isUserAuth: false,
   accessToken: '',
 
@@ -19,7 +30,7 @@ const initialState = {
   logoutFailed: false,
 };
 
-export const userAuthReducer = (state = initialState, action) => {
+export const userAuthReducer = (state = initialState, action: TUserAuthActions) => {
   switch (action.type) {
     case USER_LOGIN_REQUEST: {
       return {

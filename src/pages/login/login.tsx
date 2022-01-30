@@ -1,11 +1,10 @@
 import React, {useCallback, useEffect, useState} from 'react';
 import {Link, useLocation, useNavigate} from "react-router-dom";
-import {useDispatch } from "react-redux";
-
 import { EmailInput, PasswordInput, Button } from '@ya.praktikum/react-developer-burger-ui-components';
+import {useDispatch } from '../../utils/helpers';
+
 import styles from './login.module.css';
-import {loginUser, USER_IS_LOGED} from "../../services/actions/user-auth";
-import {getUserProfile} from "../../services/actions/user-profile";
+import {loginUser } from "../../services/actions/user-auth";
 
 export const Login = () => {
   const dispatch = useDispatch();

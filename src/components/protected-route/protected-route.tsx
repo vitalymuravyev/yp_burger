@@ -1,8 +1,8 @@
 import { useLocation, Navigate, Outlet } from "react-router-dom";
-import { useSelector } from "react-redux";
+import { useSelector } from '../../utils/helpers';
 
 export const RequireAuth = () => {
-  const { userAuth }: any = useSelector(state => state);
+  const { userAuth } = useSelector(state => state);
   const location = useLocation();
 
   if (!userAuth.isUserAuth) {

@@ -1,8 +1,8 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { Link, useLocation, useNavigate } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
-
 import { Input, Button } from '@ya.praktikum/react-developer-burger-ui-components';
+import { useDispatch, useSelector } from '../../utils/helpers';
+
 import styles from './forgot-password.module.css';
 import {sendEmail} from "../../services/actions/user-registration";
 
@@ -11,7 +11,7 @@ export const ForgotPassword = () => {
   const location = useLocation();
   const dispatch = useDispatch();
 
-  const { isEmailSent }: any = useSelector<any>(state => state.userRegistration);
+  const { isEmailSent } = useSelector(state => state.userRegistration);
   const [email, setEmail] = useState('');
 
   useEffect(() => {

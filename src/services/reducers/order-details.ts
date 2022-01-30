@@ -3,17 +3,25 @@ import {
   PUT_ORDER_INFO_SUCCESS,
   PUT_ORDER_INFO_FAILED,
   REMOVE_ORDER_INFO,
-  CLOSE_ERROR
+  CLOSE_ERROR,
+  TOrderDetailsActions
 } from '../actions/order-details';
 
-const initialState = {
+export type TOrderDetailsState = {
+  id: number;
+  name: string;
+  orderRequest: boolean;
+  orderFailed: boolean;
+}
+
+const initialState: TOrderDetailsState = {
   id: 0,
   name: '',
   orderRequest: false,
   orderFailed: false
 };
 
-export const orderDetailsReducer = (state = initialState, action) => {
+export const orderDetailsReducer = (state = initialState, action: TOrderDetailsActions) => {
   switch (action.type) {
     case PUT_ORDER_INFO_REQUEST: {
       return {

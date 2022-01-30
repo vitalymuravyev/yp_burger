@@ -1,9 +1,9 @@
 import React, {useCallback, useMemo, useState} from "react";
-import {useDispatch, useSelector} from "react-redux";
 import { useDrop} from "react-dnd";
 import {useLocation, useNavigate} from "react-router-dom";
 
 import { Button, ConstructorElement } from '@ya.praktikum/react-developer-burger-ui-components';
+import {useDispatch, useSelector} from '../../utils/helpers';
 
 import styles from './burger-constructor.module.css';
 import {PriceBlock} from "../price-block/price-block";
@@ -16,12 +16,7 @@ import {CLOSE_ERROR, postOrder, REMOVE_ORDER_INFO} from "../../services/actions/
 import {BurgerConstructorItem} from "../burger-constructor-item/burger-constructor-item";
 
 import {TIngredient} from "../../utils/types";
-
-type TBurger = {
-  bun: TIngredient;
-  ingredients: Array<TIngredient>;
-  count: number;
-}
+import {TBurger} from "../../services/reducers/burger-constructor";
 
 const getPrice = (newBurger: TBurger): number => {
   const price = newBurger.bun ? newBurger.bun.price * 2 : 0;
@@ -31,14 +26,14 @@ const getPrice = (newBurger: TBurger): number => {
 export const BurgerConstructor = () => {
   const navigate = useNavigate();
   const location = useLocation();
-  const { isUserAuth }: any = useSelector<any>(state => state.userAuth);
+  const { isUserAuth } = useSelector(state => state.userAuth);
 
   const [modalVisible, setModalVisible] = useState(false);
 
-  const errorMessage: any = useSelector<any>(state => state.orderDetails.orderFailed);
+  const errorMessage = useSelector(state => state.orderDetails.orderFailed);
 
   const dispatch = useDispatch();
-  const {burger}: any = useSelector(state => state);
+  const {burger} = useSelector(state => state);
   const bun = burger.bun;
   const ingredients = burger.ingredients;
 

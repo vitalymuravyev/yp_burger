@@ -1,6 +1,6 @@
 import React, {useEffect} from 'react';
 import {Route, Routes, useLocation, useNavigate} from 'react-router-dom';
-import {useDispatch} from "react-redux";
+import {useDispatch} from '../../utils/helpers';
 
 import styles from './app.module.css';
 

@@ -1,5 +1,0 @@
-export const ADD_BURGER_ITEM = 'ADD_BURGER_ITEM';
-export const REMOVE_BURGER_ITEM = 'REMOVE_BURGER_ITEM';
-export const RESET_BURGER = 'RESET_BURGER';
-
-export const DRAG_ITEM = 'DRAG_ITEM';

@@ -1,9 +1,9 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import Cookies from "js-cookie";
-import {useDispatch, useSelector} from "react-redux";
-
 import { Input, Button } from '@ya.praktikum/react-developer-burger-ui-components';
+import {useDispatch, useSelector} from '../../utils/helpers';
+
 import styles from './reset-password.module.css';
 import {resetPassword} from "../../services/actions/user-registration";
 
@@ -12,7 +12,7 @@ export const ResetPassword = () => {
   const location = useLocation();
   const dispatch = useDispatch();
 
-  const { isPasswordChanged }: any = useSelector<any>(state => state.userRegistration);
+  const { isPasswordChanged } = useSelector(state => state.userRegistration);
   const [password, setPassword] = useState('');
   const [token, setToken] = useState('');
 

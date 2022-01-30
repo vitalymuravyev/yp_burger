@@ -47,6 +47,7 @@
         "import/extensions": "off",
         "import/no-unresolved": "off",
         "default-param-last": "off",
-        "camelcase": "off"
+        "camelcase": "off",
+        "typescript-eslint/prefer-as-const": "off"
     }
 }

@@ -1,7 +1,7 @@
-import React, {useEffect} from 'react';
-import {useDispatch, useSelector} from "react-redux";
+import React from 'react';
 import {DndProvider} from "react-dnd";
 import {HTML5Backend} from "react-dnd-html5-backend";
+import {useDispatch, useSelector} from '../../utils/helpers';
 import styles from './home.module.css';
 
 import { BurgerConstructor } from "../../components/burger-constructor/burger-constructor";
@@ -12,7 +12,7 @@ import {CLOSE_ERROR } from "../../services/actions/burger-ingredients";
 
 export const Home = () => {
   const dispatch = useDispatch();
-  const errorMessage = useSelector<any>(state => state.ingredients.itemsFailed);
+  const errorMessage = useSelector(state => state.ingredients.itemsFailed);
 
   const closeModal = () => {
     dispatch({

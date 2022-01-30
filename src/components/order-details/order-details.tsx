@@ -1,6 +1,6 @@
 import React, { FC } from "react";
 
-import {useSelector} from "react-redux";
+import {useSelector} from '../../utils/helpers';
 import {Modal} from "../modal/modal";
 
 import { ORDER_DATA } from "../../utils/constants";
@@ -10,7 +10,7 @@ type TOrderDetails = {
 }
 
 export const OrderDetails: FC<TOrderDetails> = ({ closeModal }) => {
-  const { id }: any = useSelector<any>(state => state.orderDetails);
+  const { id } = useSelector(state => state.orderDetails);
   return (
     <Modal closeModal={closeModal}>
       <p className="text text_type_digits-large mt-20">{id}</p>

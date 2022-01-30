@@ -1,6 +1,17 @@
-import { ADD_ITEM_INFO, REMOVE_ITEM_INFO, ADD_ITEM_INFO_PAGE } from '../actions/ingredient-card';
+import {
+  ADD_ITEM_INFO,
+  REMOVE_ITEM_INFO,
+  ADD_ITEM_INFO_PAGE,
+  TIngredientInfoActions
+} from '../actions/ingredient-card';
+import {IIngredientDetails} from "../../utils/types";
 
-const initialValue = {
+export type TIngredientInfoState = {
+  details: IIngredientDetails;
+  isDetailsVisible: boolean;
+}
+
+const initialValue: TIngredientInfoState = {
   details: {
     image_large: '',
     name: '',
@@ -12,7 +23,7 @@ const initialValue = {
   isDetailsVisible: false
 };
 
-export const ingredientCardReducer = (state = initialValue, action) => {
+export const ingredientCardReducer = (state = initialValue, action: TIngredientInfoActions) => {
   switch (action.type) {
     case ADD_ITEM_INFO: {
       return {

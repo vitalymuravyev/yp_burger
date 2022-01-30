@@ -1,6 +1,6 @@
 import {useLocation} from "react-router-dom";
-import {useSelector} from "react-redux";
-import {TIngredient} from "./types";
+import {useSelector as useSelectorHook, TypedUseSelectorHook, useDispatch as useDispatchHook} from "react-redux";
+import {TIngredient, RootState, AppThunk, AppDispatch } from "./types";
 
 export const isActivePath = (currentPath: string, pathname: string): boolean => {
   return currentPath === pathname;
@@ -13,8 +13,12 @@ export const checkResponseStatus = (response: Response) => {
   return Promise.resolve(response);
 };
 
-export const useIngredientInfo = (): Array<TIngredient> => {
+export const useSelector: TypedUseSelectorHook<RootState> = useSelectorHook;
+
+export const useDispatch = () => useDispatchHook<AppDispatch | AppThunk>();
+
+export const useIngredientInfo = (): TIngredient => {
   const location = useLocation();
   const ingredientId = location.pathname.split('/')[2];
-  return useSelector((state: any) => state.ingredients.items).filter((value: TIngredient) => value._id === ingredientId)[0];
+  return useSelector((state) => state.ingredients.items).filter((value: TIngredient) => value._id === ingredientId)[0];
 };

@@ -2,17 +2,25 @@ import {
   GET_ITEMS_REQUEST,
   GET_ITEMS_SUCCESS,
   GET_ITEMS_FAILED,
-  CLOSE_ERROR,
+  CLOSE_ERROR, TGetItemsActions,
 } from '../actions/burger-ingredients';
+import {TIngredient} from "../../utils/types";
 
-const initialValue = {
+export type TBurgerIngredientState = {
+  items: ReadonlyArray<TIngredient>;
+
+  itemsRequest: boolean;
+  itemsFailed: boolean;
+}
+
+const initialValue: TBurgerIngredientState = {
   items: [],
 
   itemsRequest: false,
   itemsFailed: false,
 };
 
-export const ingredientsReducer = (state = initialValue, action) => {
+export const ingredientsReducer = (state = initialValue, action: TGetItemsActions) => {
   switch (action.type) {
     case GET_ITEMS_REQUEST: {
       return {

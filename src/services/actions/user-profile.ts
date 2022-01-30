@@ -1,7 +1,10 @@
 import Cookies from "js-cookie";
 
+import {ThunkAction} from "redux-thunk";
+import {Action} from "redux";
 import {API_URL, TOKEN_LIFE_TIME} from "../../utils/constants";
 import { checkResponseStatus } from "../../utils/helpers";
+import {AppDispatch, AppThunk, IUserInfo, RootState, TApplicationActions} from "../../utils/types";
 
 export const USER_PROFILE_REQUEST = 'USER_PROFILE_REQUEST';
 export const USER_PROFILE_SUCCESS = 'USER_PROFILE_SUCCESS';
@@ -17,8 +20,58 @@ export const GET_NEW_TOKEN_REQUEST = 'GET_NEW_TOKEN_REQUEST';
 export const GET_NEW_TOKEN_SUCCESS = 'GET_NEW_TOKEN_SUCCESS';
 export const GET_NEW_TOKEN_FAILED = 'GET_NEW_TOKEN_FAILED';
 
-const getNewToken = (nextStep) => {
-  return function (dispatch) {
+interface IGetUserProfileAction {
+  readonly type: typeof USER_PROFILE_REQUEST;
+}
+interface IGetUserProfileSuccessAction {
+  readonly type: typeof USER_PROFILE_SUCCESS;
+  payload: {
+    success: boolean;
+    user: IUserInfo
+  }
+}
+interface IGetUserProfileFailedAction {
+  readonly type: typeof USER_PROFILE_FAILED;
+}
+
+interface ISetUserProfileAction {
+  readonly type: typeof SET_USER_PROFILE_REQUEST;
+}
+interface ISetUserProfileSuccessAction {
+  readonly type: typeof SET_USER_PROFILE_SUCCESS;
+}
+interface ISetUserProfileFailedAction {
+  readonly type: typeof SET_USER_PROFILE_FAILED;
+}
+
+interface IRemoveUserProfileAction {
+  readonly type: typeof REMOVE_USER_PROFILE;
+}
+
+interface IGetNewTokenAction {
+  readonly type: typeof GET_NEW_TOKEN_REQUEST;
+}
+interface IGetNewTokenSuccessAction {
+  readonly type: typeof GET_NEW_TOKEN_SUCCESS;
+}
+interface IGetNewTokenFailedAction {
+  readonly type: typeof GET_NEW_TOKEN_FAILED;
+}
+
+export type TUserProfileActions =
+  IGetUserProfileAction
+  | IGetUserProfileSuccessAction
+  | IGetUserProfileFailedAction
+  | ISetUserProfileAction
+  | ISetUserProfileSuccessAction
+  | ISetUserProfileFailedAction
+  | IRemoveUserProfileAction
+  | IGetNewTokenAction
+  | IGetNewTokenSuccessAction
+  | IGetNewTokenFailedAction;
+
+const getNewToken: AppThunk = (nextStep) => {
+  return function (dispatch: AppDispatch) {
     dispatch({
       type: GET_NEW_TOKEN_REQUEST
     });
@@ -50,7 +103,10 @@ const getNewToken = (nextStep) => {
   };
 };
 
-export const getUserProfile = () => {
+export const getUserProfile: AppThunk = () => {
+  const headers = new Headers();
+  headers.append('Content-Type', 'application/json;charset=utf-8');
+  headers.append('authorization', Cookies.get('accessToken') || '');
   return function (dispatch) {
     dispatch({
       type: USER_PROFILE_REQUEST
@@ -58,10 +114,7 @@ export const getUserProfile = () => {
     fetch(`${API_URL}/auth/user`, {
       method: 'GET',
       mode: 'cors',
-      headers: {
-        'Content-Type': 'application/json;charset=utf-8',
-        'authorization': Cookies.get('accessToken')
-      },
+      headers
     })
       .then(res => res.json())
       .then(result => {
@@ -83,7 +136,10 @@ export const getUserProfile = () => {
   };
 };
 
-export const setUserProfile = (data) => {
+export const setUserProfile: AppThunk = (data: IUserInfo) => {
+  const headers = new Headers();
+  headers.append('Content-Type', 'application/json;charset=utf-8');
+  headers.append('authorization', Cookies.get('accessToken') || '');
   return function (dispatch) {
     dispatch({
       type: SET_USER_PROFILE_REQUEST
@@ -91,10 +147,7 @@ export const setUserProfile = (data) => {
     fetch(`${API_URL}/auth/user`, {
       method: 'PATCH',
       mode: 'cors',
-      headers: {
-        'Content-Type': 'application/json;charset=utf-8',
-        'authorization': Cookies.get('accessToken')
-      },
+      headers,
       body: JSON.stringify(data)
     })
       .then(res => res.json())

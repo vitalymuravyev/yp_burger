@@ -1,5 +1,6 @@
 import { API_URL } from "../../utils/constants";
 import {checkResponseStatus} from "../../utils/helpers";
+import {AppDispatch, IUserInfo} from "../../utils/types";
 
 export const USER_REGISTRATION_REQUEST = 'USER_REGISTRATION_REQUEST';
 export const USER_REGISTRATION_SUCCESS = 'USER_REGISTRATION_SUCCESS';
@@ -17,8 +18,49 @@ const REGISTRATION_ERROR = 'Зарегистрировать пользоват�
 const EMAIL_ERROR = 'Не удалось отправить ваш email';
 const RESET_PASSWORD_ERROR = 'Не удалось обновить ваш пароль';
 
-export const registerUser = (data) => {
-  return function (dispatch) {
+interface IGetRegistationAction {
+  readonly type: typeof USER_REGISTRATION_REQUEST;
+}
+interface IGetRegistationSuccessAction {
+  readonly type: typeof USER_REGISTRATION_SUCCESS;
+}
+interface IGetRegistationFailedAction {
+  readonly type: typeof USER_REGISTRATION_FAILED;
+}
+
+interface ISendEmailAction {
+  readonly type: typeof SEND_EMAIL_REQUEST;
+}
+interface ISendEmailSuccessAction {
+  readonly type: typeof SEND_EMAIL_SUCCESS;
+}
+interface ISendEmailFailedAction {
+  readonly type: typeof SEND_EMAIL_FAILED;
+}
+
+interface IResetPasswordAction {
+  readonly type: typeof RESET_PASSWORD_REQUEST;
+}
+interface IResetPasswordSuccessAction {
+  readonly type: typeof RESET_PASSWORD_SUCCESS;
+}
+interface IResetPasswordFailedAction {
+  readonly type: typeof RESET_PASSWORD_FAILED;
+}
+
+export type TUserRegistrationActions =
+  IGetRegistationAction
+  | IGetRegistationSuccessAction
+  | IGetRegistationFailedAction
+  | ISendEmailAction
+  | ISendEmailSuccessAction
+  | ISendEmailFailedAction
+  | IResetPasswordAction
+  | IResetPasswordSuccessAction
+  | IResetPasswordFailedAction;
+
+export const registerUser = (data: IUserInfo) => {
+  return function (dispatch: AppDispatch) {
     dispatch({
       type: USER_REGISTRATION_REQUEST
     });
@@ -54,8 +96,8 @@ export const registerUser = (data) => {
   };
 };
 
-export const sendEmail = (data) => {
-  return function (dispatch) {
+export const sendEmail = (data: {email: string}) => {
+  return function (dispatch: AppDispatch) {
     dispatch({
       type: SEND_EMAIL_REQUEST
     });
@@ -88,8 +130,8 @@ export const sendEmail = (data) => {
   };
 };
 
-export const resetPassword = (data) => {
-  return function (dispatch) {
+export const resetPassword = (data: { password: string, token: string}) => {
+  return function (dispatch: AppDispatch) {
     dispatch({
       type: RESET_PASSWORD_REQUEST
     });
