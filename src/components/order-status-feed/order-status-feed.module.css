@@ -1,0 +1,27 @@
+.wrapper {
+    width: 600px;
+
+    padding: 100px 39px 50px 39px;
+}
+
+.status {
+    display: flex;
+    gap: 36px;
+}
+
+.orderlistWrapper {
+    min-width: 272px;
+}
+
+.orderlist {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+
+    display: flex;
+    flex-direction: column;
+}
+
+.ordersNumberWrapper {
+    margin-top: 60px;
+}

@@ -21,6 +21,7 @@ import {REMOVE_ITEM_INFO} from "../../services/actions/ingredient-card";
 import {getUserProfile} from "../../services/actions/user-profile";
 import {USER_IS_LOGED} from "../../services/actions/user-auth";
 import {getItems} from "../../services/actions/burger-ingredients";
+import {Feed} from "../../pages/feed/feed";
 
 function App() {
   const location = useLocation();
@@ -60,6 +61,7 @@ function App() {
             <Route path="/profile" element={<Profile />} />
           </Route>
           <Route path="/ingredients/:id" element={<Ingredient/>} />
+          <Route path="/feed" element={<Feed />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
 
