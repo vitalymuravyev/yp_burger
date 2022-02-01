@@ -22,6 +22,7 @@ import {getUserProfile} from "../../services/actions/user-profile";
 import {USER_IS_LOGED} from "../../services/actions/user-auth";
 import {getItems} from "../../services/actions/burger-ingredients";
 import {Feed} from "../../pages/feed/feed";
+import {UserOrders} from "../../pages/user-orders/user-orders";
 
 function App() {
   const location = useLocation();
@@ -59,6 +60,7 @@ function App() {
           <Route path="/reset-password" element={<ResetPassword />} />
           <Route element={<RequireAuth />}>
             <Route path="/profile" element={<Profile />} />
+            <Route path="/profile/orders" element={<UserOrders />} />
           </Route>
           <Route path="/ingredients/:id" element={<Ingredient/>} />
           <Route path="/feed" element={<Feed />} />

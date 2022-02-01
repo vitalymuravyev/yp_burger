@@ -4,7 +4,7 @@ import {CurrencyIcon} from "@ya.praktikum/react-developer-burger-ui-components";
 import styles from './price-block.module.css';
 
 type TPriceBlock = {
-    count: number;
+    count: number | string;
     size: 'default' | 'medium';
 } & HTMLAttributes<HTMLSpanElement>
 
