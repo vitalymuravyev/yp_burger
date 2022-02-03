@@ -66,3 +66,19 @@ export interface ILoginResponse {
   success: boolean;
   user: TUserWithoutName;
 }
+
+export interface IOrderInfo {
+  status: 'created' | 'pending' | 'done';
+  ingredients: string[];
+  _id: string;
+  number: number;
+  createdAt: string;
+  updatedAt: string;
+}
+
+export interface IWsOrdersResponse {
+  success: boolean;
+  orders: Array<IOrderInfo>;
+  total: number;
+  totalToday: number;
+}

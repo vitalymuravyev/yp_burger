@@ -11,13 +11,15 @@ import './index.css';
 
 import App from './components/app/app';
 import reportWebVitals from './reportWebVitals';
+import {wSocketMiddleware} from "./services/middleware/ws-middeleware";
+import {WS_API_URL} from "./utils/constants";
 
 const composeEnhancers =
   typeof window === 'object' && (window as any).__REDUX_DEVTOOLS_EXTENSION_COMPOSE__
     ? (window as any).__REDUX_DEVTOOLS_EXTENSION_COMPOSE__({})
     : compose;
 
-const enhancer = composeEnhancers(applyMiddleware(thunk));
+const enhancer = composeEnhancers(applyMiddleware(thunk, wSocketMiddleware(WS_API_URL)));
 
 export const store = createStore(rootReducer, enhancer);
 
