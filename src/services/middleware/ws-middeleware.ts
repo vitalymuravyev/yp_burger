@@ -1,4 +1,5 @@
 import {Middleware, MiddlewareAPI} from "redux";
+import Cookies from "js-cookie";
 import {
   TWsConnectionActions, WS_CONNECTION_CLOSED, WS_CONNECTION_ERROR,
   WS_CONNECTION_START,
@@ -13,17 +14,15 @@ export const wSocketMiddleware = (wsUrl: string): Middleware => {
     let socket: WebSocket | null = null;
 
     return next => (action: TWsConnectionActions) => {
-      const { dispatch, getState } = store;
+      const { dispatch } = store;
       const { type } = action;
-      const { userAuth } = getState();
 
       if (type === WS_CONNECTION_START) {
         socket = new WebSocket(`${wsUrl}/all`);
-      }
-
-      if (type === WS_PRIVATE_CONNECTION_START) {
-        socket = new WebSocket(`${wsUrl}?token=${userAuth.accessToken}`);
-      }
+      } else if (type === WS_PRIVATE_CONNECTION_START) {
+          const token = Cookies.get('accessToken');
+          socket = new WebSocket(`${wsUrl}?token=${token && token.slice(7)}`);
+        }
 
       if (socket) {
         socket.onopen = evt => {
@@ -55,6 +54,10 @@ export const wSocketMiddleware = (wsUrl: string): Middleware => {
             payload: evt
           });
         };
+
+        if (type === WS_CONNECTION_CLOSED) {
+          socket.close();
+        }
       }
 
       next(action);

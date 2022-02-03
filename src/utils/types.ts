@@ -8,6 +8,7 @@ import {TUserAuthActions} from "../services/actions/user-auth";
 import {TUserProfileActions} from "../services/actions/user-profile";
 import {TUserRegistrationActions} from "../services/actions/user-registration";
 import {TIngredientInfoActions} from "../services/actions/ingredient-card";
+import {TWsConnectionActions} from "../services/actions/ws-action";
 
 export type TApplicationActions =
   TBurgerActions
@@ -16,7 +17,8 @@ export type TApplicationActions =
   | TUserAuthActions
   | TUserProfileActions
   | TUserRegistrationActions
-  | TIngredientInfoActions;
+  | TIngredientInfoActions
+  | TWsConnectionActions;
 
 export type RootState = ReturnType<typeof store.getState>;
 export type AppDispatch = typeof store.dispatch;

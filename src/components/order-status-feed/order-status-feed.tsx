@@ -1,6 +1,10 @@
 import React from 'react';
 
 import styles from './order-status-feed.module.css';
+import {useSelector} from "../../utils/helpers";
+
+const TOTAL_TITLE = 'Выполнено за все время:';
+const TODAY_TOTAL_TITLE = 'Выполнено за сегодня:';
 
 const ready = ['034533', '034532', '034530', '034527'];
 
@@ -33,14 +37,15 @@ const OrdersNumber = (props: {title: string, number: number}) => {
 };
 
 export const OrderStatusFeed = () => {
+  const { orders, total, totalToday } = useSelector(state => state.wsOrders);
   return (
     <section className={styles.wrapper}>
       <div className={styles.status}>
         <OrdersList title='Готовы:' />
         <OrdersList title='В работе' />
       </div>
-      <OrdersNumber title='Выполнено за все время:' number={28752} />
-      <OrdersNumber title='Выполнено за сегодня:' number={138} />
+      <OrdersNumber title={TOTAL_TITLE} number={total} />
+      <OrdersNumber title={TODAY_TOTAL_TITLE} number={totalToday} />
     </section>
   );
 };
