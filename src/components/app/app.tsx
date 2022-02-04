@@ -23,6 +23,7 @@ import {USER_IS_LOGED} from "../../services/actions/user-auth";
 import {getItems} from "../../services/actions/burger-ingredients";
 import {Feed} from "../../pages/feed/feed";
 import {UserOrders} from "../../pages/user-orders/user-orders";
+import {OrderDetailsInfo} from "../order-details-info/order-details-info";
 
 function App() {
   const location = useLocation();
@@ -74,6 +75,14 @@ function App() {
               element={
                 <Modal closeModal={closeModal}>
                   <IngredientDetails />
+                </Modal>
+              }
+            />
+            <Route
+              path="/feed/:id"
+              element={
+                <Modal closeModal={closeModal}>
+                  <OrderDetailsInfo />
                 </Modal>
               }
             />

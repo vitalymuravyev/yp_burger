@@ -5,12 +5,12 @@ import {useSelector} from "../../utils/helpers";
 
 export const OrderFeed = () => {
   const { orders } = useSelector(state => state.wsOrders);
-  console.log(orders);
+
   return (
     <section className={styles.wrapper}>
       <h2 className="text text_type_main-large">Лента заказов</h2>
       <ul className={`${styles.list} custom-scroll`}>
-        <OrderInfo />
+        {orders.map((order) => <OrderInfo key={order._id} order={order} />)}
       </ul>
     </section>
   );

@@ -1,6 +1,7 @@
 import {useLocation} from "react-router-dom";
 import {useSelector as useSelectorHook, TypedUseSelectorHook, useDispatch as useDispatchHook} from "react-redux";
-import {TIngredient, RootState, AppThunk, AppDispatch } from "./types";
+import {TIngredient, RootState, AppThunk, AppDispatch, IOrderInfo} from "./types";
+import {TBurger} from "../services/reducers/burger-constructor";
 
 export const isActivePath = (currentPath: string, pathname: string): boolean => {
   return currentPath === pathname;
@@ -20,5 +21,18 @@ export const useDispatch = () => useDispatchHook<AppDispatch | AppThunk>();
 export const useIngredientInfo = (): TIngredient => {
   const location = useLocation();
   const ingredientId = location.pathname.split('/')[2];
-  return useSelector((state) => state.ingredients.items).filter((value: TIngredient) => value._id === ingredientId)[0];
+  return useSelector((state) =>
+    state.ingredients.items).filter((value: TIngredient) => value._id === ingredientId)[0];
+};
+
+export const useOrderInfo = (): IOrderInfo => {
+  const location = useLocation();
+  const orderId = location.pathname.split('/')[2];
+  return useSelector((state) =>
+    state.wsOrders.orders).filter((value: IOrderInfo) => value._id === orderId)[0];
+};
+
+export const getPrice = (newBurger: TBurger): number => {
+  const price = newBurger.bun ? newBurger.bun.price * 2 : 0;
+  return newBurger.ingredients.reduce((sum: number, item: TIngredient) => sum + item.price, price);
 };

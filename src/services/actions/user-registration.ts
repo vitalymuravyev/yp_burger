@@ -114,7 +114,6 @@ export const sendEmail = (data: {email: string}) => {
     })
     .then(res => res.json())
     .then(result => {
-      console.log(result.success);
       if (!result.success) {
         return Promise.reject(new Error(EMAIL_ERROR));
       }

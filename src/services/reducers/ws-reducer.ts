@@ -5,9 +5,10 @@ import {
   WS_CONNECTION_SUCCESS,
   WS_GET_MESSAGE
 } from '../actions/ws-action';
+import {IOrderInfo} from "../../utils/types";
 
-type TWsState = {
-  orders: [];
+interface IWsState {
+  orders: Array<IOrderInfo>;
   total: number;
   totalToday: number;
 
@@ -15,7 +16,7 @@ type TWsState = {
   wsConnectionError: boolean;
 }
 
-const initialState: TWsState = {
+const initialState: IWsState = {
   orders: [],
   total: 0,
   totalToday: 0,

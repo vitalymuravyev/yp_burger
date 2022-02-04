@@ -7,9 +7,9 @@
 
 .ingredients {
     margin-bottom: 40px;
-    height: 366px;
 
-    overflow-y: scroll;
+    display: flex;
+    flex-direction: column;
 }
 
 .secondaryInfo {
@@ -21,9 +21,27 @@
     display: flex;
     justify-content: space-between;
     margin-bottom: 16px;
+    margin-right: 24px;
 }
 
 .ingredientInfo {
     display: flex;
     align-items: center;
+}
+
+.listWrapper {
+    overflow-y: scroll;
+    height: 366px;
+}
+
+.name, .title {
+    align-self: flex-start;
+}
+
+.done {
+    color: #00CCCC;
+}
+
+.status {
+    align-self: flex-start;
 }

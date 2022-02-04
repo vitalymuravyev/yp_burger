@@ -18,4 +18,14 @@
 
     background: #131316;
     border-radius: inherit;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.picture {
+    width: 112px;
+    height: 56px;
+
 }

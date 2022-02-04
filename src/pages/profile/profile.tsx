@@ -6,7 +6,6 @@ import styles from './profile.module.css';
 import { isActivePath, useDispatch, useSelector } from "../../utils/helpers";
 import {getUserProfile, setUserProfile} from "../../services/actions/user-profile";
 import {logoutUser} from "../../services/actions/user-auth";
-import {WS_CONNECTION_CLOSED, WS_PRIVATE_CONNECTION_START} from "../../services/actions/ws-action";
 
 export const Profile = () => {
   const { pathname } = useLocation();
@@ -21,17 +20,6 @@ export const Profile = () => {
   const [currentName, setCurrentName] = useState(initialState.name);
   const [currentEmail, setCurrentEmail] = useState(initialState.email);
   const [password, setPassword] = useState(initialState.password);
-
-  useEffect(() => {
-    dispatch({
-      type: WS_PRIVATE_CONNECTION_START
-    });
-    return () => {
-      dispatch({
-        type: WS_CONNECTION_CLOSED
-      });
-    };
-  });
 
   const onResetClick = useCallback(() => {
     setCurrentName(initialState.name);

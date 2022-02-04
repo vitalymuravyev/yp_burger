@@ -18,3 +18,9 @@ export const ingredientTypes = {
   sauce: 'Соусы',
   main: 'Начинки'
 };
+
+export const OrderStatus = {
+  done: 'Выполнен',
+  pending: 'Готовится',
+  created: 'Создан'
+};

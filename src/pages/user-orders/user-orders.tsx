@@ -1,13 +1,26 @@
-import React, {useCallback} from 'react';
+import React, {useCallback, useEffect} from 'react';
 import {Link, useLocation} from "react-router-dom";
 import styles from './user-orders.module.css';
-import {isActivePath, useDispatch} from "../../utils/helpers";
+import {isActivePath, useDispatch, useSelector} from "../../utils/helpers";
 import {logoutUser} from "../../services/actions/user-auth";
-import {OrderDetailsInfo} from "../../components/order-details-info/order-details-info";
+import {OrderInfo} from "../../components/order-info/order-info";
+import {WS_CONNECTION_CLOSED, WS_PRIVATE_CONNECTION_START} from "../../services/actions/ws-action";
 
 export const UserOrders = () => {
   const { pathname } = useLocation();
   const dispatch = useDispatch();
+  const { orders } = useSelector(state => state.wsOrders);
+
+  useEffect(() => {
+    dispatch({
+      type: WS_PRIVATE_CONNECTION_START
+    });
+    return () => {
+      dispatch({
+        type: WS_CONNECTION_CLOSED
+      });
+    };
+  }, []);
 
   const onExitClick = useCallback(() => {
     dispatch(logoutUser());
@@ -30,7 +43,9 @@ export const UserOrders = () => {
           Выход
         </button>
       </div>
-      <OrderDetailsInfo />
+      <ul className={`${styles.list} custom-scroll`}>
+        {orders.map((order) => <OrderInfo key={order._id} order={order} />)}
+      </ul>
     </div>
   );
 };

@@ -3,7 +3,7 @@ import { useDrop} from "react-dnd";
 import {useLocation, useNavigate} from "react-router-dom";
 
 import { Button, ConstructorElement } from '@ya.praktikum/react-developer-burger-ui-components';
-import {useDispatch, useSelector} from '../../utils/helpers';
+import {getPrice, useDispatch, useSelector} from '../../utils/helpers';
 
 import styles from './burger-constructor.module.css';
 import {PriceBlock} from "../price-block/price-block";
@@ -16,12 +16,6 @@ import {CLOSE_ERROR, postOrder, REMOVE_ORDER_INFO} from "../../services/actions/
 import {BurgerConstructorItem} from "../burger-constructor-item/burger-constructor-item";
 
 import {TIngredient} from "../../utils/types";
-import {TBurger} from "../../services/reducers/burger-constructor";
-
-const getPrice = (newBurger: TBurger): number => {
-  const price = newBurger.bun ? newBurger.bun.price * 2 : 0;
-  return newBurger.ingredients.reduce((sum: number, item: TIngredient) => sum + item.price, price);
-};
 
 export const BurgerConstructor = () => {
   const navigate = useNavigate();

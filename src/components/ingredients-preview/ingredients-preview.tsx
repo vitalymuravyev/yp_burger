@@ -2,19 +2,26 @@ import React, { FC } from 'react';
 
 import styles from './ingredients-preview.module.css';
 import {IngredientFeedView} from "../ingredient-feed-view/ingredient-feed-view";
+import {TIngredient} from "../../utils/types";
 
 type IngredientsPreview = {
-  items: string[];
+  list: TIngredient[];
 }
 
-export const IngredientsPreview: FC<IngredientsPreview> = ({items}) => {
+export const IngredientsPreview: FC<IngredientsPreview> = ({list}) => {
+  const rightList = list.length > 6 ? list.slice(0, 6) : list;
+  const difference = list.length > 6 ? list.length - 6 : 0;
   return (
-    <ul className={styles.wrapper}>
-      {items.map((item, index) =>
-        <li key={index}  style={{zIndex: 6 - index, left: 48 * index, position: "absolute"}}>
-          <IngredientFeedView />
-        </li>
-      )}
-    </ul>
+    <React.Fragment>
+      <ul className={styles.wrapper}>
+        {rightList.map((item, index) =>
+          <li key={item._id}  style={{zIndex: 6 - index, left: 48 * index, position: "absolute"}}>
+            <IngredientFeedView src={item.image_mobile} difference={difference} />
+          </li>
+        )}
+      </ul>
+      {/* <span>{difference && difference}</span> */}
+    </React.Fragment>
+
   );
 };
