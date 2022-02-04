@@ -1,3 +1,4 @@
+import Cookies from "js-cookie";
 import { API_URL} from "../../utils/constants";
 import {AppDispatch, TIngredient} from "../../utils/types";
 
@@ -40,6 +41,10 @@ export const postOrder = (ingredients: ReadonlyArray<TIngredient>, bun: TIngredi
     ingredients: [...ingredients.map((item) => item._id), bun && bun._id]
   };
 
+  const headers = new Headers;
+  headers.append('Content-Type', 'application/json;charset=utf-8');
+  headers.append('authorization', Cookies.get('accessToken') || '');
+
   return function (dispatch: AppDispatch) {
     dispatch({
       type: PUT_ORDER_INFO_REQUEST
@@ -47,10 +52,8 @@ export const postOrder = (ingredients: ReadonlyArray<TIngredient>, bun: TIngredi
     fetch(`${API_URL}/orders`, {
       method: 'POST',
       mode: 'cors',
-      headers: {
-        'Content-Type': 'application/json;charset=utf-8'
-      },
-      body: JSON.stringify(data)
+      headers,
+      body: JSON.stringify(data),
     })
       .then(res => {
         if (!res.ok) {

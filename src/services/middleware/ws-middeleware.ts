@@ -21,10 +21,14 @@ export const wSocketMiddleware = (wsUrl: string): Middleware => {
         socket = new WebSocket(`${wsUrl}/all`);
       } else if (type === WS_PRIVATE_CONNECTION_START) {
           const token = Cookies.get('accessToken');
-          socket = new WebSocket(`${wsUrl}?token=${token && token.slice(7)}`);
+          socket = new WebSocket(`${wsUrl}?token=${token?.slice(7)}`);
         }
 
       if (socket) {
+        if (type === WS_CONNECTION_CLOSED) {
+          socket.close();
+        }
+
         socket.onopen = evt => {
           dispatch({
             type: WS_CONNECTION_SUCCESS,
@@ -55,9 +59,6 @@ export const wSocketMiddleware = (wsUrl: string): Middleware => {
           });
         };
 
-        if (type === WS_CONNECTION_CLOSED) {
-          socket.close();
-        }
       }
 
       next(action);
