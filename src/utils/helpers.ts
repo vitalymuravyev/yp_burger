@@ -1,4 +1,10 @@
 import {useLocation} from "react-router-dom";
+import {
+  format,
+  isToday, isYesterday,
+  parseISO,
+} from 'date-fns';
+import { ru } from 'date-fns/locale';
 import {useSelector as useSelectorHook, TypedUseSelectorHook, useDispatch as useDispatchHook} from "react-redux";
 import {TIngredient, RootState, AppThunk, AppDispatch, IOrderInfo} from "./types";
 import {TBurger} from "../services/reducers/burger-constructor";
@@ -35,4 +41,10 @@ export const useOrderInfo = (): IOrderInfo => {
 export const getPrice = (newBurger: TBurger): number => {
   const price = newBurger.bun ? newBurger.bun.price * 2 : 0;
   return newBurger.ingredients.reduce((sum: number, item: TIngredient) => sum + item.price, price);
+};
+
+export const parseDate = (date: string): string => {
+  // eslint-disable-next-line no-nested-ternary
+  const day = !isToday(parseISO(date)) ? isYesterday(parseISO(date)) ? 'Вчера' : format(parseISO(date), "d MMMM", { locale: ru }) : 'Сегодня';
+  return `${day}, ${format(parseISO(date), "HH:mm", { locale: ru })}, i-${format(parseISO(date), "O")}`;
 };

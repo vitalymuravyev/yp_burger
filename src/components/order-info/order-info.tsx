@@ -5,7 +5,7 @@ import styles from './order-info.module.css';
 import {PriceBlock} from "../price-block/price-block";
 import {IngredientsPreview} from "../ingredients-preview/ingredients-preview";
 import {IOrderInfo, TIngredient} from "../../utils/types";
-import {useSelector} from "../../utils/helpers";
+import {parseDate, useSelector} from "../../utils/helpers";
 
 interface Props {
   order: IOrderInfo
@@ -25,7 +25,7 @@ export const OrderInfo: FC<Props> = ({ order }) => {
 
   const data = ingredientsInfo.filter(value => ingredients.includes(value._id));
   const price = useMemo(() => getPrice(data), [data]);
-  
+
   return (
     <Link
       to={`/feed/${_id}`}
@@ -37,7 +37,7 @@ export const OrderInfo: FC<Props> = ({ order }) => {
           {`#${number}`}
         </span>
         <span className="text text_type_main-default text_color_inactive">
-         {createdAt}
+         {parseDate(createdAt)}
         </span>
       </div>
       <h3 className="text text_type_main-medium">{name}</h3>

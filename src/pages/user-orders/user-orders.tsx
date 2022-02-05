@@ -6,6 +6,8 @@ import {logoutUser} from "../../services/actions/user-auth";
 import {OrderInfo} from "../../components/order-info/order-info";
 import {WS_CONNECTION_CLOSED, WS_PRIVATE_CONNECTION_START} from "../../services/actions/ws-action";
 
+const FEED_TEXT = 'В этом разделе вы можете просмотреть свою историю заказов';
+
 export const UserOrders = () => {
   const { pathname } = useLocation();
   const dispatch = useDispatch();
@@ -42,6 +44,9 @@ export const UserOrders = () => {
         >
           Выход
         </button>
+        <p className={`text text_type_main-default text_color_inactive mt-20 ml-5 ${styles.text}`}>
+          {FEED_TEXT}
+        </p>
       </div>
       <ul className={`${styles.list} custom-scroll`}>
         {orders.map((order) => <OrderInfo key={order._id} order={order} />)}

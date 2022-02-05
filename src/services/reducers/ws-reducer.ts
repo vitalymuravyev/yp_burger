@@ -3,7 +3,8 @@ import {
   WS_CONNECTION_CLOSED,
   WS_CONNECTION_ERROR,
   WS_CONNECTION_SUCCESS,
-  WS_GET_MESSAGE
+  WS_GET_MESSAGE,
+  WS_CONNECTION_START
 } from '../actions/ws-action';
 import {IOrderInfo} from "../../utils/types";
 
@@ -14,6 +15,7 @@ interface IWsState {
 
   wsConnection: boolean;
   wsConnectionError: boolean;
+  wsConnectionLoading: boolean;
 }
 
 const initialState: IWsState = {
@@ -22,14 +24,22 @@ const initialState: IWsState = {
   totalToday: 0,
   wsConnection: false,
   wsConnectionError: false,
+  wsConnectionLoading: false
 };
 
 export const wsOrderReducer = (state = initialState, action: TWsConnectionActions) => {
   switch (action.type) {
+    case WS_CONNECTION_START: {
+      return {
+        ...state,
+        wsConnectionLoading: true
+      };
+    }
     case WS_CONNECTION_SUCCESS: {
       return {
         ...state,
-        wsConnection: true
+        wsConnection: true,
+        wsConnectionLoading: false
       };
     }
     case WS_CONNECTION_ERROR: {

@@ -3,7 +3,7 @@ import React, {useCallback, useMemo} from 'react';
 import styles from './order-details-info.module.css';
 import {PriceBlock} from "../price-block/price-block";
 import {IngredientFeedView} from "../ingredient-feed-view/ingredient-feed-view";
-import {useOrderInfo, useSelector} from "../../utils/helpers";
+import {parseDate, useOrderInfo, useSelector} from "../../utils/helpers";
 import {TIngredient} from "../../utils/types";
 import {OrderStatus} from "../../utils/constants";
 
@@ -53,7 +53,7 @@ export const OrderDetailsInfo = () => {
         </div>
       </div>
       <div className={styles.secondaryInfo}>
-        <p className="text text_type_main-default text_color_inactive">{createdAt}</p>
+        <p className="text text_type_main-default text_color_inactive">{parseDate(createdAt)}</p>
         <PriceBlock count={price} size="default" />
       </div>
     </div>
