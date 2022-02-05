@@ -1,0 +1,12 @@
+.wrapper {
+    width: 640px;
+
+    margin: 0 auto;
+    text-align: center;
+
+    height: 620px;
+}
+
+.margin {
+    margin-top: calc((100vh - 700px)/2);
+}

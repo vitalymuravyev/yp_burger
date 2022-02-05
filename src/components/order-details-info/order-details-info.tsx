@@ -12,7 +12,7 @@ const Ingredient = ({item, qty}: { item: TIngredient, qty: number}) => {
   return (
     <div className={styles.ingredientWrapper}>
       <div className={styles.ingredientInfo}>
-        <IngredientFeedView src={item.image_mobile} difference={4} />
+        <IngredientFeedView src={item.image_mobile} />
         <p className="text text_type_main-default ml-4">{item.name}</p>
       </div>
       <PriceBlock count={`${ingredientQty} x ${item.price}`} size="default" />
@@ -43,7 +43,7 @@ export const OrderDetailsInfo = () => {
 
   return (
     <div className={styles.wrapper}>
-      <p className="text text_type_main-default mb-10">{`#${number}`}</p>
+      <p className="text text_type_digits-default mb-10">{`#${number}`}</p>
       <p className={`${styles.name} text text_type_main-medium mb-3`}>{name}</p>
       <p className={`${styles.status} ${status === "done" ? styles.done : ''} text text_type_main-small mb-15`}>{OrderStatus[status]}</p>
       <div className={`${styles.ingredients}`}>

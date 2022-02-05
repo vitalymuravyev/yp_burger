@@ -28,7 +28,7 @@ export const OrderInfo: FC<Props> = ({ order }) => {
 
   return (
     <Link
-      to={`/feed/${_id}`}
+      to={`${location.pathname}/${_id}`}
       state={{ backgroundLocation: location }}
       className={`${styles.wrapper} p-6`}
     >

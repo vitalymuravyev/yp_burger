@@ -25,10 +25,6 @@ export const wSocketMiddleware = (wsUrl: string): Middleware => {
         }
 
       if (socket) {
-        if (type === WS_CONNECTION_CLOSED) {
-          socket.close();
-        }
-
         socket.onopen = evt => {
           dispatch({
             type: WS_CONNECTION_SUCCESS,
@@ -58,6 +54,10 @@ export const wSocketMiddleware = (wsUrl: string): Middleware => {
             payload: evt
           });
         };
+
+        if (type === WS_CONNECTION_CLOSED) {
+          socket.close();
+        }
 
       }
 

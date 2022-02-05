@@ -32,14 +32,12 @@ export const wsOrderReducer = (state = initialState, action: TWsConnectionAction
     case WS_CONNECTION_START: {
       return {
         ...state,
-        wsConnectionLoading: true
       };
     }
     case WS_CONNECTION_SUCCESS: {
       return {
         ...state,
         wsConnection: true,
-        wsConnectionLoading: false
       };
     }
     case WS_CONNECTION_ERROR: {
@@ -60,7 +58,8 @@ export const wsOrderReducer = (state = initialState, action: TWsConnectionAction
         ...state,
         orders: action.payload.orders,
         total: action.payload.total,
-        totalToday: action.payload.totalToday
+        totalToday: action.payload.totalToday,
+        wsConnectionLoading: true
       };
     }
     default: {

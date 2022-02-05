@@ -30,11 +30,15 @@
 }
 
 .listWrapper {
-    overflow-y: scroll;
-    height: 366px;
+    overflow-y: auto;
+    height: 300px;
 }
 
-.name, .title {
+.name {
+    align-self: flex-start;
+}
+
+.title {
     align-self: flex-start;
 }
 

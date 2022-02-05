@@ -23,7 +23,7 @@ import {USER_IS_LOGED} from "../../services/actions/user-auth";
 import {getItems} from "../../services/actions/burger-ingredients";
 import {Feed} from "../../pages/feed/feed";
 import {UserOrders} from "../../pages/user-orders/user-orders";
-import {OrderDetailsInfo} from "../order-details-info/order-details-info";
+import {Order} from "../../pages/order/order";
 
 function App() {
   const location = useLocation();
@@ -62,9 +62,11 @@ function App() {
           <Route element={<RequireAuth />}>
             <Route path="/profile" element={<Profile />} />
             <Route path="/profile/orders" element={<UserOrders />} />
+            <Route path="/profile/orders/:id" element={<Order />} />
           </Route>
           <Route path="/ingredients/:id" element={<Ingredient/>} />
           <Route path="/feed" element={<Feed />} />
+          <Route path="/feed/:id" element={<Order />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
 
@@ -82,7 +84,15 @@ function App() {
               path="/feed/:id"
               element={
                 <Modal closeModal={closeModal}>
-                  <OrderDetailsInfo />
+                  <Order />
+                </Modal>
+              }
+            />
+            <Route
+              path="/profile/orders/:id"
+              element={
+                <Modal closeModal={closeModal}>
+                  <Order />
                 </Modal>
               }
             />

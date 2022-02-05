@@ -33,7 +33,7 @@ export const useIngredientInfo = (): TIngredient => {
 
 export const useOrderInfo = (): IOrderInfo => {
   const location = useLocation();
-  const orderId = location.pathname.split('/')[2];
+  const orderId = location.pathname.split('/')[location.pathname.split('/').length - 1];
   return useSelector((state) =>
     state.wsOrders.orders).filter((value: IOrderInfo) => value._id === orderId)[0];
 };
