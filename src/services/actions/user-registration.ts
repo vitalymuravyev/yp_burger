@@ -1,6 +1,6 @@
 import { API_URL } from "../../utils/constants";
 import {checkResponseStatus} from "../../utils/helpers";
-import {AppDispatch, IUserInfo} from "../../utils/types";
+import {AppDispatch, AppThunk, IUserInfo} from "../../utils/types";
 
 export const USER_REGISTRATION_REQUEST = 'USER_REGISTRATION_REQUEST';
 export const USER_REGISTRATION_SUCCESS = 'USER_REGISTRATION_SUCCESS';
@@ -96,7 +96,7 @@ export const registerUser = (data: IUserInfo) => {
   };
 };
 
-export const sendEmail = (data: {email: string}) => {
+export const sendEmail: AppThunk = (data: {email: string}) => {
   return function (dispatch: AppDispatch) {
     dispatch({
       type: SEND_EMAIL_REQUEST
@@ -129,7 +129,7 @@ export const sendEmail = (data: {email: string}) => {
   };
 };
 
-export const resetPassword = (data: { password: string, token: string}) => {
+export const resetPassword: AppThunk = (data: { password: string, token: string}) => {
   return function (dispatch: AppDispatch) {
     dispatch({
       type: RESET_PASSWORD_REQUEST

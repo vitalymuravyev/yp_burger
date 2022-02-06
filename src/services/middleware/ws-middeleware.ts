@@ -6,20 +6,21 @@ import {
   WS_CONNECTION_SUCCESS, WS_GET_MESSAGE,
   WS_PRIVATE_CONNECTION_START
 } from "../actions/ws-action";
-import {AppDispatch, RootState} from "../../utils/types";
+import {AppDispatch, IWsMiddlewareActions, RootState} from "../../utils/types";
 
 
-export const wSocketMiddleware = (wsUrl: string): Middleware => {
+export const wSocketMiddleware = (wsUrl: string, wsActions: IWsMiddlewareActions): Middleware => {
   return ((store: MiddlewareAPI<AppDispatch, RootState>) => {
     let socket: WebSocket | null = null;
 
     return next => (action: TWsConnectionActions) => {
       const { dispatch } = store;
       const { type } = action;
+      const { wsStart, wsPrivateStart, wsOpen, wsError, wsMessage, wsClose} = wsActions;
 
-      if (type === WS_CONNECTION_START) {
+      if (type === wsStart) {
         socket = new WebSocket(`${wsUrl}/all`);
-      } else if (type === WS_PRIVATE_CONNECTION_START) {
+      } else if (type === wsPrivateStart) {
           const token = Cookies.get('accessToken');
           socket = new WebSocket(`${wsUrl}?token=${token?.slice(7)}`);
         }
@@ -27,14 +28,14 @@ export const wSocketMiddleware = (wsUrl: string): Middleware => {
       if (socket) {
         socket.onopen = evt => {
           dispatch({
-            type: WS_CONNECTION_SUCCESS,
+            type: wsOpen,
             payload: evt
           });
         };
 
         socket.onerror = evt => {
           dispatch({
-            type: WS_CONNECTION_ERROR,
+            type: wsError,
             payload: evt
           });
         };
@@ -43,19 +44,19 @@ export const wSocketMiddleware = (wsUrl: string): Middleware => {
           const { data } = evt;
           const parsedData = JSON.parse(data);
           dispatch({
-            type: WS_GET_MESSAGE,
+            type: wsMessage,
             payload: parsedData
           });
         };
 
         socket.onclose = evt => {
           dispatch({
-            type: WS_CONNECTION_CLOSED,
+            type: wsClose,
             payload: evt
           });
         };
 
-        if (type === WS_CONNECTION_CLOSED) {
+        if (type === wsClose) {
           socket.close();
         }
 

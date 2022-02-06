@@ -2,7 +2,7 @@ import Cookies from 'js-cookie';
 
 import {API_URL, TOKEN_LIFE_TIME} from "../../utils/constants";
 import {checkResponseStatus} from "../../utils/helpers";
-import {AppDispatch, ILoginResponse, IUserInfo, TUserWithoutName} from "../../utils/types";
+import {AppDispatch, AppThunk, ILoginResponse, IUserInfo, TUserWithoutName} from "../../utils/types";
 
 export const USER_LOGIN_REQUEST = 'USER_LOGIN_REQUEST';
 export const USER_LOGIN_SUCCESS = 'USER_LOGIN_SUCCESS';
@@ -52,7 +52,7 @@ export type TUserAuthActions =
   | IUserLogoutFailedAction
   | IUserLoggedAction;
 
-export const loginUser = (data: TUserWithoutName) => {
+export const loginUser: AppThunk = (data: TUserWithoutName) => {
   return function (dispatch: AppDispatch) {
     dispatch({
       type: USER_LOGIN_REQUEST
@@ -85,7 +85,7 @@ export const loginUser = (data: TUserWithoutName) => {
   };
 };
 
-export const logoutUser = () => {
+export const logoutUser: AppThunk = () => {
   return function (dispatch: AppDispatch) {
     dispatch({
       type: USER_LOGOUT_REQUEST

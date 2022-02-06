@@ -1,6 +1,6 @@
 import Cookies from "js-cookie";
 import { API_URL} from "../../utils/constants";
-import {AppDispatch, TIngredient} from "../../utils/types";
+import {AppDispatch, AppThunk, TIngredient} from "../../utils/types";
 
 export const PUT_ORDER_INFO_REQUEST = 'PUT_ORDER_INFO_REQUEST';
 export const PUT_ORDER_INFO_SUCCESS = 'PUT_ORDER_INFO_SUCCESS';
@@ -36,7 +36,7 @@ export type TOrderDetailsActions =
   | IRemoveOrderInfoAction
   | ICloseError;
 
-export const postOrder = (ingredients: ReadonlyArray<TIngredient>, bun: TIngredient | '', openModal: (value: boolean) => void ) => {
+export const postOrder: AppThunk = (ingredients: ReadonlyArray<TIngredient>, bun: TIngredient | '', openModal: (value: boolean) => void ) => {
   const data = {
     ingredients: [...ingredients.map((item) => item._id), bun && bun._id]
   };

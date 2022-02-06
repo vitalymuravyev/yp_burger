@@ -1,5 +1,5 @@
 import {API_URL} from "../../utils/constants";
-import {AppDispatch, TIngredient} from "../../utils/types";
+import {AppDispatch, AppThunk, TIngredient} from "../../utils/types";
 
 export const GET_ITEMS_REQUEST = 'GET_ITEMS_REQUEST';
 export const GET_ITEMS_SUCCESS = 'GET_ITEMS_SUCCESS';
@@ -30,7 +30,7 @@ export type TGetItemsActions =
   | IGetItemsSuccessAction
   | ICloseErrorAction;
 
-export const getItems = () => {
+export const getItems: AppThunk = () => {
   return function (dispatch: AppDispatch) {
     dispatch({
       type: GET_ITEMS_REQUEST
