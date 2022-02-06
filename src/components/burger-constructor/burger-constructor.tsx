@@ -2,6 +2,8 @@ import React, {useCallback, useMemo, useState} from "react";
 import { useDrop} from "react-dnd";
 import {useLocation, useNavigate} from "react-router-dom";
 
+import ClipLoader from "react-spinners/ClipLoader";
+import { css } from "@emotion/react";
 import { Button, ConstructorElement } from '@ya.praktikum/react-developer-burger-ui-components';
 import {getPrice, useDispatch, useSelector} from '../../utils/helpers';
 
@@ -17,6 +19,12 @@ import {BurgerConstructorItem} from "../burger-constructor-item/burger-construct
 
 import {TIngredient} from "../../utils/types";
 
+const override = css`
+  position: absolute;
+  top: 10px;
+  left: -20px;
+`;
+
 export const BurgerConstructor = () => {
   const navigate = useNavigate();
   const location = useLocation();
@@ -28,6 +36,7 @@ export const BurgerConstructor = () => {
 
   const dispatch = useDispatch();
   const {burger} = useSelector(state => state);
+  const { orderRequest } = useSelector(state => state.orderDetails);
   const bun = burger.bun;
   const ingredients = burger.ingredients;
 
@@ -101,6 +110,7 @@ export const BurgerConstructor = () => {
   return (
     <React.Fragment>
       <section className={styles.wrapper} ref={dropTarget} >
+        <ClipLoader loading={orderRequest} size={60} color='#8585AD' css={override} />
         <div className={styles.container}>
           {bun && <div className={styles.item}>
             <ConstructorElement
