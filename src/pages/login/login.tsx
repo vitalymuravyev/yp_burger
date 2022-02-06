@@ -16,17 +16,17 @@ export const Login = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
+  useEffect(() => {
+    if (localStorage.getItem('refreshToken')) {
+      navigate(from, { replace: true });
+    }
+  }, [from, navigate]);
+
   const onFormSubmit = useCallback((evt) => {
     evt.preventDefault();
     dispatch(loginUser({email, password}));
     navigate(from, { replace: true });
   }, [dispatch, email, password, navigate, from]);
-
-  useEffect(() => {
-    if (localStorage.getItem('refreshToken')) {
-      navigate('/', { replace: true });
-    }
-  }, [navigate]);
 
   return (
     <div className={styles.wrapper}>
