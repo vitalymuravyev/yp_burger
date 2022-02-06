@@ -1,9 +1,11 @@
 import React, {useCallback, useMemo, useState} from "react";
-import {useDispatch, useSelector} from "react-redux";
 import { useDrop} from "react-dnd";
 import {useLocation, useNavigate} from "react-router-dom";
 
+import ClipLoader from "react-spinners/ClipLoader";
+import { css } from "@emotion/react";
 import { Button, ConstructorElement } from '@ya.praktikum/react-developer-burger-ui-components';
+import {getPrice, useDispatch, useSelector} from '../../utils/helpers';
 
 import styles from './burger-constructor.module.css';
 import {PriceBlock} from "../price-block/price-block";
@@ -17,28 +19,24 @@ import {BurgerConstructorItem} from "../burger-constructor-item/burger-construct
 
 import {TIngredient} from "../../utils/types";
 
-type TBurger = {
-  bun: TIngredient;
-  ingredients: Array<TIngredient>;
-  count: number;
-}
-
-const getPrice = (newBurger: TBurger): number => {
-  const price = newBurger.bun ? newBurger.bun.price * 2 : 0;
-  return newBurger.ingredients.reduce((sum: number, item: TIngredient) => sum + item.price, price);
-};
+const override = css`
+  position: absolute;
+  top: 10px;
+  left: -20px;
+`;
 
 export const BurgerConstructor = () => {
   const navigate = useNavigate();
   const location = useLocation();
-  const { isUserAuth }: any = useSelector<any>(state => state.userAuth);
+  const { isUserAuth } = useSelector(state => state.userAuth);
 
   const [modalVisible, setModalVisible] = useState(false);
 
-  const errorMessage: any = useSelector<any>(state => state.orderDetails.orderFailed);
+  const errorMessage = useSelector(state => state.orderDetails.orderFailed);
 
   const dispatch = useDispatch();
-  const {burger}: any = useSelector(state => state);
+  const {burger} = useSelector(state => state);
+  const { orderRequest } = useSelector(state => state.orderDetails);
   const bun = burger.bun;
   const ingredients = burger.ingredients;
 
@@ -112,6 +110,7 @@ export const BurgerConstructor = () => {
   return (
     <React.Fragment>
       <section className={styles.wrapper} ref={dropTarget} >
+        <ClipLoader loading={orderRequest} size={60} color='#8585AD' css={override} />
         <div className={styles.container}>
           {bun && <div className={styles.item}>
             <ConstructorElement

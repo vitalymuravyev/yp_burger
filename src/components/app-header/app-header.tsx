@@ -28,9 +28,9 @@ export const AppHeader = () => {
             {LABELS.constructor}
           </ButtonWithIcon>
           <ButtonWithIcon
-            active={isActivePath("/order-feed", pathname)}
-            icon={<ListIcon type={isActivePath("/order-feed", pathname) ? "primary" : "secondary"} />}
-            path="/order-feed"
+            active={isActivePath("/feed", pathname)}
+            icon={<ListIcon type={isActivePath("/feed", pathname) ? "primary" : "secondary"} />}
+            path="/feed"
           >
             {LABELS.list}
           </ButtonWithIcon>

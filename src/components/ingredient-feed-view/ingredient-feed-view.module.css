@@ -1,0 +1,35 @@
+.wrapper {
+    width: 64px;
+    height: 64px;
+
+    position: relative;
+    border-radius: 50%;
+    background: linear-gradient(63.18deg, #801AB3 0%, #4C4CFF 100%);
+    text-align: center;
+}
+
+.container {
+    content: "";
+    position: absolute;
+    top: 2px;
+    bottom: 2px;
+    left: 2px;
+    right: 2px;
+
+    background: #131316;
+    border-radius: inherit;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.picture {
+    width: 112px;
+    height: 56px;
+}
+
+.text {
+    position: absolute;
+    color: #F2F2F3
+}

@@ -1,11 +1,10 @@
 import React, {useCallback, useEffect, useState} from 'react';
 import {Link, useLocation, useNavigate} from "react-router-dom";
-import {useDispatch } from "react-redux";
-
 import { EmailInput, PasswordInput, Button } from '@ya.praktikum/react-developer-burger-ui-components';
+import {useDispatch } from '../../utils/helpers';
+
 import styles from './login.module.css';
-import {loginUser, USER_IS_LOGED} from "../../services/actions/user-auth";
-import {getUserProfile} from "../../services/actions/user-profile";
+import {loginUser } from "../../services/actions/user-auth";
 
 export const Login = () => {
   const dispatch = useDispatch();
@@ -17,17 +16,17 @@ export const Login = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
+  useEffect(() => {
+    if (localStorage.getItem('refreshToken')) {
+      navigate(from, { replace: true });
+    }
+  }, [from, navigate]);
+
   const onFormSubmit = useCallback((evt) => {
     evt.preventDefault();
     dispatch(loginUser({email, password}));
     navigate(from, { replace: true });
   }, [dispatch, email, password, navigate, from]);
-
-  useEffect(() => {
-    if (localStorage.getItem('refreshToken')) {
-      navigate('/', { replace: true });
-    }
-  }, [navigate]);
 
   return (
     <div className={styles.wrapper}>

@@ -1,7 +1,7 @@
 import React, {useEffect, FC } from "react";
 import { useInView } from "react-intersection-observer";
 
-import { useSelector } from "react-redux";
+import { useSelector } from '../../utils/helpers';
 import styles from './ingredients-list.module.css';
 
 import { ingredientTypes } from '../../utils/constants';
@@ -11,12 +11,12 @@ import {TIngredient, TIngredientTypeName} from "../../utils/types";
 type TIngredientsList = {
   changeTab: (type: TIngredientTypeName, ratio?: number) => void;
   type: TIngredientTypeName;
-  reference: any;
+  reference: React.MutableRefObject<HTMLDivElement>;
 }
 
 export const IngredientsList: FC<TIngredientsList> = ({ type, reference, changeTab }) => {
 
-  const data: any = useSelector<any>(state => state.ingredients.items);
+  const data = useSelector(state => state.ingredients.items);
   const ingredients = data.filter((item: TIngredient) => item.type === type);
 
   const { ref, inView, entry } = useInView({

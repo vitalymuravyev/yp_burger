@@ -1,17 +1,16 @@
 import React, {useCallback, useEffect, useState} from 'react';
-import {Link, useLocation, useNavigate } from "react-router-dom";
-import {useDispatch, useSelector} from "react-redux";
+import {Link, useLocation } from "react-router-dom";
 
 import { EmailInput, PasswordInput, Input, Button } from '@ya.praktikum/react-developer-burger-ui-components';
 import styles from './profile.module.css';
-import { isActivePath } from "../../utils/helpers";
+import { isActivePath, useDispatch, useSelector } from "../../utils/helpers";
 import {getUserProfile, setUserProfile} from "../../services/actions/user-profile";
 import {logoutUser} from "../../services/actions/user-auth";
 
 export const Profile = () => {
   const { pathname } = useLocation();
   const dispatch = useDispatch();
-  const { name, email}: any = useSelector<any>(state => state.userProfile.user);
+  const { name, email} = useSelector(state => state.userProfile.user);
   const initialState = {
     name,
     email,

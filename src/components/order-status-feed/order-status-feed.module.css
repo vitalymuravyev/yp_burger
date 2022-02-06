@@ -1,0 +1,37 @@
+.wrapper {
+    width: 600px;
+
+    padding: 100px 39px 50px 39px;
+}
+
+.status {
+    display: flex;
+    justify-content: space-between;
+
+    max-height: calc(100vh - 610px);
+}
+
+.orderlistWrapper {
+
+}
+
+.orderlist {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    column-gap: 10px;
+    height: calc(100vh - 660px);
+    max-height: 325px;
+}
+
+.ordersNumberWrapper {
+    margin-top: 60px;
+}
+
+.accent {
+    color: #00CCCC;
+}

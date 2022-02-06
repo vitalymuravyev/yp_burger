@@ -1,5 +1,5 @@
 import React, {useEffect} from "react";
-import {useDispatch, useSelector} from "react-redux";
+import {useDispatch, useSelector} from '../../utils/helpers';
 
 import styles from './ingredient-details.module.css';
 import {ADD_ITEM_INFO_PAGE} from "../../services/actions/ingredient-card";
@@ -16,8 +16,8 @@ export const IngredientDetails = () => {
     });
   }, [dispatch, item]);
 
-  const { image_large, name, calories, proteins, fat, carbohydrates }: any
-    = useSelector<any>(state => state.ingredientInfo.details);
+  const { image_large, name, calories, proteins, fat, carbohydrates }
+    = useSelector(state => state.ingredientInfo.details);
 
   return (
     <div>

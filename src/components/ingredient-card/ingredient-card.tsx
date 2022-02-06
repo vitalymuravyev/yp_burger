@@ -1,9 +1,9 @@
 import React, { useMemo, FC } from "react";
-import { useSelector} from "react-redux";
 import {useDrag} from "react-dnd";
 import { Link, useLocation } from "react-router-dom";
 
 import {Counter} from "@ya.praktikum/react-developer-burger-ui-components";
+import { useSelector} from '../../utils/helpers';
 import styles from './ingredient-card.module.css';
 import {PriceBlock} from "../price-block/price-block";
 import { TIngredient } from "../../utils/types";
@@ -21,13 +21,13 @@ export const IngredientCard: FC<TIngredientCard> = ({ item }) => {
     item,
   });
 
-  const burger: any = useSelector<any>(state => state.burger);
+  const burger = useSelector(state => state.burger);
 
   const counter = useMemo(() => {
-    if (type === 'bun' && item._id === burger.bun._id) return 2;
+    if (burger.bun && type === 'bun' && item._id === burger.bun._id) return 2;
 
     return burger.ingredients.filter((value: TIngredient) => value._id === item._id).length;
-  }, [burger.bun._id, burger.ingredients, item._id, type]);
+  }, [burger.bun, burger.ingredients, item._id, type]);
 
   return (
     <Link

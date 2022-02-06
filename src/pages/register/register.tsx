@@ -1,8 +1,8 @@
 import React, {useCallback, useEffect, useState} from 'react';
 import {Link, useNavigate} from "react-router-dom";
-import { useDispatch } from "react-redux";
-
 import { EmailInput, PasswordInput, Input, Button } from '@ya.praktikum/react-developer-burger-ui-components';
+import { useDispatch } from '../../utils/helpers';
+
 import styles from './register.module.css';
 import {registerUser} from "../../services/actions/user-registration";
 

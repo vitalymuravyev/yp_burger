@@ -1,11 +1,10 @@
 import { useLocation, Navigate, Outlet } from "react-router-dom";
-import { useSelector } from "react-redux";
+import { useSelector } from '../../utils/helpers';
 
 export const RequireAuth = () => {
-  const { userAuth }: any = useSelector(state => state);
+  const { isUserAuth, loginRequest } = useSelector(state => state.userAuth);
   const location = useLocation();
-
-  if (!userAuth.isUserAuth) {
+  if (!isUserAuth && !loginRequest) {
     return <Navigate to="/login" state={{ from: location }} />;
   }
 

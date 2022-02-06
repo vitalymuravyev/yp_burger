@@ -6,6 +6,7 @@ import { orderDetailsReducer } from './order-details';
 import { userRegistrationReducer } from './user-registration';
 import { userAuthReducer } from "./user-auth";
 import { userProfileReducer } from "./user-profile";
+import {wsOrderReducer} from "./ws-reducer";
 
 export const rootReducer = combineReducers({
   ingredients: ingredientsReducer,
@@ -15,4 +16,5 @@ export const rootReducer = combineReducers({
   userRegistration: userRegistrationReducer,
   userAuth: userAuthReducer,
   userProfile: userProfileReducer,
+  wsOrders: wsOrderReducer,
 });

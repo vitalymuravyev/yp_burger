@@ -8,10 +8,24 @@ import {
   SET_USER_PROFILE_FAILED,
   GET_NEW_TOKEN_REQUEST,
   GET_NEW_TOKEN_SUCCESS,
-  GET_NEW_TOKEN_FAILED
+  GET_NEW_TOKEN_FAILED, TUserProfileActions
 } from '../actions/user-profile';
+import {IUserInfo} from "../../utils/types";
 
-const initialState = {
+interface IUserProfileState {
+  profileRequest: boolean;
+  profileFailed: boolean;
+  user: IUserInfo;
+  isUserLoaded: boolean;
+
+  setProfileRequest: boolean;
+  setProfileFailed: boolean;
+
+  getNewTokenRequest: boolean;
+  getNewTokenFailed: boolean;
+}
+
+const initialState: IUserProfileState = {
   profileRequest: false,
   profileFailed: false,
   user: {
@@ -27,7 +41,7 @@ const initialState = {
   getNewTokenFailed: false
 };
 
-export const userProfileReducer = (state = initialState, action) => {
+export const userProfileReducer = (state = initialState, action: TUserProfileActions) => {
   switch (action.type) {
     case USER_PROFILE_REQUEST: {
       return {
