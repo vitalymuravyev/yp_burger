@@ -61,7 +61,7 @@ export const BurgerConstructorItem: FC<TBurgerConstructorItem> = ({item, onRemov
   const opacity = isDragging ? 0 : 1;
 
   return (
-    <li className={className} ref={ref} style={{opacity}}>
+    <li className={className} ref={ref} style={{opacity}} data-test-id="constructor-drag-element" >
       <DragIcon type="primary"/>
       <ConstructorElement
         text={item.name}

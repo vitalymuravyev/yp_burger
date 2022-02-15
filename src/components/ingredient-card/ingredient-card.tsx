@@ -35,6 +35,7 @@ export const IngredientCard: FC<TIngredientCard> = ({ item }) => {
       state={{ backgroundLocation: location }}
       className={styles.card}
       ref={dragRef}
+      data-test-id="burger-ingredient"
     >
       <img src={image} alt={name} />
       <PriceBlock count={price} size="default" className={styles.price} />

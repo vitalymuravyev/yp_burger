@@ -99,7 +99,7 @@ export const BurgerConstructor = () => {
 
   if (!bun && ingredients.length === 0) {
     return (
-      <section className={styles.wrapper} ref={dropTarget}>
+      <section className={styles.wrapper} ref={dropTarget} data-test-id="constructor-container">
         <p className={`text text_type_main-medium ${styles.text}`}>
           {EMPTY_ORDER}
         </p>
@@ -109,9 +109,9 @@ export const BurgerConstructor = () => {
 
   return (
     <React.Fragment>
-      <section className={styles.wrapper} ref={dropTarget} >
+      <section className={styles.wrapper} ref={dropTarget} data-test-id="constructor-container">
         <ClipLoader loading={orderRequest} size={60} color='#8585AD' css={override} />
-        <div className={styles.container}>
+        <div className={styles.container} >
           {bun && <div className={styles.item}>
             <ConstructorElement
               text={`${bun.name} (верх)`}
