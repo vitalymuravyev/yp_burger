@@ -10,7 +10,7 @@ import {
   RESET_PASSWORD_FAILED, TUserRegistrationActions
 } from '../actions/user-registration';
 
-interface IUserRegistrationState {
+export interface IUserRegistrationState {
   registrationRequest: boolean;
   registrationFailed: boolean;
 

@@ -1,6 +1,6 @@
 import React, {useCallback, useEffect, useState} from 'react';
 import {Link, useLocation, useNavigate} from "react-router-dom";
-import { EmailInput, PasswordInput, Button } from '@ya.praktikum/react-developer-burger-ui-components';
+import { PasswordInput, Button, Input } from '@ya.praktikum/react-developer-burger-ui-components';
 import {useDispatch } from '../../utils/helpers';
 
 import styles from './login.module.css';
@@ -32,9 +32,11 @@ export const Login = () => {
     <div className={styles.wrapper}>
       <h2 className="text text_type_main-medium">Вход</h2>
       <form className={styles.form} onSubmit={(evt) => onFormSubmit(evt)}>
-        <EmailInput
+        <Input
+          type="email"
           name="email"
           value={email}
+          placeholder="Email"
           onChange={e => setEmail(e.target.value)}
         />
         <PasswordInput

@@ -12,7 +12,7 @@ import {
 } from '../actions/user-profile';
 import {IUserInfo} from "../../utils/types";
 
-interface IUserProfileState {
+export interface IUserProfileState {
   profileRequest: boolean;
   profileFailed: boolean;
   user: IUserInfo;

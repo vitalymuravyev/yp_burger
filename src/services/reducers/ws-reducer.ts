@@ -8,7 +8,7 @@ import {
 } from '../actions/ws-action';
 import {IOrderInfo} from "../../utils/types";
 
-interface IWsState {
+export interface IWsState {
   orders: Array<IOrderInfo>;
   total: number;
   totalToday: number;

@@ -28,8 +28,8 @@ export const Modal: FC<TModal> = ({closeModal, children }) => {
 
   return ReactDOM.createPortal(
     <>
-      <div className={`p-10 ${styles.wrapper}`}>
-        <span className={styles.closeButton} onClick={closeModal}>
+      <div className={`p-10 ${styles.wrapper}`} data-test-id="modal">
+        <span className={styles.closeButton} onClick={closeModal} data-test-id="modal-close">
           <CloseIcon type="primary" />
         </span>
         {children}
